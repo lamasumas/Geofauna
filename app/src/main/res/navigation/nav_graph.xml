@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/menuPrincipal">
+
+    <fragment
+        android:id="@+id/menuPrincipal"
+        android:name="com.example.muestreo_fauna_salvaje.MenuPrincipal"
+        android:label="fragment_menu_principal"
+        tools:layout="@layout/fragment_menu_principal" >
+        <action
+            android:id="@+id/action_menuPrincipal_to_avistamiento"
+            app:destination="@id/avistamiento" />
+    </fragment>
+    <fragment
+        android:id="@+id/avistamiento"
+        android:name="com.example.muestreo_fauna_salvaje.Avistamiento"
+        android:label="fragment_avistamiento"
+        tools:layout="@layout/fragment_avistamiento" />
+</navigation>
