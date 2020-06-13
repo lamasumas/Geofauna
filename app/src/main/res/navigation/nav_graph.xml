@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/menuPrincipal"
-        android:name="com.example.muestreo_fauna_salvaje.MenuPrincipal"
+        android:name="com.example.muestreo_fauna_salvaje.Fragments.MenuPrincipal"
         android:label="fragment_menu_principal"
         tools:layout="@layout/fragment_menu_principal" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/avistamiento"
-        android:name="com.example.muestreo_fauna_salvaje.Avistamiento"
+        android:name="com.example.muestreo_fauna_salvaje.Fragments.Avistamiento"
         android:label="fragment_avistamiento"
         tools:layout="@layout/fragment_avistamiento" />
 </navigation>

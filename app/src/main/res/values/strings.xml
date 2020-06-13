@@ -4,4 +4,16 @@
     <string name="btnResumen">Resumen</string>
     <string name="btnAñadir">Añadir avistamiento</string>
     <string name="btnEstadisticas">Estadísticas</string>
+    <string name="avistamientoTitulo">Registrar Avistamiento</string>
+    <string name="tvEspecie">Especie:</string>
+    <string name="tvHora">Hora:</string>
+    <string name="tvFecha">Fecha:</string>
+    <string name="tvLatitud">Latitud:</string>
+    <string name="tvLongitud">Longitud:</string>
+    <string name="etEspecie">Escribe la especie</string>
+    <string name="etLongitud">Escribe la longitud</string>
+    <string name="etLatitud">Escribe la latitud</string>
+    <string name="etHora">Escribe la hora</string>
+    <string name="etFecha">Escribe la fecha</string>
+    <string name="btnAñadirAvistamiento">Añadir avistamiento</string>
 </resources>

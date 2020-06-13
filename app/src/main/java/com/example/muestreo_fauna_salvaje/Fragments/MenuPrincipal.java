@@ -1,15 +1,16 @@
-package com.example.muestreo_fauna_salvaje;
+package com.example.muestreo_fauna_salvaje.Fragments;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.example.muestreo_fauna_salvaje.R;
 
 public class MenuPrincipal extends Fragment {
 
