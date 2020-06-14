@@ -16,4 +16,9 @@
     <string name="etHora">Escribe la hora</string>
     <string name="etFecha">Escribe la fecha</string>
     <string name="btnAñadirAvistamiento">Añadir avistamiento</string>
+    <string name="tvPais">País:</string>
+    <string name="tvLugar">Lugar:</string>
+    <string name= "btnAutocompletar">Autocompletar</string>
+    <string name="etPais">Escribe el país</string>
+    <string name="etLugar">Escribe el lugar</string>
 </resources>

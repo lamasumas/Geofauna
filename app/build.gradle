@@ -31,6 +31,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    //google locaton
+    implementation 'com.google.android.gms:play-services-location:15.0.1'
     //Dependencias de la navegación
     def nav_version = "2.3.0-beta01"
 

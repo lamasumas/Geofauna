@@ -43,6 +43,52 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvPaís"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/tvPais"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+            <EditText
+                android:id="@+id/etPais"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="@string/etPais"
+                android:inputType="textPersonName" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvLugar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/tvLugar"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+            <EditText
+                android:id="@+id/etLugar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="@string/etLugar"
+                android:inputType="textPersonName" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -131,21 +177,27 @@
 
         </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        android:paddingHorizontal="50dp"
-        android:paddingVertical="20dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            >
 
-        <Button
-            android:id="@+id/btnAñadirAvistamiento"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/btnAñadirAvistamiento"
-            android:gravity="center"/>
-    </LinearLayout>>
+            <Button
+                android:id="@+id/btnAñadirAvistamiento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/btnAñadirAvistamiento" />
+
+            <Button
+                android:id="@+id/btnAutocompletar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/btnAutocompletar" />
+        </LinearLayout>>
     </LinearLayout>
 </FrameLayout>
