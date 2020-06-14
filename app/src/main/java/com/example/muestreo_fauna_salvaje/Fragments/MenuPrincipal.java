@@ -3,6 +3,8 @@ package com.example.muestreo_fauna_salvaje.Fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.muestreo_fauna_salvaje.R;
+import com.example.muestreo_fauna_salvaje.ViewModels.LocationViewModel;
 
 public class MenuPrincipal extends Fragment {
 
@@ -38,6 +41,7 @@ public class MenuPrincipal extends Fragment {
                              Bundle savedInstanceState) {
 
         View theView = inflater.inflate(R.layout.fragment_menu_principal, container, false);
+        iniciarServicioLocalizacion();
         Button btnAñadir = (Button)theView.findViewById(R.id.btnAñadir);
         btnAñadir.setOnClickListener( new View.OnClickListener(){
 
@@ -46,8 +50,13 @@ public class MenuPrincipal extends Fragment {
                 Navigation.findNavController(view).navigate(R.id.action_menuPrincipal_to_avistamiento);
             }
         });
-
         return theView;
+    }
+
+    private void iniciarServicioLocalizacion() {
+        LocationViewModel vwLocation = new ViewModelProvider(this).get(LocationViewModel.class);
+        vwLocation.inicializar(getContext(),getActivity());
+
     }
 
 }
