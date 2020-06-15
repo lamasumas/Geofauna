@@ -4,9 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
-import android.webkit.WebView;
 
-import com.example.muestreo_fauna_salvaje.ViewModels.LocationViewModel;
+import com.example.muestreo_fauna_salvaje.viewModels.LocationViewModel;
 
 public class MainActivity extends AppCompatActivity {
 

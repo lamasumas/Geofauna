@@ -11,14 +11,20 @@
     <string name="tvLatitud">Latitud:</string>
     <string name="tvLongitud">Longitud:</string>
     <string name="etEspecie">Escribe la especie</string>
-    <string name="etLongitud">Escribe la longitud</string>
-    <string name="etLatitud">Escribe la latitud</string>
-    <string name="etHora">Escribe la hora</string>
-    <string name="etFecha">Escribe la fecha</string>
+    <string name="etLongitud">Longitud</string>
+    <string name="etLatitud">Latitud</string>
+    <string name="etHora">Hora</string>
+    <string name="etMinuto">Minuto</string>
+    <string name="etDia">Día</string>
+    <string name="etMes">Mes</string>
+    <string name="etAño">Año</string>
     <string name="btnAñadirAvistamiento">Añadir avistamiento</string>
     <string name="tvPais">País:</string>
     <string name="tvLugar">Lugar:</string>
     <string name= "btnAutocompletar">Autocompletar</string>
-    <string name="etPais">Escribe el país</string>
-    <string name="etLugar">Escribe el lugar</string>
+    <string name="etPais">El país</string>
+    <string name="etLugar">El lugar</string>
+    <string name="alertaGPSMensaje"> No se ha encontrado información GPS. Intentelo más tarde.</string>
+    <string name="alertaGPSTitulo">Aviso GPS</string>
+    <string name="alertaGPSBoton">Cerrar</string>
 </resources>

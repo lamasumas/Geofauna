@@ -1,9 +1,8 @@
-package com.example.muestreo_fauna_salvaje.Fragments;
+package com.example.muestreo_fauna_salvaje.fragments;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -13,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.muestreo_fauna_salvaje.R;
-import com.example.muestreo_fauna_salvaje.ViewModels.LocationViewModel;
+import com.example.muestreo_fauna_salvaje.viewModels.LocationViewModel;
 
 public class MenuPrincipal extends Fragment {
 

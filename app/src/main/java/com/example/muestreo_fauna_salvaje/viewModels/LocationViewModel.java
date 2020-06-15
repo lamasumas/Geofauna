@@ -1,4 +1,4 @@
-package com.example.muestreo_fauna_salvaje.ViewModels;
+package com.example.muestreo_fauna_salvaje.viewModels;
 
 import android.Manifest;
 import android.app.Activity;
@@ -13,7 +13,6 @@ import android.provider.Settings;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 

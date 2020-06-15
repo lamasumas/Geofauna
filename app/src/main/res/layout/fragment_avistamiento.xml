@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.Avistamiento">
+    tools:context=".fragments.Avistamiento">
 
 
     <LinearLayout
@@ -145,12 +145,21 @@
 
             <EditText
                 android:id="@+id/etHora"
-                android:layout_width="wrap_content"
+                android:layout_width="275dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="@string/etHora"
                 android:inputType="time" />
+
+            <EditText
+                android:id="@+id/etMinuto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="@string/etMinuto"
+                android:inputType="datetime" />
 
         </LinearLayout>
 
@@ -167,12 +176,30 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <EditText
-                android:id="@+id/etFecha"
+                android:id="@+id/etDia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="@string/etFecha"
+                android:hint="@string/etDia"
+                android:inputType="date" />
+
+            <EditText
+                android:id="@+id/etMes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="@string/etMes"
+                android:inputType="date" />
+
+            <EditText
+                android:id="@+id/etAño"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="@string/etAño"
                 android:inputType="date" />
 
         </LinearLayout>
