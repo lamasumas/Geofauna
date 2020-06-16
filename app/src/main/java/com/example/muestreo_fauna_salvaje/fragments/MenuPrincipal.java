@@ -2,6 +2,8 @@ package com.example.muestreo_fauna_salvaje.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -38,10 +40,13 @@ public class MenuPrincipal extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        View theView = inflater.inflate(R.layout.fragment_menu_principal, container, false);
         iniciarServicioLocalizacion();
-        Button btnAñadir = (Button)theView.findViewById(R.id.btnAñadir);
+        return  inflater.inflate(R.layout.fragment_menu_principal, container, false);
+    }
+
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Button btnAñadir = (Button)view.findViewById(R.id.btnAñadir);
         btnAñadir.setOnClickListener( new View.OnClickListener(){
 
             @Override
@@ -49,13 +54,17 @@ public class MenuPrincipal extends Fragment {
                 Navigation.findNavController(view).navigate(R.id.action_menuPrincipal_to_avistamiento);
             }
         });
-        return theView;
+        ((Button) view.findViewById(R.id.btnResumen)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_menuPrincipal_to_resumen);
+            }
+        });
     }
 
     private void iniciarServicioLocalizacion() {
         LocationViewModel vwLocation = new ViewModelProvider(this).get(LocationViewModel.class);
         vwLocation.inicializar(getContext(),getActivity());
-
     }
 
 }

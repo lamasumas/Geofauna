@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -48,23 +50,26 @@ public class Avistamiento extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        return  inflater.inflate(R.layout.fragment_avistamiento, container, false);
+    }
 
-        final View vAvistamiento = inflater.inflate(R.layout.fragment_avistamiento, container, false);
-        setAutomaticInfo(vAvistamiento);
-        ((Button)vAvistamiento.findViewById(R.id.btnAutocompletar)).setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setAutomaticInfo(view);
+        ((Button)view.findViewById(R.id.btnAutocompletar)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setAutomaticInfo(vAvistamiento);
+                setAutomaticInfo(view);
             }
         });
-        ((Button) vAvistamiento.findViewById(R.id.btnAñadirAvistamiento)).setOnClickListener(new View.OnClickListener() {
+        ((Button) view.findViewById(R.id.btnAñadirAvistamiento)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DBAnimalesLocal dbAnimalesLocal = new DBAnimalesLocal(getContext());
 
             }
         });
-        return vAvistamiento;
     }
 
     private void setAutomaticInfo(View vAvistamiento) {

@@ -21,10 +21,12 @@
     <string name="btnAñadirAvistamiento">Añadir avistamiento</string>
     <string name="tvPais">País:</string>
     <string name="tvLugar">Lugar:</string>
-    <string name= "btnAutocompletar">Autocompletar</string>
+    <string name="btnAutocompletar">Autocompletar</string>
     <string name="etPais">El país</string>
     <string name="etLugar">El lugar</string>
     <string name="alertaGPSMensaje"> No se ha encontrado información GPS. Intentelo más tarde.</string>
     <string name="alertaGPSTitulo">Aviso GPS</string>
     <string name="alertaGPSBoton">Cerrar</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

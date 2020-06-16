@@ -13,10 +13,18 @@
         <action
             android:id="@+id/action_menuPrincipal_to_avistamiento"
             app:destination="@id/avistamiento" />
+        <action
+            android:id="@+id/action_menuPrincipal_to_resumen"
+            app:destination="@id/resumen" />
     </fragment>
     <fragment
         android:id="@+id/avistamiento"
         android:name="com.example.muestreo_fauna_salvaje.fragments.Avistamiento"
         android:label="fragment_avistamiento"
         tools:layout="@layout/fragment_avistamiento" />
+    <fragment
+        android:id="@+id/resumen"
+        android:name="com.example.muestreo_fauna_salvaje.fragments.resumen.Resumen"
+        android:label="fragment_resumen"
+        tools:layout="@layout/fragment_resumen" />
 </navigation>
