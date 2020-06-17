@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Muestreo_Fauna_Salvaje</string>
+    <string name="tituloAplicacion">Muestreo de Fauna Salvaje</string>
+    <string name="btnResumen">Resumen</string>
+    <string name="btnAñadir">Añadir avistamiento</string>
+    <string name="btnEstadisticas">Estadísticas</string>
+    <string name="avistamientoTitulo">Registrar Avistamiento</string>
+    <string name="tvEspecie">Especie:</string>
+    <string name="tvHora">Hora:</string>
+    <string name="tvFecha">Fecha:</string>
+    <string name="tvLatitud">Latitud:</string>
+    <string name="tvLongitud">Longitud:</string>
+    <string name="etEspecie">Escribe la especie</string>
+    <string name="etLongitud">Longitud</string>
+    <string name="etLatitud">Latitud</string>
+    <string name="etHora">Hora</string>
+    <string name="etMinuto">Minuto</string>
+    <string name="etDia">Día</string>
+    <string name="etMes">Mes</string>
+    <string name="etAño">Año</string>
+    <string name="btnAñadirAvistamiento">Añadir avistamiento</string>
+    <string name="tvPais">País:</string>
+    <string name="tvLugar">Lugar:</string>
+    <string name="btnAutocompletar">Autocompletar</string>
+    <string name="etPais">El país</string>
+    <string name="etLugar">El lugar</string>
+    <string name="alertaGPSMensaje"> No se ha encontrado información GPS. Intentelo más tarde.</string>
+    <string name="alertaGPSTitulo">Aviso GPS</string>
+    <string name="alertaGPSBoton">Cerrar</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
