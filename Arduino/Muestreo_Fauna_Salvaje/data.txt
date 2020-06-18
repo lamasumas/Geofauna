@@ -1,0 +1,8 @@
+Usage: pio device [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  -h, --help  Show this message and exit.
+
+Commands:
+  list     List devices
+  monitor  Monitor device (Serial)
