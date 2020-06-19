@@ -5,12 +5,14 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
+import com.example.myapplication.LocationViewModel
 import com.example.myapplication.R
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainFragment : Fragment() {
 
+    val vwlocation = LocationViewModel();
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -38,7 +40,7 @@ class MainFragment : Fragment() {
             MainAdapter(this);
         val botonFlotante = view.findViewById<FloatingActionButton>(R.id.fab);
         botonFlotante.setOnClickListener{ view.findNavController().navigate(MainFragmentDirections.actionMainFragment2ToAvistamiento2())};
-
+        vwlocation.startGettingData()
 
     }
 

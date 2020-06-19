@@ -10,10 +10,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="599c1641-09b8-49fb-83c7-08b8d0bb49aa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/muestreo_fauna_salvaje/MainActivityPageAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/muestreo_fauna_salvaje/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/muestreo_fauna_salvaje/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/muestreo_fauna_salvaje/fragments/resumen/Resumen.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/muestreo_fauna_salvaje/fragments/resumen/Resumen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/muestreo_fauna_salvaje/fragments/resumen/ResumenPageAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/muestreo_fauna_salvaje/fragments/resumen/ResumenPageAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Kotlin/MyApplication/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Kotlin/MyApplication/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../Kotlin/MyApplication/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Kotlin/MyApplication/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Kotlin/MyApplication/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Kotlin/MyApplication/app/src/main/java/com/example/myapplication/LocationViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../Kotlin/MyApplication/app/src/main/java/com/example/myapplication/LocationViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Kotlin/MyApplication/app/src/main/java/com/example/myapplication/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../Kotlin/MyApplication/app/src/main/java/com/example/myapplication/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Kotlin/MyApplication/app/src/main/java/com/example/myapplication/fragments/Avistamiento.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../Kotlin/MyApplication/app/src/main/java/com/example/myapplication/fragments/Avistamiento.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Kotlin/MyApplication/app/src/main/java/com/example/myapplication/fragments/MainFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../Kotlin/MyApplication/app/src/main/java/com/example/myapplication/fragments/MainFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Kotlin/MyApplication/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Kotlin/MyApplication/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,7 +27,7 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_2_API_24" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="9P69YSIF59MJIVYD" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -44,10 +48,10 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectId" id="1dMWL6SSfiKfiMQfhE45zOjiWrg" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -58,6 +62,7 @@
   <component name="PropertiesComponent">
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="9P69YSIF59MJIVYD" />
     <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-06-15T16:12:03.069Z" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Build Variants" />
