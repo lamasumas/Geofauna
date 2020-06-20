@@ -55,4 +55,7 @@ dependencies {
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
     // Location Google API
     implementation 'com.google.android.gms:play-services-location:11.0.2'
+    //RxAndroid
+    implementation 'io.reactivex.rxjava3:rxkotlin:3.0.0'
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
 }

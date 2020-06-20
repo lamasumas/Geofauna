@@ -10,14 +10,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="599c1641-09b8-49fb-83c7-08b8d0bb49aa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../Kotlin/MyApplication/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Kotlin/MyApplication/app/src/main/java/com/example/myapplication/LocationManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Arduino/Muestreo_Fauna_Salvaje/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Arduino/Muestreo_Fauna_Salvaje/src/main.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Kotlin/MyApplication/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../Kotlin/MyApplication/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Kotlin/MyApplication/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Kotlin/MyApplication/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Kotlin/MyApplication/app/src/main/java/com/example/myapplication/LocationViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../Kotlin/MyApplication/app/src/main/java/com/example/myapplication/LocationViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Kotlin/MyApplication/app/src/main/java/com/example/myapplication/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../Kotlin/MyApplication/app/src/main/java/com/example/myapplication/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Kotlin/MyApplication/app/src/main/java/com/example/myapplication/LocationViewModel.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Kotlin/MyApplication/app/src/main/java/com/example/myapplication/fragments/Avistamiento.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../Kotlin/MyApplication/app/src/main/java/com/example/myapplication/fragments/Avistamiento.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Kotlin/MyApplication/app/src/main/java/com/example/myapplication/fragments/MainFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../Kotlin/MyApplication/app/src/main/java/com/example/myapplication/fragments/MainFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Kotlin/MyApplication/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Kotlin/MyApplication/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +62,7 @@
     <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-06-15T16:12:03.069Z" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Kotlin/MyApplication" />
     <property name="project.structure.last.edited" value="Build Variants" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -166,6 +164,10 @@
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state x="38" y="-22" width="862" height="1073" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1592411909580" />
+    <state x="742" y="253" width="426" height="477" key="FileChooserDialogImpl" timestamp="1592673810599">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state x="742" y="253" width="426" height="477" key="FileChooserDialogImpl/1920.0.1920.1080/0.0.1920.1080@0.0.1920.1080" timestamp="1592673810599" />
     <state width="1874" height="296" key="GridCell.Tab.0.bottom" timestamp="1592415651949">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>

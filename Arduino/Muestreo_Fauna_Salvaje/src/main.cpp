@@ -77,5 +77,6 @@ void loop() {
 	Serial.println();
 	delay(5000);
   */
+ Serial.println("Works new rule in udev");
 
 }
