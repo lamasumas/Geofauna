@@ -6,6 +6,7 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.0"
 
+
     defaultConfig {
         applicationId "com.example.myapplication"
         minSdkVersion 24
@@ -58,4 +59,6 @@ dependencies {
     //RxAndroid
     implementation 'io.reactivex.rxjava3:rxkotlin:3.0.0'
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    // Library to handle RxAndroid ui
+    implementation 'com.jakewharton.rxbinding2:rxbinding-kotlin:2.0.0'
 }

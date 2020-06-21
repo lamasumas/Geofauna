@@ -144,7 +144,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <EditText
-                android:id="@+id/etHora"
+                android:id="@+id/etHour"
                 android:layout_width="275dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -153,7 +153,7 @@
                 android:inputType="time" />
 
             <EditText
-                android:id="@+id/etMinuto"
+                android:id="@+id/etMinute"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -176,7 +176,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <EditText
-                android:id="@+id/etDia"
+                android:id="@+id/etDay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -185,7 +185,7 @@
                 android:inputType="date" />
 
             <EditText
-                android:id="@+id/etMes"
+                android:id="@+id/etMonth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -194,7 +194,7 @@
                 android:inputType="date" />
 
             <EditText
-                android:id="@+id/etAño"
+                android:id="@+id/etYear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

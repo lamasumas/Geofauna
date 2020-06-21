@@ -9,6 +9,8 @@ import com.example.myapplication.LocationManager
 import com.example.myapplication.R
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.jakewharton.rxbinding2.view.RxView
+import com.jakewharton.rxbinding2.view.clicks
 
 class MainFragment : Fragment() {
 
@@ -37,8 +39,12 @@ class MainFragment : Fragment() {
         val viewpager = view.findViewById<ViewPager2>(R.id.vpMain);
         viewpager.adapter =
             MainAdapter(this);
-        val botonFlotante = view.findViewById<FloatingActionButton>(R.id.fab);
-        botonFlotante.setOnClickListener{ view.findNavController().navigate(MainFragmentDirections.actionMainFragment2ToAvistamiento2())};
+
+        view.findViewById<FloatingActionButton>(R.id.fab).clicks()
+                .subscribe {
+                    onNext ->  view.findNavController().navigate(MainFragmentDirections.actionMainFragment2ToAvistamiento2())
+                };
+
 
 
     }
