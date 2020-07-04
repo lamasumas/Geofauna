@@ -2,6 +2,7 @@ package com.example.myapplication.fragments
 
 import android.location.Geocoder
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,9 @@ import android.widget.EditText
 import com.example.myapplication.LocationManager
 import com.example.myapplication.R
 import io.reactivex.rxjava3.disposables.Disposable
+import java.io.IOException
+import java.lang.Error
+import java.lang.Exception
 import java.util.*
 
 class Avistamiento : Fragment() {
@@ -45,10 +49,15 @@ class Avistamiento : Fragment() {
                 onNext->  run  {
             view.findViewById<EditText>(R.id.etLatitud).setText(onNext.latitude.toString());
             view.findViewById<EditText>(R.id.etLongitud).setText( onNext.longitude.toString());
-             geocoder.getFromLocation(onNext.latitude, onNext.longitude,3).forEach{
-                     address -> view.findViewById<EditText>(R.id.etLugar).setText(address.adminArea);
-                                view.findViewById<EditText>(R.id.etPais).setText(address.countryName)}
+             try {
+                 geocoder.getFromLocation(onNext.latitude, onNext.longitude, 3).forEach { address ->
+                     view.findViewById<EditText>(R.id.etLugar).setText(address.adminArea);
+                     view.findViewById<EditText>(R.id.etPais).setText(address.countryName)
+                 }
+             }catch (e: Exception){
+                    Log.e("Geocoder", "Geocoder didn't found anything");
 
+             }
         }
         }
 
