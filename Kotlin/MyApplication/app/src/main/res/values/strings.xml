@@ -29,6 +29,12 @@
     <string name="cerrarAlertBoton">Cerrar</string>
     <string name="permisosDenegadosTitulo">Permisos revocados</string>
     <string name="permisosDenegadosDescripcion">Esta aplicación necesita permisos de ubicación para así acceder al gps, en caso de que sea necesario</string>
+    <string name="tvEspecieTitulo">Especie</string>
+    <string name="tvLongitudTitulo">Longitud</string>
+    <string name="tvLatitudTitulo">Latitud</string>
+    <string name="tvHoraTitulo">Hora</string>
+    <string name="tvDiaTitulo">Día</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

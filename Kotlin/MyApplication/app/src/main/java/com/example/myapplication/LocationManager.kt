@@ -16,9 +16,9 @@ object LocationManager {
 
 
 
-    fun getLocationObservable(context: Context): Observable<Location>?{
+    fun getLocationObservable(context: Context): Observable<Location>{
         if(locationObservable!=null)
-            return locationObservable;
+            return locationObservable!!;
         else {
             locationObservable = Observable.create { emitter ->
                 if (!isThereArduino) {
@@ -46,7 +46,7 @@ object LocationManager {
 
                 }
             };
-            return locationObservable;
+            return locationObservable!!;
         }
 
     }
