@@ -14,7 +14,7 @@
     </fragment>
     <fragment
         android:id="@+id/avistamiento2"
-        android:name="com.example.myapplication.fragments.Avistamiento"
+        android:name="com.example.myapplication.fragments.AvistamientoFragment"
         android:label="fragment_avistamiento"
         tools:layout="@layout/fragment_avistamiento" >
         <action

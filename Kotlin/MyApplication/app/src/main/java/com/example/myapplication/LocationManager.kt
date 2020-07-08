@@ -7,7 +7,7 @@ import android.location.Location
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.location.*
-import io.reactivex.rxjava3.core.Observable
+import io.reactivex.Observable
 
 @SuppressLint("MissingPermission")
 object LocationManager {
@@ -18,6 +18,7 @@ object LocationManager {
 
     fun getLocationObservable(context: Context): Observable<Location>{
         if(locationObservable!=null)
+
             return locationObservable!!;
         else {
             locationObservable = Observable.create { emitter ->

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.MenuPrincipal">
+    tools:context=".fragments.MenuPrincipalFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,31 +20,31 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/etEspecie"
+                    android:id="@+id/etEspecieTitulo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/tvEspecieTitulo" />
 
                 <TextView
-                    android:id="@+id/tvLatitude"
+                    android:id="@+id/tvLatitudeTitulo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/tvLatitudTitulo" />
 
                 <TextView
-                    android:id="@+id/tvLongitude"
+                    android:id="@+id/tvLongitudeTitulo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/tvLongitudTitulo" />
 
                 <TextView
-                    android:id="@+id/tvDate"
+                    android:id="@+id/tvDateTitulo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/tvDiaTitulo" />
 
                 <TextView
-                    android:id="@+id/tvTime"
+                    android:id="@+id/tvTimeTitulo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/tvHoraTitulo" />

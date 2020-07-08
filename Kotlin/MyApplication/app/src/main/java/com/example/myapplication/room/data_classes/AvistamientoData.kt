@@ -1,10 +1,10 @@
-package com.example.myapplication.data_classes
+package com.example.myapplication.room.data_classes
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "animals")
 data class AvistamientoData(@PrimaryKey(autoGenerate = true) var uid:Int = 0,
                             @ColumnInfo(name = "specie") val especie: String,
                             @ColumnInfo(name = "longitude") val longitude: Double,
