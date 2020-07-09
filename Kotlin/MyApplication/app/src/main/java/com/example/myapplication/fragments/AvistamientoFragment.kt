@@ -15,9 +15,11 @@ import com.example.myapplication.LocationManager
 import com.example.myapplication.R
 import com.example.myapplication.room.data_classes.AvistamientoData
 import com.example.myapplication.room.DatabaseRepository
-import com.example.myapplication.viewmodels.DatabaseViewModel
 import com.jakewharton.rxbinding2.view.clicks
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import java.lang.Exception
 import java.util.*
 
@@ -50,25 +52,30 @@ class AvistamientoFragment : Fragment() {
         view.findViewById<EditText>(R.id.etDay).setText(calendar.get(Calendar.DATE).toString())
         view.findViewById<EditText>(R.id.etMonth).setText(calendar.get(Calendar.MONTH).toString())
         view.findViewById<EditText>(R.id.etYear).setText(calendar.get(Calendar.YEAR).toString())
+        data class  MylocationObject(var longitude:Double, var latitude:Double, var country: String, var place:String);
 
-        disposable = LocationManager.getLocationObservable(view.context).subscribe {
-            onNext ->
-            run {
-                view.findViewById<EditText>(R.id.etLatitud).setText(onNext.latitude.toString());
-                view.findViewById<EditText>(R.id.etLongitud).setText(onNext.longitude.toString());
-                try {
-                    geocoder.getFromLocation(onNext.latitude, onNext.longitude, 3).forEach { address ->
-                        view.findViewById<EditText>(R.id.etLugar).setText(address.adminArea);
-                        view.findViewById<EditText>(R.id.etPais).setText(address.countryName)
-                    }
-                } catch (e: Exception) {
-                    Log.e("Geocoder", "Geocoder didn't found anything");
-
+        disposable = LocationManager.getLocationObservable(view.context).observeOn(Schedulers.io()).flatMap {
+            val mylocationObject = MylocationObject(it.longitude, it.latitude, "Not Found", "Not Found")
+            try {
+                geocoder.getFromLocation(it.latitude, it.longitude, 3).forEach { address ->
+                    mylocationObject.country = address.countryName;
+                    mylocationObject.place = address.adminArea;
                 }
+            } catch (e: Exception) {
+                    //Log.e("Geocoder", "Geocoder didn't found anything");
             }
-        }
+            return@flatMap Observable.just(mylocationObject)
 
-        view.findViewById<Button>(R.id.btnAñadirAvistamiento).clicks().subscribe { onNext ->
+            }.observeOn(AndroidSchedulers.mainThread()).subscribe {
+                view.findViewById<EditText>(R.id.etLatitud).setText(it.latitude.toString());
+                view.findViewById<EditText>(R.id.etLongitud).setText(it.longitude.toString());
+                view.findViewById<EditText>(R.id.etLugar).setText(it.place);
+                view.findViewById<EditText>(R.id.etPais).setText(it.country)
+            }
+
+
+
+        view.findViewById<Button>(R.id.btnAñadirAvistamiento).clicks().subscribe {
             val newDatabaseEntry = createAvistamientoObject(view)
             val databaseRepository =  DatabaseRepository(view.context);
             databaseRepository.insertNewAnimalToDB(newDatabaseEntry)

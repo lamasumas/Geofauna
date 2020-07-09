@@ -33,9 +33,9 @@ object LocationManager {
                         override fun onLocationResult(locationResult: LocationResult?) {
                             super.onLocationResult(locationResult)
                             if (locationResult != null) {
-                                for (locaiton: Location in locationResult.locations) {
-                                    if (locaiton != null) {
-                                        emitter.onNext(locaiton);
+                                for (location: Location in locationResult.locations) {
+                                    if (location != null) {
+                                        emitter.onNext(location);
                                     }
                                 }
                             }

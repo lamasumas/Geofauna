@@ -40,9 +40,7 @@ class MainFragment : Fragment() {
                 MainAdapter(this);
 
         view.findViewById<FloatingActionButton>(R.id.fab).clicks()
-                .subscribe {
-                    onNext ->  view.findNavController().navigate(MainFragmentDirections.actionMainFragment2ToAvistamiento2())
-                };
+                .subscribe {view.findNavController().navigate(MainFragmentDirections.actionMainFragment2ToAvistamiento2())};
 
 
 
