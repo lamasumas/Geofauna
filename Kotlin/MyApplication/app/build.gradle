@@ -92,4 +92,6 @@ dependencies {
     // Library to handle RxAndroid ui
     implementation 'com.jakewharton.rxbinding2:rxbinding-kotlin:2.0.0'
 
+    //Recyclerview
+    implementation "androidx.recyclerview:recyclerview-selection:1.1.0-rc01"
 }

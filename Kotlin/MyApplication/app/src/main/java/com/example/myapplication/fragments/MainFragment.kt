@@ -5,7 +5,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
-import com.example.myapplication.MainAdapter
+import com.example.myapplication.adapters.MainAdapter
 import com.example.myapplication.R
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton

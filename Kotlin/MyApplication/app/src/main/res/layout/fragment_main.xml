@@ -25,7 +25,8 @@
         app:backgroundTint="@color/design_default_color_primary_dark"
         app:fabAlignmentMode="center"
         android:id="@+id/bar"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:menu="@menu/menu_bb"/>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,7 +34,7 @@
         app:elevation="0dp"
         app:layout_anchor="@id/bar"
         app:backgroundTint="@color/design_default_color_primary_dark"
-        android:src="@drawable/add"
+        android:src="@drawable/add_icon"
         />
 
 
