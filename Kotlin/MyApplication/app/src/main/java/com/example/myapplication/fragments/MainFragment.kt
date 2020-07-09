@@ -5,11 +5,10 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
-import com.example.myapplication.LocationManager
+import com.example.myapplication.MainAdapter
 import com.example.myapplication.R
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.jakewharton.rxbinding2.view.RxView
 import com.jakewharton.rxbinding2.view.clicks
 
 class MainFragment : Fragment() {
@@ -38,7 +37,7 @@ class MainFragment : Fragment() {
         val bar = view.findViewById<BottomAppBar>(R.id.bar);
         val viewpager = view.findViewById<ViewPager2>(R.id.vpMain);
         viewpager.adapter =
-            MainAdapter(this);
+                MainAdapter(this);
 
         view.findViewById<FloatingActionButton>(R.id.fab).clicks()
                 .subscribe {

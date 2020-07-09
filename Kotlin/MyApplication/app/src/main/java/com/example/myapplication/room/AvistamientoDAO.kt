@@ -19,6 +19,6 @@ interface AvistamientoDAO{
     fun insertAvistamiento(vararg avistamiento: AvistamientoData): Completable
 
     @Query("SELECT * FROM animals")
-    fun getAlllAvistamiento(): LiveData<List<AvistamientoData>>
+    fun getAlllAvistamiento(): Observable<List<AvistamientoData>>
 
 }

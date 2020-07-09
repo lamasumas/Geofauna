@@ -1,10 +1,9 @@
 #include <Arduino.h>
-#include <Wire.h>
-#include <SPI.h>
 #include <TinyGPS++.h>
 #include <SoftwareSerial.h>
 #include <Adafruit_BME280.h>
 #include <Adafruit_Sensor.h>
+
 
 
 //Definicion de pines
@@ -42,7 +41,7 @@ void setup() {
   
 }
 
-    i
+
 void loop() {
  //GPS
  /*
@@ -84,10 +83,10 @@ void loop() {
 	Serial.println();
 
   */
+ 
  // UV
-
-  Serial.println(UVIndex());
-  delay(1000);
+//Serial.println(UVIndex());
+  
 
 
   delay(5000);
@@ -98,7 +97,12 @@ void loop() {
 
 
 
-
+/**
+ * 
+ * Code from chansheunglong
+ * https://github.com/chansheunglong/GUVA-S12SD-lib/blob/master/GUVA_S12SD/GUVA_S12SD.h
+ * 
+ * */
 int UVIndex() {
       int s12sd_sensorVoltage = analogRead(A0) ;
       Serial.print("test: " );

@@ -1,6 +1,7 @@
 package com.example.myapplication.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
@@ -10,6 +11,7 @@ import com.example.myapplication.room.data_classes.AvistamientoData
 import com.example.myapplication.room.DatabaseRepository
 import com.example.myapplication.viewmodels.DatabaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class MenuPrincipalFragment : Fragment() {
 
@@ -29,32 +31,9 @@ class MenuPrincipalFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val vmDatabase = ViewModelProviders.of(this).get(DatabaseViewModel::class.java);
-        val databaseRepository = DatabaseRepository(view.context)
-        databaseRepository.retrieveSightsings()/*.subscribe{
-            onNext -> generateTable(view, onNext)
-        }*/
-    }
-
-    private fun generateTable(view:View, animal: AvistamientoData) {
-        val table = view.findViewById<TableLayout>(R.id.tableSeen);
-        fun createTextView(text:String):TextView{
-            var newTextView = TextView(context);
-            newTextView.text = text;
-            return  newTextView;
-        }
-
-            val newRow = TableRow(context);
-            newRow.addView(createTextView(animal.especie));
-            newRow.addView(createTextView(animal.latitude.toString()));
-            newRow.addView(createTextView(animal.longitude.toString()));
-            newRow.addView(createTextView(animal.date));
-            newRow.addView(createTextView(animal.time));
-        table.addView(newRow)
-
-
 
     }
+
 
 
 }
