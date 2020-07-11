@@ -7,13 +7,12 @@ import com.example.myapplication.fragments.MenuPrincipalFragment
 
 class MainAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int {
-        return 2;
+        return 1;
     }
 
     override fun createFragment(position: Int): Fragment {
         when(position) {
-            0 -> return MenuPrincipalFragment();
-            1 -> return DatabaseViewFragment();
+            0 -> return DatabaseViewFragment();
             else -> return MenuPrincipalFragment();
         }
     }

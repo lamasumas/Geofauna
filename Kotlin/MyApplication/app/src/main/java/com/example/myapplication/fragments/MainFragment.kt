@@ -2,6 +2,8 @@ package com.example.myapplication.fragments
 
 import android.os.Bundle
 import android.view.*
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
@@ -34,11 +36,10 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val bar = view.findViewById<BottomAppBar>(R.id.bar);
-        val viewpager = view.findViewById<ViewPager2>(R.id.vpMain);
+
+        val viewpager = view.findViewById<ViewPager2>(R.id.vpMain)
         viewpager.adapter =
                 MainAdapter(this);
-
         view.findViewById<FloatingActionButton>(R.id.fab).clicks()
                 .subscribe {view.findNavController().navigate(MainFragmentDirections.actionMainFragment2ToAvistamiento2())};
 

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
@@ -38,45 +39,14 @@ class DatabaseViewFragment : Fragment() {
         val recyclerView = view.findViewById<RecyclerView>(R.id.rvDatabase).apply {
             setHasFixedSize(true)
             layoutManager = viewManager
-            db.retrieveSightsings().subscribeOn(Schedulers.io()).subscribe{
+            db.retrieveSightsings().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe{
                 adapter= DatabaseRvAdapter(it)
+                visibility =  View.VISIBLE
+                view.findViewById<ProgressBar>(R.id.databaseMiddleware).visibility = View.GONE
             }
-
             }
-
-
-
-
-
-
-        val databaseRepository = DatabaseRepository(view.context)
-        databaseRepository.retrieveSightsings().subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe {
-                    onNext -> generateTable(view, onNext)
-                }
 
     }
 
-    private fun generateTable(view:View, animals: List<AvistamientoData>) {
-        val table = view.findViewById<TableLayout>(R.id.tableSeen);
-        fun createTextView(text: String): TextView {
-            var newTextView = TextView(context);
-            newTextView.text = text;
-            return newTextView;
-        }
 
-        animals.forEach { animal ->
-            run {
-                val newRow = TableRow(context);
-                newRow.addView(createTextView(animal.especie));
-                newRow.addView(createTextView(animal.latitude.toString()));
-                newRow.addView(createTextView(animal.longitude.toString()));
-                newRow.addView(createTextView(animal.date));
-                newRow.addView(createTextView(animal.time));
-                table.addView(newRow)
-            }
-
-
-        }
-    }
 }

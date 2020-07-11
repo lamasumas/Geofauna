@@ -9,6 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <ProgressBar
+            android:id="@+id/databaseMiddleware"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvDatabase"
             android:layout_width="match_parent"
@@ -21,49 +28,6 @@
         </androidx.recyclerview.widget.RecyclerView>
 
 
-
-
-        <TableLayout
-            android:id="@+id/tableSeen"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/etEspecieTitulo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tvEspecieTitulo" />
-
-                <TextView
-                    android:id="@+id/tvLatitudeTitulo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tvLatitudTitulo" />
-
-                <TextView
-                    android:id="@+id/tvLongitudeTitulo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tvLongitudTitulo" />
-
-                <TextView
-                    android:id="@+id/tvDateTitulo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tvDiaTitulo" />
-
-                <TextView
-                    android:id="@+id/tvTimeTitulo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tvHoraTitulo" />
-
-            </TableRow>
-        </TableLayout>
     </LinearLayout>
 
 </FrameLayout>

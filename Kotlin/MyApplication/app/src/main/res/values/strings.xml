@@ -37,7 +37,6 @@
     <string name="bluetoothMenu">Bluetooth </string>
     <string name="languageMenu">Lenguaje</string>
     <string name="aboutMenu">Saber mas</string>
-
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
