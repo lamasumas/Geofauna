@@ -11,10 +11,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
+import com.example.myapplication.adapters.DatabaseRvAdapter
 import com.example.myapplication.room.DatabaseRepository
 import com.example.myapplication.room.data_classes.AvistamientoData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_database_view.*
 
 
 class DatabaseViewFragment : Fragment() {
@@ -31,12 +33,17 @@ class DatabaseViewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val db = DatabaseRepository(view.context);
         val viewManager = LinearLayoutManager(view.context);
         val recyclerView = view.findViewById<RecyclerView>(R.id.rvDatabase).apply {
             setHasFixedSize(true)
-            layoutManager = viewManager}
-       // val viewAdapter
+            layoutManager = viewManager
+            db.retrieveSightsings().subscribeOn(Schedulers.io()).subscribe{
+                adapter= DatabaseRvAdapter(it)
+            }
+
+            }
+
 
 
 
