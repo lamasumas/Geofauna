@@ -19,6 +19,20 @@
         tools:layout="@layout/fragment_avistamiento" >
         <action
             android:id="@+id/action_avistamiento2_to_mainFragment2"
-            app:destination="@id/mainFragment2" />
+            app:destination="@id/mainFragment2"
+            app:enterAnim="@anim/nav_default_enter_anim" />
+        <action
+            android:id="@+id/action_avistamiento2_to_databaseViewFragment"
+            app:destination="@id/databaseViewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/databaseViewFragment"
+        android:name="com.example.myapplication.fragments.DatabaseViewFragment"
+        android:label="fragment_database_view"
+        tools:layout="@layout/fragment_database_view" >
+        <action
+            android:id="@+id/action_databaseViewFragment_to_avistamiento2"
+            app:destination="@id/avistamiento2" />
+        <argument android:name="idAnimal" />
     </fragment>
 </navigation>

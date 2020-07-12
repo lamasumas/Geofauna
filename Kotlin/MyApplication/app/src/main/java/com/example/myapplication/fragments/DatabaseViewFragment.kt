@@ -43,6 +43,7 @@ class DatabaseViewFragment : Fragment() {
                 adapter= DatabaseRvAdapter(it)
                 visibility =  View.VISIBLE
                 view.findViewById<ProgressBar>(R.id.databaseMiddleware).visibility = View.GONE
+
             }
             }
 
