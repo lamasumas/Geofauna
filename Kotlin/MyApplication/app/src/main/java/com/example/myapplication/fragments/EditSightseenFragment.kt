@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.myapplication.R
 import com.example.myapplication.room.DatabaseRepository
@@ -51,7 +52,7 @@ class EditSightseen : Fragment() {
         }
         view.findViewById<Button>(R.id.btnEditDatabaseAnimal).clicks().subscribe {
             dbRepository.updateAnimal(generateAnimal(view, uid))
-            Toast.makeText(view.context, "Animal editado", Toast.LENGTH_LONG).show()
+            view.findNavController().navigate(EditSightseenDirections.actionEditSightseenToMainFragment2())
         }
     }
 

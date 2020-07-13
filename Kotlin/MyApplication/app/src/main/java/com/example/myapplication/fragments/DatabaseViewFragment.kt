@@ -15,9 +15,11 @@ import com.example.myapplication.R
 import com.example.myapplication.adapters.DatabaseRvAdapter
 import com.example.myapplication.room.DatabaseRepository
 import com.example.myapplication.room.data_classes.AvistamientoData
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_database_view.*
+import java.util.*
 
 
 class DatabaseViewFragment : Fragment() {
@@ -34,12 +36,14 @@ class DatabaseViewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val db = DatabaseRepository(view.context);
         val viewManager = LinearLayoutManager(view.context);
+
         val recyclerView = view.findViewById<RecyclerView>(R.id.rvDatabase).apply {
             setHasFixedSize(true)
             layoutManager = viewManager
-            db.retrieveSightsings().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe{
+            Observable.just(DatabaseRepository(view.context)).observeOn(Schedulers.io()).flatMap {
+                return@flatMap it.retrieveSightsings()
+            }.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe{
                 adapter= DatabaseRvAdapter(it)
                 visibility =  View.VISIBLE
                 view.findViewById<ProgressBar>(R.id.databaseMiddleware).visibility = View.GONE

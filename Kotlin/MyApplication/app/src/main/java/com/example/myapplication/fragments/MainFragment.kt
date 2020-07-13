@@ -36,12 +36,15 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val viewpager = view.findViewById<ViewPager2>(R.id.vpMain)
-        viewpager.adapter =
-                MainAdapter(this);
         view.findViewById<FloatingActionButton>(R.id.fab).clicks()
-                .subscribe {view.findNavController().navigate(MainFragmentDirections.actionMainFragment2ToAvistamiento2())};
+                .subscribe {
+                    val navController = view.findNavController()
+                    if(navController.currentDestination?.id == R.id.mainFragment2)
+                        navController.navigate( MainFragmentDirections.actionMainFragment2ToAvistamiento2())
+                };
+        val viewpager = view.findViewById<ViewPager2>(R.id.vpMain)
+        viewpager.adapter = MainAdapter(this);
+
 
 
 
