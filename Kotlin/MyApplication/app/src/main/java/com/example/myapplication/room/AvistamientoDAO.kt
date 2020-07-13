@@ -1,10 +1,7 @@
 package com.example.myapplication.room
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.myapplication.room.data_classes.AvistamientoData
 import io.reactivex.Completable
 import io.reactivex.Flowable
@@ -20,5 +17,12 @@ interface AvistamientoDAO{
 
     @Query("SELECT * FROM animals")
     fun getAlllAvistamiento(): Observable<List<AvistamientoData>>
+
+    @Query("SELECT * FROM animals WHERE uid=:uid")
+    fun getAvistamientoById(vararg uid:Int): Observable<AvistamientoData>
+
+    @Update
+    fun updateAvistamiento(vararg avistamientoData: AvistamientoData):Completable
+
 
 }

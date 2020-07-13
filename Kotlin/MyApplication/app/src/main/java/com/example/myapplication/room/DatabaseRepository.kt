@@ -25,4 +25,13 @@ class DatabaseRepository(context: Context){
         return db.avistamientoDao().getAlllAvistamiento()
     }
 
+    fun retrieveAnimal(uid:Int):Observable<AvistamientoData>{
+        return db.avistamientoDao().getAvistamientoById(uid)
+    }
+
+    fun updateAnimal(animal: AvistamientoData){
+        db.avistamientoDao().updateAvistamiento(animal).subscribeOn(Schedulers.io()).subscribe({
+            Log.e("Database repository", "Anmimal updated")})
+    }
+
 }

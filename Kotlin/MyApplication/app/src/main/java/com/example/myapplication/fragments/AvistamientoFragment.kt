@@ -79,7 +79,7 @@ class AvistamientoFragment : Fragment() {
             val newDatabaseEntry = createAvistamientoObject(view)
             val databaseRepository =  DatabaseRepository(view.context);
             databaseRepository.insertNewAnimalToDB(newDatabaseEntry)
-            Toast.makeText(view.context, "Animal added", Toast.LENGTH_LONG).show();
+            Toast.makeText(view.context, "Animal añadido", Toast.LENGTH_LONG).show();
         }
     }
 

@@ -13,17 +13,12 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="487" />
-                            <option name="y" value="-219" />
+                            <option name="x" value="464" />
+                            <option name="y" value="-312" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_avistamiento2_to_databaseViewFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
                             <entry key="action_avistamiento2_to_mainFragment2">
                               <value>
                                 <LayoutPositions />
@@ -34,18 +29,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="databaseViewFragment">
+                  <entry key="editSightseen">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="823" />
-                            <option name="y" value="-265" />
+                            <option name="x" value="832" />
+                            <option name="y" value="-97" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_databaseViewFragment_to_avistamiento2">
+                            <entry key="action_editSightseen_to_mainFragment2">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -60,13 +55,18 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="256" />
-                            <option name="y" value="12" />
+                            <option name="x" value="143" />
+                            <option name="y" value="-241" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_mainFragment2_to_avistamiento2">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_mainFragment2_to_editSightseen">
                               <value>
                                 <LayoutPositions />
                               </value>

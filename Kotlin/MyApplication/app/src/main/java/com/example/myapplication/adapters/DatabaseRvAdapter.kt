@@ -6,12 +6,15 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.AnimalViewHolder
 import com.example.myapplication.R
 import com.example.myapplication.fragments.DatabaseViewFragment
-import com.example.myapplication.fragments.DatabaseViewFragmentDirections
+import com.example.myapplication.fragments.EditSightseenDirections
+import com.example.myapplication.fragments.MainFragment
+import com.example.myapplication.fragments.MainFragmentDirections
 import com.example.myapplication.room.data_classes.AvistamientoData
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -41,8 +44,7 @@ class DatabaseRvAdapter(val elements:List<AvistamientoData>): RecyclerView.Adapt
             holder.hiddenViews.visibility = if(holder.hiddenViews.isShown()) View.GONE else View.VISIBLE
         }
        holder.btnEdit.clicks().observeOn(AndroidSchedulers.mainThread()).subscribe{
-
-           holder.btnEdit.findNavController().navigate(DatabaseViewFragmentDirections.actionDatabaseViewFragmentToAvistamiento2())
+           holder.btnEdit.findNavController().navigate(MainFragmentDirections.actionMainFragment2ToEditSightseen( holder.uid))
         }
 
 
