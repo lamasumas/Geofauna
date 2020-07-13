@@ -19,7 +19,7 @@ class AnimalViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     var uid : Int
     var hiddenViews: LinearLayout
     var btnEdit: Button
-
+    var btnDelete : Button
     init {
         cv = itemView.findViewById(R.id.cvAnimalScheme)
         species = itemView.findViewById(R.id.tvCvSpecies)
@@ -31,7 +31,7 @@ class AnimalViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         lat = itemView.findViewById(R.id.tvCvLatitude)
         hiddenViews = itemView.findViewById(R.id.hidenCardText)
         btnEdit = itemView.findViewById(R.id.btnEditSightseen)
-
+        btnDelete = itemView.findViewById(R.id.btnDeleteSightseen)
         uid = 0
     }
 

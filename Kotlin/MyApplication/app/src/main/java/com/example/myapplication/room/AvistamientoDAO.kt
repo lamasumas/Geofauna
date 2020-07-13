@@ -24,5 +24,8 @@ interface AvistamientoDAO{
     @Update
     fun updateAvistamiento(vararg avistamientoData: AvistamientoData):Completable
 
+    @Delete
+    fun deleteAvistamiento(vararg avistamientoData: AvistamientoData):Completable
+
 
 }

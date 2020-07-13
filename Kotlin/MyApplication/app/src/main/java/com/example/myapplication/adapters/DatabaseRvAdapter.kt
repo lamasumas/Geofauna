@@ -15,9 +15,14 @@ import com.example.myapplication.fragments.DatabaseViewFragment
 import com.example.myapplication.fragments.EditSightseenDirections
 import com.example.myapplication.fragments.MainFragment
 import com.example.myapplication.fragments.MainFragmentDirections
+import com.example.myapplication.room.DatabaseRepository
 import com.example.myapplication.room.data_classes.AvistamientoData
 import com.jakewharton.rxbinding2.view.clicks
+import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import java.util.*
 
 class DatabaseRvAdapter(val elements:List<AvistamientoData>): RecyclerView.Adapter<AnimalViewHolder>() {
 
@@ -39,12 +44,20 @@ class DatabaseRvAdapter(val elements:List<AvistamientoData>): RecyclerView.Adapt
         holder.time.text = elements[position].time
         holder.date.text = elements[position].date
         holder.uid = elements[position].uid
-        holder.cv.clicks().subscribe{
-
-            holder.hiddenViews.visibility = if(holder.hiddenViews.isShown()) View.GONE else View.VISIBLE
+        holder.cv.clicks().subscribe {
+            holder.hiddenViews.visibility = if (holder.hiddenViews.isShown()) View.GONE else View.VISIBLE
         }
-       holder.btnEdit.clicks().observeOn(AndroidSchedulers.mainThread()).subscribe{
-           holder.btnEdit.findNavController().navigate(MainFragmentDirections.actionMainFragment2ToEditSightseen( holder.uid))
+
+        holder.btnEdit.clicks().observeOn(AndroidSchedulers.mainThread()).subscribe {
+            holder.btnEdit.findNavController().navigate(MainFragmentDirections.actionMainFragment2ToEditSightseen(holder.uid))
+        }
+
+        holder.btnDelete.clicks().observeOn(AndroidSchedulers.mainThread()).doOnNext{
+            holder.cv.removeAllViews()
+    }.observeOn(Schedulers.io()).subscribe {
+            val dbRepository = DatabaseRepository(holder.cv.context)
+            dbRepository.deleteAnimal(elements[position])
+
         }
 
 

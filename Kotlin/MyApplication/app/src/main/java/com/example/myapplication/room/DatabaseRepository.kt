@@ -16,8 +16,8 @@ class DatabaseRepository(context: Context){
     val db =  Room.databaseBuilder(context, AppDatabase::class.java, "application_db").build();
 
     fun insertNewAnimalToDB(animal: AvistamientoData) {
-        db.avistamientoDao().insertAvistamiento(animal).subscribeOn(Schedulers.io()).subscribe({
-            Log.e("Database repository", "Animnal added")})
+        db.avistamientoDao().insertAvistamiento(animal).subscribeOn(Schedulers.io()).subscribe{
+            Log.e("Database repository", "Animnal added")}
     }
 
 
@@ -30,8 +30,13 @@ class DatabaseRepository(context: Context){
     }
 
     fun updateAnimal(animal: AvistamientoData){
-        db.avistamientoDao().updateAvistamiento(animal).subscribeOn(Schedulers.io()).subscribe({
-            Log.e("Database repository", "Anmimal updated")})
+        db.avistamientoDao().updateAvistamiento(animal).subscribeOn(Schedulers.io()).subscribe{
+            Log.e("Database repository", "Anmimal updated")}
+    }
+    fun deleteAnimal(animal:AvistamientoData){
+        db.avistamientoDao().deleteAvistamiento(animal).subscribe {
+            Log.e("Database repository", "Animnal deleted")
+        }
     }
 
 }

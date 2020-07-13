@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import com.example.myapplication.LocationManager
 import com.example.myapplication.R
 import com.example.myapplication.room.data_classes.AvistamientoData
@@ -79,7 +80,7 @@ class AvistamientoFragment : Fragment() {
             val newDatabaseEntry = createAvistamientoObject(view)
             val databaseRepository =  DatabaseRepository(view.context);
             databaseRepository.insertNewAnimalToDB(newDatabaseEntry)
-            Toast.makeText(view.context, "Animal añadido", Toast.LENGTH_LONG).show();
+            view.findNavController().navigate(AvistamientoFragmentDirections.actionAvistamiento2ToMainFragment2())
         }
     }
 
