@@ -97,4 +97,7 @@ dependencies {
 
     //Cardivew
     implementation "androidx.cardview:cardview:1.0.0"
+
+    //RxBluetooth
+    implementation "com.polidea.rxandroidble2:rxandroidble:1.11.1"
 }

@@ -1,5 +1,7 @@
 package com.example.myapplication
 
+import android.app.Activity
+import android.bluetooth.BluetoothAdapter
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -14,17 +16,21 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import com.example.myapplication.bluetooth.BluetoothManager
 import com.google.android.material.bottomappbar.BottomAppBar
 import java.util.jar.Manifest
 
 class MainActivity : AppCompatActivity() {
     companion object{
-        const val GPS_PERMISION_CODE = 55;
+        const val GPS_PERMISION_CODE = 55
+        const val BLUETOOTH_CODE = 56
+
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         getPermissions()
+
 
     }
 
@@ -41,8 +47,32 @@ class MainActivity : AppCompatActivity() {
 
         val locationManager:LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager;
         if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
-            startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+            startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
 
+        val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+        if(!bluetoothAdapter.isEnabled){
+            startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), BLUETOOTH_CODE)
+        }
+
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode){
+
+            BLUETOOTH_CODE -> {
+                if(resultCode == Activity.RESULT_CANCELED){
+                    val builder = AlertDialog.Builder(this);
+                    builder.setTitle(R.string.bluetoothDenegadoTitulo);
+                    builder.setMessage(R.string.bluetoothDenegadoDescripcion)
+                    builder.setPositiveButton(R.string.cerrarAlertBoton) { dialog, _ ->
+                        dialog.dismiss()
+                    };
+                    builder.create().show()
+                }
+            }
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -56,15 +86,19 @@ class MainActivity : AppCompatActivity() {
                 if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_DENIED) {
                     val builder = AlertDialog.Builder(this);
                     builder.setTitle(R.string.permisosDenegadosTitulo);
-                    builder.setMessage(R.string.permisosDenegadosDescripcion);
+                    builder.setMessage(R.string.permisosDenegadosDescripcion)
                     builder.setPositiveButton(R.string.cerrarAlertBoton) { dialog, _ ->
                         getPermissions()
                         dialog.dismiss()
                     };
-                    builder.create().show();
+                    builder.create().show()
                 }
+            }
+
             }
         }
 
-    }
+
+
+
 }

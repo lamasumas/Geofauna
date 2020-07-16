@@ -4,19 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
-import android.widget.TableLayout
-import android.widget.TableRow
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.adapters.DatabaseRvAdapter
+import com.example.myapplication.bluetooth.BluetoothManager
 import com.example.myapplication.room.DatabaseRepository
 import com.example.myapplication.room.data_classes.AvistamientoData
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_database_view.*
 import java.util.*
@@ -24,6 +24,7 @@ import java.util.*
 
 class DatabaseViewFragment : Fragment() {
 
+    private var disposables: CompositeDisposable = CompositeDisposable()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -41,16 +42,21 @@ class DatabaseViewFragment : Fragment() {
         val recyclerView = view.findViewById<RecyclerView>(R.id.rvDatabase).apply {
             setHasFixedSize(true)
             layoutManager = viewManager
-            Observable.just(DatabaseRepository(view.context)).observeOn(Schedulers.io()).flatMap {
+            disposables.add(Observable.just(DatabaseRepository(view.context)).observeOn(Schedulers.io()).flatMap {
                 return@flatMap it.retrieveSightsings()
             }.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe{
                 adapter= DatabaseRvAdapter(it)
                 visibility =  View.VISIBLE
                 view.findViewById<ProgressBar>(R.id.databaseMiddleware).visibility = View.GONE
+            })
             }
-            }
+
+
 
     }
 
-
+    override fun onDestroy() {
+        disposables.dispose()
+        super.onDestroy()
+    }
 }

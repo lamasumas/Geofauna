@@ -26,7 +26,7 @@ import java.util.*
 
 class AvistamientoFragment : Fragment() {
 
-    var disposable:Disposable? = null;
+    private var disposable:Disposable? = null;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

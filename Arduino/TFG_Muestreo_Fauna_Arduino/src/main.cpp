@@ -3,6 +3,7 @@
 #include <SoftwareSerial.h>
 #include <Adafruit_BME280.h>
 #include <Adafruit_Sensor.h>
+#include <SoftwareSerial.h>
 
 
 
@@ -23,9 +24,14 @@ float sensorValue;
 // BME280
 Adafruit_BME280 bme;
 
+//Bluetooth
+SoftwareSerial mySerial(2,3); //TX , RX
+int ledpin=13;
+
 void setup() {
   Serial.begin(9600);
-  
+
+
   //
   
 
@@ -38,11 +44,44 @@ void setup() {
 		Serial.println("Could not find a valid BME280 sensor, check wiring!");
 		while (1);
 	}*/
-  
+
+mySerial.begin(9600);
+pinMode(ledpin,OUTPUT);
+Serial.println("Start");
+
+
 }
 
 
 void loop() {
+  int i;
+ 
+if (mySerial.available()){
+  i=mySerial.read();
+  Serial.println("DATA RECEIVED:");
+  if(i=='1'){
+    digitalWrite(ledpin,1);
+    Serial.println("led on");
+  }
+  if(i=='0'){
+    digitalWrite(ledpin,0);
+    Serial.println("led off");
+  }
+  if(i=='2'){
+    mySerial.write("Test");
+    Serial.println("Writting");
+  }
+}
+
+
+
+
+
+
+
+
+
+
  //GPS
  /*
   while (serial_conection.available())

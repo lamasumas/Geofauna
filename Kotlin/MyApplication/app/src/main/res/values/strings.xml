@@ -40,6 +40,8 @@
     <string name="btnEditAnimal">Editar entrada de animal</string>
     <string name="btnEditar">Editar</string>
     <string name="btnBorrar">Borrar</string>
+    <string name="bluetoothDenegadoTitulo">Bluetooth denegado</string>
+    <string name="bluetoothDenegadoDescripcion">Si no enciende el bluetooth, no podra utilizar arduino</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
