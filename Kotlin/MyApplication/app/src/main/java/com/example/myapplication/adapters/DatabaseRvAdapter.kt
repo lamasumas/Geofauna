@@ -3,31 +3,21 @@ package com.example.myapplication.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.AnimalViewHolder
 import com.example.myapplication.R
-import com.example.myapplication.fragments.DatabaseViewFragment
-import com.example.myapplication.fragments.EditSightseenDirections
-import com.example.myapplication.fragments.MainFragment
 import com.example.myapplication.fragments.MainFragmentDirections
 import com.example.myapplication.room.DatabaseRepository
 import com.example.myapplication.room.data_classes.AvistamientoData
 import com.jakewharton.rxbinding2.view.clicks
-import io.reactivex.Completable
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import java.util.*
 
 class DatabaseRvAdapter(val elements:List<AvistamientoData>): RecyclerView.Adapter<AnimalViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimalViewHolder{
-        val theView = LayoutInflater.from(parent.context).inflate(R.layout.card_scheme, parent,false)
+        val theView = LayoutInflater.from(parent.context).inflate(R.layout.animal_card_scheme, parent,false)
         return AnimalViewHolder(theView)
     }
 

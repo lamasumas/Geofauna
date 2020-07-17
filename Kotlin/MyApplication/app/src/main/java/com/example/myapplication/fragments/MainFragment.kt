@@ -1,7 +1,9 @@
 package com.example.myapplication.fragments
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -12,6 +14,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.myapplication.adapters.MainAdapter
 import com.example.myapplication.R
 import com.example.myapplication.bluetooth.BluetoothManager
+import com.example.myapplication.bluetooth.dialog.BluetoothScanDialog
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.jakewharton.rxbinding2.view.clicks
@@ -39,24 +42,7 @@ class MainFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_bb, menu)
-        compositeDisposable.add(menu.findItem(R.id.bluetoothMenu).clicks().subscribe {
-            val builder = AlertDialog.Builder(requireContext())
-            builder.setTitle("Lista bluetooth")
-            BluetoothManager.scanDevices(requireContext()).toList().subscribe { onNext ->
-                builder.setItems(onNext.map { it.bleDevice.name }.toTypedArray()){
-                    when(it){
 
-                    }
-                }
-
-            }
-
-            builder.setMessage(R.string.bluetoothDenegadoDescripcion)
-            builder.setPositiveButton(R.string.cerrarAlertBoton) { dialog, _ ->
-                dialog.dismiss()
-            };
-            builder.create().show()
-        })
     }
 
 
@@ -70,6 +56,12 @@ class MainFragment : Fragment() {
                 })
         val viewpager = view.findViewById<ViewPager2>(R.id.vpMain)
         viewpager.adapter = MainAdapter(this);
+
+
+        compositeDisposable.add(view.findViewById<Button>(R.id.bluetoothMenu).clicks().subscribe {
+            BluetoothScanDialog(view.context).show()
+
+        })
 
 
 
