@@ -6,7 +6,6 @@
 #include <SoftwareSerial.h>
 
 
-
 //Definicion de pines
 #define GPS_RX 8
 #define GPS_RT 7
@@ -27,6 +26,7 @@ Adafruit_BME280 bme;
 //Bluetooth
 SoftwareSerial mySerial(2,3); //TX , RX
 int ledpin=13;
+
 
 void setup() {
   Serial.begin(9600);
@@ -71,8 +71,14 @@ if (mySerial.available()){
     mySerial.write("Test");
     Serial.println("Writting");
   }
+  mySerial.write("Sending data test");
+  Serial.println("Writting");
 }
 
+  mySerial.println("test");
+  delay(5000);
+  mySerial.flush();
+  mySerial.println("test1 test2 test3");
 
 
 

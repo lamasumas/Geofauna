@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.AnimalViewHolder
 import com.example.myapplication.BluetoothViewHolder
 import com.example.myapplication.R
+import com.example.myapplication.bluetooth.BluetoothManager
 import com.example.myapplication.bluetooth.dialog.BluetoothScanDialog
 import com.example.myapplication.fragments.MainFragmentDirections
 import com.example.myapplication.room.DatabaseRepository
@@ -17,7 +18,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 
-class BluetoothRvAdapter(val x: BluetoothScanDialog): RecyclerView.Adapter<BluetoothViewHolder>() {
+class BluetoothRvAdapter(val dialog: BluetoothScanDialog): RecyclerView.Adapter<BluetoothViewHolder>() {
 
     private val devices = mutableListOf<ScanResult>()
 
@@ -36,7 +37,8 @@ class BluetoothRvAdapter(val x: BluetoothScanDialog): RecyclerView.Adapter<Bluet
         holder.ScanResult = devices[position]
 
         holder.cv.clicks().subscribe {
-                x.dismiss()
+
+                BluetoothManager.connectToDevice(devices[position].bleDevice.macAddress, holder.itemView.context)
         }
     }
 
