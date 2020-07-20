@@ -1,8 +1,11 @@
 package com.example.myapplication.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.AnimalViewHolder
@@ -36,9 +39,14 @@ class BluetoothRvAdapter(val dialog: BluetoothScanDialog): RecyclerView.Adapter<
         holder.mac.text = devices[position].bleDevice.macAddress
         holder.ScanResult = devices[position]
 
-        holder.cv.clicks().subscribe {
+        holder.cv.findViewById<Button>(R.id.btnConnect).clicks().subscribe {
 
-                BluetoothManager.connectToDevice(devices[position].bleDevice.macAddress, holder.itemView.context)
+                BluetoothManager.startTalking(devices[position].bleDevice.macAddress, holder.itemView.context)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe{
+                    onNext ->
+                            Toast.makeText(holder.cv.context, onNext, Toast.LENGTH_LONG).show()
+                }
         }
     }
 

@@ -5,13 +5,18 @@
 #include <Adafruit_Sensor.h>
 #include <SoftwareSerial.h>
 
-
 //Definicion de pines
 #define GPS_RX 8
 #define GPS_RT 7
 
+//Helping led
+#define HELPING_LED 9
+
 // Constantes
 #define SEALEVELPRESSURE_HPA (1013.25)
+
+#define CONECTED '1'
+
 
 //UV
 int sensorVoltage;
@@ -25,7 +30,11 @@ Adafruit_BME280 bme;
 
 //Bluetooth
 SoftwareSerial mySerial(2,3); //TX , RX
-int ledpin=13;
+bool startSendingData = false;
+int selector = 0;
+char *sensorInfo[] = { "test 1", "test 2"};
+
+
 
 
 void setup() {
@@ -46,40 +55,36 @@ void setup() {
 	}*/
 
 mySerial.begin(9600);
-pinMode(ledpin,OUTPUT);
+pinMode(HELPING_LED, OUTPUT);
 Serial.println("Start");
+
+// Helping led
 
 
 }
 
 
 void loop() {
-  int i;
+  char bluetoothData;
  
 if (mySerial.available()){
-  i=mySerial.read();
-  Serial.println("DATA RECEIVED:");
-  if(i=='1'){
-    digitalWrite(ledpin,1);
-    Serial.println("led on");
+  bluetoothData=mySerial.read();
+  Serial.println(bluetoothData);
+  if(bluetoothData == CONECTED )
+  {
+    Serial.println("DATA RECEIVED:");
+    digitalWrite(HELPING_LED, 1);
+    startSendingData = true;
   }
-  if(i=='0'){
-    digitalWrite(ledpin,0);
-    Serial.println("led off");
+  if(startSendingData)
+  {
+    mySerial.flush();
+    mySerial.write(sensorInfo[selector]);
   }
-  if(i=='2'){
-    mySerial.write("Test");
-    Serial.println("Writting");
-  }
-  mySerial.write("Sending data test");
-  Serial.println("Writting");
+  selector+= 1;
+  if(selector >=2)
+    selector = 0;
 }
-
-  mySerial.println("test");
-  delay(5000);
-  mySerial.flush();
-  mySerial.println("test1 test2 test3");
-
 
 
 
@@ -134,7 +139,6 @@ if (mySerial.available()){
   
 
 
-  delay(5000);
 
 }
 
