@@ -32,7 +32,6 @@ Adafruit_BME280 bme;
 SoftwareSerial mySerial(2,3); //TX , RX
 bool startSendingData = false;
 int selector = 0;
-char *sensorInfo[] = { "test 1", "test 2"};
 
 
 
@@ -69,24 +68,31 @@ void loop() {
  
 if (mySerial.available()){
   bluetoothData=mySerial.read();
-  Serial.println(bluetoothData);
-  if(bluetoothData == CONECTED )
+  if(bluetoothData == CONECTED && !startSendingData )
   {
     Serial.println("DATA RECEIVED:");
     digitalWrite(HELPING_LED, 1);
     startSendingData = true;
   }
-  if(startSendingData)
-  {
-    mySerial.flush();
-    mySerial.write(sensorInfo[selector]);
-  }
-  selector+= 1;
+  
   if(selector >=2)
     selector = 0;
+
+  if(selector == 0){
+    mySerial.flush();
+    mySerial.write("test");
+    Serial.println("test");
+    selector++;
+  }
+  else {
+    mySerial.flush();
+    mySerial.write("test2");
+    Serial.println("test2");
+    selector++;
+  }
+  delay(3000);
+
 }
-
-
 
 
 

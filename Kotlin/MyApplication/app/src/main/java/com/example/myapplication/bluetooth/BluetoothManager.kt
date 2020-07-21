@@ -4,6 +4,7 @@ package com.example.myapplication.bluetooth
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import com.polidea.rxandroidble2.NotificationSetupMode
 import com.polidea.rxandroidble2.RxBleClient
 import com.polidea.rxandroidble2.RxBleDevice
 import com.polidea.rxandroidble2.scan.ScanFilter
@@ -41,28 +42,22 @@ object BluetoothManager{
     }
 
     fun startTalking(macAddress: String, context:Context):Observable<String>{
-        /*disposable = getClient(context).getBleDevice(macAddress).establishConnection(false)
-                .flatMap { it.setupNotification(UUID.fromString(HM10_CUSTOMCHARACTERISITCS)) }
-                .flatMap { it }.observeOn(AndroidSchedulers.mainThread()).subscribe(
-                    {rxBleCharacteristics ->
-                        Toast.makeText(context, String(rxBleCharacteristics), Toast.LENGTH_LONG).show()
 
-                    },
-                    { throwable ->
-
-                    }
-                )*/
         return Observable.create<String> { emiter ->
             getClient(context).getBleDevice(macAddress).establishConnection(false)
                         .subscribe {
                             connection ->
-                            connection.writeCharacteristic(HM10_CUSTOMCHARACTERISITCS, byteArrayOf('1'.toByte())).subscribe{
-                                onSuccess ->
-                                    connection.setupNotification(HM10_CUSTOMCHARACTERISITCS)
-                                            .flatMap {it}.subscribe{
-                                                emiter.onNext(String(it))
-                                            }
-
+                            connection.setupNotification(HM10_CUSTOMCHARACTERISITCS, NotificationSetupMode.QUICK_SETUP)
+                                    .flatMap { connection.writeCharacteristic(HM10_CUSTOMCHARACTERISITCS, byteArrayOf('1'.toByte())).subscribe {
+                                        onSuccess -> Log.d("Bluetooth communication", "Starting bluetooth communication ")
+                                    }
+                                        it }.subscribe {
+                                        emiter.onNext(String(it))
+                                        connection.writeCharacteristic(HM10_CUSTOMCHARACTERISITCS, byteArrayOf('1'.toByte())).subscribe {
+                                            onSuccess -> Log.d("Bluetooth communication", "Asking HM-10 for more data")
+                                        }
+                                    }
+                            }
 
                         }
 
@@ -73,10 +68,10 @@ object BluetoothManager{
 
 
 
-        }
 
 
-    }
+
+
 
 
 }
