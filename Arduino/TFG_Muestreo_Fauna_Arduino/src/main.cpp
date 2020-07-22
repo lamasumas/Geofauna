@@ -3,11 +3,9 @@
 #include <SoftwareSerial.h>
 #include <Adafruit_BME280.h>
 #include <Adafruit_Sensor.h>
-#include <SoftwareSerial.h>
+#include <ComunicationManager.h>
 
-//Definicion de pines
-#define GPS_RX 8
-#define GPS_RT 7
+
 
 //Helping led
 #define HELPING_LED 9
@@ -15,37 +13,39 @@
 // Constantes
 #define SEALEVELPRESSURE_HPA (1013.25)
 
-#define CONECTED '1'
+#define START_SENDING '1'
+#define LON_REQ '2'
+#define LAT_REQ '3'
+#define ALT_REQ '4'
+#define HUM_REQ '5'
+#define UV_REQ '6'
+#define PRESS_REQ '7'
+#define TEMP_SENDING '8'
 
 
 //UV
 int sensorVoltage;
 float sensorValue;
-//GPS variables
-//SoftwareSerial serial_conection(GPS_RX, GPS_RT);
-//TinyGPSPlus gps;
+
+  //GPS variables
+SoftwareSerial serial_conection(9,8); //RX ,RT,
+TinyGPSPlus gps;
 
 // BME280
 Adafruit_BME280 bme;
 
 //Bluetooth
-SoftwareSerial mySerial(2,3); //TX , RX
+//SoftwareSerial mySerial(2,3); //TX , RX
 bool startSendingData = false;
 int selector = 0;
-
-
-
+ComunicationManager comunicationManager(2,3);
 
 void setup() {
   Serial.begin(9600);
 
-
-  //
-  
-
   //GPS
-  //serial_conection.begin(9600);
-  //Serial.println("GPS Start");
+  serial_conection.begin(9600);
+  Serial.println("GPS Start");
   
   //BME208
   /*if (!bme.begin(0x76)) {
@@ -53,70 +53,33 @@ void setup() {
 		while (1);
 	}*/
 
-mySerial.begin(9600);
+//mySerial.begin(9600);
 pinMode(HELPING_LED, OUTPUT);
-Serial.println("Start");
-
-// Helping led
-
-
 }
 
 
 void loop() {
-  char bluetoothData;
+comunicationManager.updateData(1, 10);
+comunicationManager.checkForImcoming();
+
+
+//GPS
+if(serial_conection.available())
+{
+ ;
+  gps.encode(serial_conection.read());
  
-if (mySerial.available()){
-  bluetoothData=mySerial.read();
-  if(bluetoothData == CONECTED && !startSendingData )
-  {
-    Serial.println("DATA RECEIVED:");
-    digitalWrite(HELPING_LED, 1);
-    startSendingData = true;
-  }
-  
-  if(selector >=2)
-    selector = 0;
-
-  if(selector == 0){
-    mySerial.flush();
-    mySerial.write("test");
-    Serial.println("test");
-    selector++;
-  }
-  else {
-    mySerial.flush();
-    mySerial.write("test2");
-    Serial.println("test2");
-    selector++;
-  }
-  delay(3000);
-
 }
 
+if(gps.location.isUpdated())
+{
+  Serial.println("Latitude:");
+  Serial.println(gps.location.lat(), 6);
+  Serial.println("Longitude:");
+  Serial.println(gps.location.lng(), 6);
+  Serial.println("Altitude Feet:");
+}
 
-
-
-
-
- //GPS
- /*
-  while (serial_conection.available())
-  {
-    gps.encode(serial_conection.read());
-  }
-
-  if(gps.location.isUpdated())
-  {
-    Serial.println("Latitude:");
-    Serial.println(gps.location.lat(), 6);
-    Serial.println("Longitude:");
-    Serial.println(gps.location.lng(), 6);
-    Serial.println("Altitude Feet:");
-    Serial.println(gps.altitude.feet());
-    Serial.println("");
-  }
- */
 
   // BME208: Temperatura - Presion - Humedad
   /*
@@ -143,9 +106,6 @@ if (mySerial.available()){
  // UV
 //Serial.println(UVIndex());
   
-
-
-
 }
 
 
