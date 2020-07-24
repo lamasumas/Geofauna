@@ -1,24 +1,15 @@
-package com.example.myapplication.adapters
+package com.example.myapplication.bluetooth.dialog
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapplication.AnimalViewHolder
-import com.example.myapplication.BluetoothViewHolder
 import com.example.myapplication.R
 import com.example.myapplication.bluetooth.BluetoothManager
-import com.example.myapplication.bluetooth.dialog.BluetoothScanDialog
-import com.example.myapplication.fragments.MainFragmentDirections
-import com.example.myapplication.room.DatabaseRepository
 import com.jakewharton.rxbinding2.view.clicks
 import com.polidea.rxandroidble2.scan.ScanResult
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
 
 class BluetoothRvAdapter(val dialog: BluetoothScanDialog): RecyclerView.Adapter<BluetoothViewHolder>() {

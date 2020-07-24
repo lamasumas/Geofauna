@@ -9,17 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.example.myapplication.adapters.DatabaseRvAdapter
-import com.example.myapplication.bluetooth.BluetoothManager
+import com.example.myapplication.room.database_recyclerview.DatabaseRvAdapter
 import com.example.myapplication.room.DatabaseRepository
-import com.example.myapplication.room.data_classes.AvistamientoData
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_database_view.*
-import java.util.*
 
 
 class DatabaseViewFragment : Fragment() {

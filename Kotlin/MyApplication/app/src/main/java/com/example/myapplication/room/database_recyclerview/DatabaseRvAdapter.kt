@@ -1,11 +1,10 @@
-package com.example.myapplication.adapters
+package com.example.myapplication.room.database_recyclerview
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapplication.AnimalViewHolder
 import com.example.myapplication.R
 import com.example.myapplication.fragments.MainFragmentDirections
 import com.example.myapplication.room.DatabaseRepository
@@ -16,7 +15,7 @@ import io.reactivex.schedulers.Schedulers
 
 class DatabaseRvAdapter(val elements:List<AvistamientoData>): RecyclerView.Adapter<AnimalViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimalViewHolder{
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimalViewHolder {
         val theView = LayoutInflater.from(parent.context).inflate(R.layout.animal_card_scheme, parent,false)
         return AnimalViewHolder(theView)
     }

@@ -20,7 +20,6 @@ void ComunicationManager::checkForImcoming(){
 
 }
 
-
 void ComunicationManager::updateData(int sensorIndex, double newData ){
     sensorData[sensorIndex] = newData;
 }
