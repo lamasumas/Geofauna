@@ -4,18 +4,19 @@
 class ComunicationManager
 {
 private:
-    double sensorData[8] = {0,0,0,0,0,0,0};
+    double sensorData[7] = {0,1,2,3,4,5,6};
     SoftwareSerial mySerial;
 public:
-    ComunicationManager(int, int);
+    ComunicationManager(int, int, int);
     const int LAT_POS = 0;
-    const int LON_REQ = 1;
-    const int ALT_REQ = 2;
-    const int HUM_REQ = 3;
-    const int UV_REQ = 4;
-    const int PRESS_REQ = 5;
-    const int TEMP_SENDING = 6;
-
+    const int LON_POS = 1;
+    const int ALT_POS = 2;
+    const int HUM_POS = 3;
+    const int UV_POS = 4;
+    const int PRESS_POS = 5;
+    const int TEMP_POS = 6;
+    const int FINISH_COMUNICATION = 7;
+    int pinHelpingLed;
 
     void updateData(int, double);
     void transmitInfo(int);

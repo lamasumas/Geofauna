@@ -3,10 +3,13 @@
 #include <SoftwareSerial.h>
 #include <Arduino.h>
 
-ComunicationManager::ComunicationManager(int tx, int rx) : mySerial(tx, rx)
+ComunicationManager::ComunicationManager(int tx, int rx, int extraPin) : mySerial(tx, rx)
 {
     mySerial.begin(9600); 
     Serial.begin(9600);
+    pinHelpingLed = extraPin;
+    pinMode(pinHelpingLed, OUTPUT);
+
     
 
 }
@@ -26,8 +29,23 @@ void ComunicationManager::updateData(int sensorIndex, double newData ){
 
 void ComunicationManager::transmitInfo(int sensorIndex){
     mySerial.flush();
-    Serial.println("Sending: " + String(sensorData[sensorIndex]));
-    mySerial.println( String(sensorData[sensorIndex]));
+    Serial.println("Sensor index: " + String(sensorIndex));
+    Serial.println("Termination symbol: " + String(FINISH_COMUNICATION));
+
+    if(sensorIndex == FINISH_COMUNICATION)
+    {
+      digitalWrite(pinHelpingLed, 0);
+      Serial.println("Transmission finished");
+    } else {
+
+      if(sensorIndex == LAT_POS)
+        digitalWrite(pinHelpingLed, 1);
+
+      Serial.println("Sending: " + String(sensorData[sensorIndex]));
+      mySerial.println( String(sensorData[sensorIndex]));
+    }
+   
+   
 }
 
  /*

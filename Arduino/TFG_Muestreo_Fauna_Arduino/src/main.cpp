@@ -1,48 +1,11 @@
 #include <Arduino.h>
-#include <TinyGPS++.h>
-#include <SoftwareSerial.h>
-#include <Adafruit_BME280.h>
-#include <Adafruit_Sensor.h>
-#include <ComunicationManager.h>
+#include <main.h>
 
 
-
-//Helping led
-#define HELPING_LED 9
-
-// Constantes
-#define SEALEVELPRESSURE_HPA (1013.25)
-
-#define START_SENDING '1'
-#define LON_REQ '2'
-#define LAT_REQ '3'
-#define ALT_REQ '4'
-#define HUM_REQ '5'
-#define UV_REQ '6'
-#define PRESS_REQ '7'
-#define TEMP_SENDING '8'
-
-
-//UV
-int sensorVoltage;
-float sensorValue;
-
-  //GPS variables
-SoftwareSerial serial_conection(9,8); //RX ,RT,
-TinyGPSPlus gps;
-
-// BME280
-Adafruit_BME280 bme;
-
-//Bluetooth
-//SoftwareSerial mySerial(2,3); //TX , RX
-bool startSendingData = false;
-int selector = 0;
-ComunicationManager comunicationManager(2,3);
 
 void setup() {
-  Serial.begin(9600);
 
+  Serial.begin(9600);
   //GPS
   serial_conection.begin(9600);
   Serial.println("GPS Start");
@@ -54,99 +17,99 @@ void setup() {
 	}*/
 
 //mySerial.begin(9600);
-pinMode(HELPING_LED, OUTPUT);
 }
 
 
 void loop() {
-comunicationManager.updateData(1, 10);
-comunicationManager.checkForImcoming();
-
-
-//GPS
-if(serial_conection.available())
-{
- ;
-  gps.encode(serial_conection.read());
  
+  //comunicationManager.checkForImcoming();
+  updateGPS();
+  //updateBME();
+  //updateUV();
 }
 
-if(gps.location.isUpdated())
-{
-  Serial.println("Latitude:");
-  Serial.println(gps.location.lat(), 6);
-  Serial.println("Longitude:");
-  Serial.println(gps.location.lng(), 6);
-  Serial.println("Altitude Feet:");
+void updateGPS(){
+  if(serial_conection.available()){
+    gps.encode(serial_conection.read());
+    }
+  if(gps.location.isUpdated())
+  {
+    Serial.println("Latitude:");
+    Serial.println(gps.location.lat(), 6);
+    comunicationManager.updateData(comunicationManager.LAT_POS, gps.location.lat());
+    
+    Serial.println("Longitude:");
+    Serial.println(gps.location.lng(), 6);
+    comunicationManager.updateData(comunicationManager.LON_POS, gps.location.lng());
+  }
 }
-
-
+void updateBME(){
+ 
   // BME208: Temperatura - Presion - Humedad
-  /*
-  Serial.print("Temperature = ");
-	Serial.print(bme.readTemperature());
-	Serial.println("*C");
-
-	Serial.print("Pressure = ");
-	Serial.print(bme.readPressure() / 100.0F);
-	Serial.println("hPa");
-
-	Serial.print("Approx. Altitude = ");
-	Serial.print(bme.readAltitude(SEALEVELPRESSURE_HPA));
-	Serial.println("m");
-
-	Serial.print("Humidity = ");
-	Serial.print(bme.readHumidity());
-	Serial.println("%");
-
-	Serial.println();
-
-  */
- 
- // UV
-//Serial.println(UVIndex());
   
+  //Read Temperature in ºC
+  comunicationManager.updateData(comunicationManager.TEMP_POS, bme.readTemperature());
+  //Read Pressure in hPa
+  comunicationManager.updateData(comunicationManager.PRESS_POS, bme.readTemperature() / 100.0F);
+  //Read Altitude in m
+  comunicationManager.updateData(comunicationManager.ALT_POS, bme.readAltitude(SEALEVELPRESSURE_HPA));
+  //Read Hummidity in %
+  comunicationManager.updateData(comunicationManager.HUM_POS, bme.readHumidity());
+
 }
-
-
 
 
 
 /**
- * 
- * Code from chansheunglong
+ * Based in code from chansheunglong
  * https://github.com/chansheunglong/GUVA-S12SD-lib/blob/master/GUVA_S12SD/GUVA_S12SD.h
  * 
  * */
-int UVIndex() {
-      int s12sd_sensorVoltage = analogRead(A0) ;
-      Serial.print("test: " );
-      Serial.println(s12sd_sensorVoltage);
-      s12sd_sensorVoltage = s12sd_sensorVoltage/ 1024 * 3.3;
- 
-      if (s12sd_sensorVoltage * 1000 < 50) {
-        return 0;
-      } else if (s12sd_sensorVoltage * 1000 < 227) {
-        return 1;
-      } else if (s12sd_sensorVoltage * 1000 < 318) {
-        return 2;
-      } else if (s12sd_sensorVoltage * 1000 < 408) {
-        return 3;
-      } else if (s12sd_sensorVoltage * 1000 < 503) {
-        return 4;
-      } else if (s12sd_sensorVoltage * 1000 < 606) {
-        return 5;
-      } else if (s12sd_sensorVoltage * 1000 < 696) {
-        return 6;
-      } else if (s12sd_sensorVoltage * 1000 < 795) {
-        return 7;
-      } else if (s12sd_sensorVoltage * 1000 < 881) {
-        return 8;
-      } else if (s12sd_sensorVoltage * 1000 < 976) {
-        return 9;
-      } else if (s12sd_sensorVoltage * 1000 < 1079) {
-        return 10;
-      } else {
-        return 11;
-      }
+void updateUV(){
+  int s12sd_sensorVoltage = analogRead(A0) ;
+  s12sd_sensorVoltage = s12sd_sensorVoltage/ 1024 * 3.3;
+  switch (s12sd_sensorVoltage * 1000)
+  {
+  case 0 ... 49:
+    comunicationManager.updateData(comunicationManager.UV_POS, 0);
+    break;
+  case 50 ... 226:
+    comunicationManager.updateData(comunicationManager.UV_POS, 1);
+    break;
+  case 227 ... 317:
+    comunicationManager.updateData(comunicationManager.UV_POS, 2);
+    break;
+  case 318 ... 407:
+    comunicationManager.updateData(comunicationManager.UV_POS, 3);
+    break;
+  case 408 ... 502:
+    comunicationManager.updateData(comunicationManager.UV_POS, 4);
+    break;
+  case 503 ... 605:
+    comunicationManager.updateData(comunicationManager.UV_POS, 5);
+    break;
+  case 606 ...695:
+    comunicationManager.updateData(comunicationManager.UV_POS, 6);
+    break;
+  case 696 ... 794:
+    comunicationManager.updateData(comunicationManager.UV_POS, 7);
+    break;
+  case 795 ... 880:
+    comunicationManager.updateData(comunicationManager.UV_POS, 8);
+    break;
+  case 881 ... 975:
+    comunicationManager.updateData(comunicationManager.UV_POS, 9);
+    break;
+  case 976 ... 1078:
+    comunicationManager.updateData(comunicationManager.UV_POS, 10);
+    break;
+  default:
+    if (s12sd_sensorVoltage * 1000 >= 1079){
+      comunicationManager.updateData(comunicationManager.UV_POS, 11);
+    }else{
+      comunicationManager.updateData(comunicationManager.UV_POS, 0);
+    }
+    break;
+  }
+  
 }
