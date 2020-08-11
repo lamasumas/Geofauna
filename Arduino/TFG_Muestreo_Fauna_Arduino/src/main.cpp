@@ -1,31 +1,30 @@
 #include <Arduino.h>
 #include <main.h>
 
-
-
 void setup() {
 
   Serial.begin(9600);
+  
   //GPS
   serial_conection.begin(9600);
-  Serial.println("GPS Start");
   
   //BME208
-  /*if (!bme.begin(0x76)) {
+  if (!bme.begin(0x76)) {
 		Serial.println("Could not find a valid BME280 sensor, check wiring!");
 		while (1);
-	}*/
+	}
 
-//mySerial.begin(9600);
 }
-
 
 void loop() {
  
-  //comunicationManager.checkForImcoming();
-  updateGPS();
-  //updateBME();
-  //updateUV();
+  comunicationManager.checkForImcoming();
+  /*if(!comunicationManager.isSendingData()){
+    updateGPS();
+    updateBME();
+    updateUV();
+    //delay(1000);
+  }*/
 }
 
 void updateGPS(){
@@ -34,41 +33,36 @@ void updateGPS(){
     }
   if(gps.location.isUpdated())
   {
-    Serial.println("Latitude:");
-    Serial.println(gps.location.lat(), 6);
+    //Leyendo latitude 
     comunicationManager.updateData(comunicationManager.LAT_POS, gps.location.lat());
-    
-    Serial.println("Longitude:");
-    Serial.println(gps.location.lng(), 6);
+    //Leyendo longitud
     comunicationManager.updateData(comunicationManager.LON_POS, gps.location.lng());
+    //Leyendo altiud
+    comunicationManager.updateData(comunicationManager.ALT_POS, gps.altitude.meters());
   }
 }
 void updateBME(){
  
   // BME208: Temperatura - Presion - Humedad
   
-  //Read Temperature in ºC
+  //Leyendo temperatura en  ºC
   comunicationManager.updateData(comunicationManager.TEMP_POS, bme.readTemperature());
-  //Read Pressure in hPa
-  comunicationManager.updateData(comunicationManager.PRESS_POS, bme.readTemperature() / 100.0F);
-  //Read Altitude in m
-  comunicationManager.updateData(comunicationManager.ALT_POS, bme.readAltitude(SEALEVELPRESSURE_HPA));
+  //Leyendo presion en hPa
+  comunicationManager.updateData(comunicationManager.PRESS_POS, bme.readPressure() / 100.0F);
+  //Alternativa para leer altitud en m
+  //comunicationManager.updateData(comunicationManager.ALT_POS, bme.readAltitude(SEALEVELPRESSURE_HPA));
   //Read Hummidity in %
   comunicationManager.updateData(comunicationManager.HUM_POS, bme.readHumidity());
 
 }
 
 
-
-/**
- * Based in code from chansheunglong
- * https://github.com/chansheunglong/GUVA-S12SD-lib/blob/master/GUVA_S12SD/GUVA_S12SD.h
- * 
- * */
 void updateUV(){
-  int s12sd_sensorVoltage = analogRead(A0) ;
-  s12sd_sensorVoltage = s12sd_sensorVoltage/ 1024 * 3.3;
-  switch (s12sd_sensorVoltage * 1000)
+  float rvVoltage = analogRead(A0) ;
+  rvVoltage = rvVoltage/ 1024 * 3.3;
+  int switchStatement = rvVoltage * 1000;
+  //Switch para determinar el indice UV
+  switch (switchStatement)
   {
   case 0 ... 49:
     comunicationManager.updateData(comunicationManager.UV_POS, 0);
@@ -104,12 +98,11 @@ void updateUV(){
     comunicationManager.updateData(comunicationManager.UV_POS, 10);
     break;
   default:
-    if (s12sd_sensorVoltage * 1000 >= 1079){
+    if (switchStatement >= 1079){
       comunicationManager.updateData(comunicationManager.UV_POS, 11);
     }else{
       comunicationManager.updateData(comunicationManager.UV_POS, 0);
     }
     break;
   }
-  
 }

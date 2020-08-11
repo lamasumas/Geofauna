@@ -3,7 +3,7 @@
 #include <SoftwareSerial.h>
 #include <Arduino.h>
 
-ComunicationManager::ComunicationManager(int tx, int rx, int extraPin) : mySerial(tx, rx)
+ComunicationManager::ComunicationManager(int tx, int rx, int extraPin) : mySerial(tx,rx)
 {
     mySerial.begin(9600); 
     Serial.begin(9600);
@@ -31,11 +31,12 @@ void ComunicationManager::transmitInfo(int sensorIndex){
     mySerial.flush();
     Serial.println("Sensor index: " + String(sensorIndex));
     Serial.println("Termination symbol: " + String(FINISH_COMUNICATION));
-
+    sendingData = true;
     if(sensorIndex == FINISH_COMUNICATION)
     {
       digitalWrite(pinHelpingLed, 0);
       Serial.println("Transmission finished");
+      sendingData = false;
     } else {
 
       if(sensorIndex == LAT_POS)
@@ -47,38 +48,10 @@ void ComunicationManager::transmitInfo(int sensorIndex){
    
    
 }
+bool ComunicationManager::isSendingData(){
+  return sendingData;
+}
 
- /*
- Antigo codigo en loop
  
- char bluetoothData;
- 
-if (mySerial.available()){
-  bluetoothData=mySerial.read();
-  if(bluetoothData == START_SENDING && !startSendingData )
-  {
-    Serial.println("DATA RECEIVED:");
-    digitalWrite(HELPING_LED, 1);
-    startSendingData = true;
-  }
-  
-  if(selector >=2)
-    selector = 0;
-
-  if(selector == 0){
-    mySerial.flush();
-    mySerial.write("test");
-    Serial.println("test");
-    selector++;
-  }
-  else {
-    mySerial.flush();
-    mySerial.write("test2");
-    Serial.println("test2");
-    selector++;
-    
-  }*/
-
-
 
 

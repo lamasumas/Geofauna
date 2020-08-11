@@ -3,6 +3,7 @@
 #include <SoftwareSerial.h>
 #include <TinyGPS++.h>
 #include <ComunicationManager.h>
+#include <Adafruit_Sensor.h>
 
 //Constants
 //Bluetooth transmission led
@@ -14,7 +15,7 @@
 //BME
 Adafruit_BME280 bme;
 //GPS variables
-SoftwareSerial serial_conection(9,8); //RX ,RT,
+SoftwareSerial serial_conection(10, 9); //RX = 9 ,RT= 10,
 TinyGPSPlus gps;
 //Bluetooth
 ComunicationManager comunicationManager(2,3, TRANSMISSION_LED); // TX, RX, Transmission led

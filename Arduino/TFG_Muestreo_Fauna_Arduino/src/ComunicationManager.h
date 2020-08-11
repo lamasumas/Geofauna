@@ -4,8 +4,11 @@
 class ComunicationManager
 {
 private:
-    double sensorData[7] = {0,1,2,3,4,5,6};
+    double sensorData[7] = {99, 99,2,3,4,5,6};
     SoftwareSerial mySerial;
+    bool sendingData = false;
+    void transmitInfo(int);
+    
 public:
     ComunicationManager(int, int, int);
     const int LAT_POS = 0;
@@ -17,9 +20,10 @@ public:
     const int TEMP_POS = 6;
     const int FINISH_COMUNICATION = 7;
     int pinHelpingLed;
+    const int NO_DATA = 999;
 
     void updateData(int, double);
-    void transmitInfo(int);
     void checkForImcoming();
+    bool isSendingData();
     
 };
