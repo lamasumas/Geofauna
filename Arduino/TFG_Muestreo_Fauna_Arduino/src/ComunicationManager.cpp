@@ -3,22 +3,19 @@
 #include <SoftwareSerial.h>
 #include <Arduino.h>
 
-ComunicationManager::ComunicationManager(int tx, int rx, int extraPin) : mySerial(tx,rx)
-{
-    mySerial.begin(9600); 
-    Serial.begin(9600);
-    pinHelpingLed = extraPin;
-    pinMode(pinHelpingLed, OUTPUT);
-
-    
-
+ComunicationManager::ComunicationManager(int tx, int rx, int extraPin): mySerial(2,3){
+  mySerial.begin(9600); 
+  Serial.begin(9600);
+  pinHelpingLed = extraPin;
+  pinMode(pinHelpingLed, OUTPUT);
 }
 
 void ComunicationManager::checkForImcoming(){
+  //Serial.println(mySerial.available());
     if(mySerial.available()){
-        int dataRecieved = mySerial.read() - '0';
-        Serial.println("Recieved: " + dataRecieved);
-        transmitInfo( dataRecieved);
+      int dataRecieved = mySerial.read() - '0';
+      Serial.println("Recieved: " + dataRecieved);
+      transmitInfo( dataRecieved);
     }
 
 }

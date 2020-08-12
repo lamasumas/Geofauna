@@ -1,12 +1,13 @@
 #include <Arduino.h>
 #include <main.h>
 
+
 void setup() {
 
   Serial.begin(9600);
   
   //GPS
-  serial_conection.begin(9600);
+  //serial_conection.begin(9600);
   
   //BME208
   if (!bme.begin(0x76)) {
@@ -19,12 +20,12 @@ void setup() {
 void loop() {
  
   comunicationManager.checkForImcoming();
-  /*if(!comunicationManager.isSendingData()){
+  if(!comunicationManager.isSendingData()){
     updateGPS();
     updateBME();
     updateUV();
-    //delay(1000);
-  }*/
+    delay(1000);
+  }
 }
 
 void updateGPS(){

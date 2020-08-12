@@ -1,12 +1,12 @@
 
 
-#include "SoftwareSerial.h"
+#include <SoftwareSerial.h>
 class ComunicationManager
 {
 private:
-    double sensorData[7] = {99, 99,2,3,4,5,6};
-    SoftwareSerial mySerial;
+    double sensorData[7] = {999, 999,2,3,4,5,6};
     bool sendingData = false;
+    SoftwareSerial mySerial;
     void transmitInfo(int);
     
 public:
@@ -20,7 +20,6 @@ public:
     const int TEMP_POS = 6;
     const int FINISH_COMUNICATION = 7;
     int pinHelpingLed;
-    const int NO_DATA = 999;
 
     void updateData(int, double);
     void checkForImcoming();
