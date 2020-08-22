@@ -4,7 +4,7 @@
 class ComunicationManager
 {
 private:
-    double sensorData[7] = {999, 999,2,3,4,5,6};
+    double sensorData[7] = {};
     bool sendingData = false;
     SoftwareSerial mySerial;
     void transmitInfo(int);

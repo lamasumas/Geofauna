@@ -61,6 +61,7 @@ class MainFragment : Fragment() {
         compositeDisposable.add(view.findViewById<Button>(R.id.bluetoothMenu).clicks().subscribe {
             BluetoothScanDialog(view.context).show()
 
+
         })
 
 

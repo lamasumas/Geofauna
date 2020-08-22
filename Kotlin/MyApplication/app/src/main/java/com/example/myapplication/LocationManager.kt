@@ -22,30 +22,28 @@ object LocationManager {
             return locationObservable!!;
         else {
             locationObservable = Observable.create { emitter ->
-                if (!isThereArduino) {
+                val locationRequest = LocationRequest.create();
+                locationRequest.interval = 10000;
+                locationRequest.fastestInterval = 5000;
+                locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY;
 
-                    val locationRequest = LocationRequest.create();
-                    locationRequest.interval = 10000;
-                    locationRequest.fastestInterval = 5000;
-                    locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY;
-
-                    val locationCallback = object : LocationCallback() {
-                        override fun onLocationResult(locationResult: LocationResult?) {
-                            super.onLocationResult(locationResult)
-                            if (locationResult != null) {
-                                for (location: Location in locationResult.locations) {
-                                    if (location != null) {
-                                        emitter.onNext(location);
-                                    }
+                val locationCallback = object : LocationCallback() {
+                    override fun onLocationResult(locationResult: LocationResult?) {
+                        super.onLocationResult(locationResult)
+                        if (locationResult != null) {
+                            for (location: Location in locationResult.locations) {
+                                if (location != null) {
+                                    emitter.onNext(location);
                                 }
                             }
                         }
                     }
-
-                    val locationClient = LocationServices.getFusedLocationProviderClient(context);
-                    locationClient.requestLocationUpdates(locationRequest,locationCallback, null);
-
                 }
+
+                val locationClient = LocationServices.getFusedLocationProviderClient(context);
+                locationClient.requestLocationUpdates(locationRequest,locationCallback, null);
+
+
             };
             return locationObservable!!;
         }

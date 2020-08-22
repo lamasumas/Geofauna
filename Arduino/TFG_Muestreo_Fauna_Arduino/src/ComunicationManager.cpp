@@ -13,8 +13,7 @@ ComunicationManager::ComunicationManager(int tx, int rx, int extraPin): mySerial
 void ComunicationManager::checkForImcoming(){
   //Serial.println(mySerial.available());
     if(mySerial.available()){
-      int dataRecieved = mySerial.read() - '0';
-      Serial.println("Recieved: " + dataRecieved);
+      int dataRecieved = mySerial.read() ;
       transmitInfo( dataRecieved);
     }
 
@@ -28,19 +27,22 @@ void ComunicationManager::transmitInfo(int sensorIndex){
     mySerial.flush();
     Serial.println("Sensor index: " + String(sensorIndex));
     Serial.println("Termination symbol: " + String(FINISH_COMUNICATION));
-    sendingData = true;
     if(sensorIndex == FINISH_COMUNICATION)
     {
-      digitalWrite(pinHelpingLed, 0);
+      digitalWrite(pinHelpingLed, LOW);
       Serial.println("Transmission finished");
       sendingData = false;
     } else {
-
+      sendingData = true;
       if(sensorIndex == LAT_POS)
-        digitalWrite(pinHelpingLed, 1);
+        digitalWrite(pinHelpingLed, HIGH);
 
-      Serial.println("Sending: " + String(sensorData[sensorIndex]));
-      mySerial.println( String(sensorData[sensorIndex]));
+      if(sensorData[sensorIndex] == NULL)
+        mySerial.println('e');
+      else{  
+        Serial.println("Sending: " + String(sensorData[sensorIndex]));
+        mySerial.println( String(sensorData[sensorIndex]));
+      }
     }
    
    

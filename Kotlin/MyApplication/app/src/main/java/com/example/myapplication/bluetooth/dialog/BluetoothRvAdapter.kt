@@ -5,7 +5,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.LocationManager
 import com.example.myapplication.R
+import com.example.myapplication.bluetooth.BleController
 import com.example.myapplication.bluetooth.BluetoothManager
 import com.jakewharton.rxbinding2.view.clicks
 import com.polidea.rxandroidble2.scan.ScanResult
@@ -15,7 +17,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 class BluetoothRvAdapter(val dialog: BluetoothScanDialog): RecyclerView.Adapter<BluetoothViewHolder>() {
 
     private val devices = mutableListOf<ScanResult>()
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BluetoothViewHolder {
         val theView = LayoutInflater.from(parent.context).inflate(R.layout.bluetooth_card_scheme, parent,false)
         return BluetoothViewHolder(theView)
@@ -32,12 +33,9 @@ class BluetoothRvAdapter(val dialog: BluetoothScanDialog): RecyclerView.Adapter<
 
         holder.cv.findViewById<Button>(R.id.btnConnect).clicks().subscribe {
 
-                BluetoothManager.startTalking(devices[position].bleDevice.macAddress, holder.itemView.context)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe{
-                    onNext ->
-                            Toast.makeText(holder.cv.context, onNext, Toast.LENGTH_LONG).show()
-                }
+            BluetoothManager.bleDeviceMac = holder.mac.text.toString()
+            dialog.dismiss()
+
         }
     }
 

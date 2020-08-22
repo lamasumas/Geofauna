@@ -20,12 +20,11 @@ void setup() {
 void loop() {
  
   comunicationManager.checkForImcoming();
-  if(!comunicationManager.isSendingData()){
-    updateGPS();
-    updateBME();
-    updateUV();
+  updateGPS();
+  updateBME();
+  updateUV();
+  if(!comunicationManager.isSendingData())
     delay(1000);
-  }
 }
 
 void updateGPS(){
@@ -38,8 +37,8 @@ void updateGPS(){
     comunicationManager.updateData(comunicationManager.LAT_POS, gps.location.lat());
     //Leyendo longitud
     comunicationManager.updateData(comunicationManager.LON_POS, gps.location.lng());
-    //Leyendo altiud
-    comunicationManager.updateData(comunicationManager.ALT_POS, gps.altitude.meters());
+    //Leyendo altiud manera de leer la altura
+    //comunicationManager.updateData(comunicationManager.ALT_POS, gps.altitude.meters());
   }
 }
 void updateBME(){
@@ -50,8 +49,8 @@ void updateBME(){
   comunicationManager.updateData(comunicationManager.TEMP_POS, bme.readTemperature());
   //Leyendo presion en hPa
   comunicationManager.updateData(comunicationManager.PRESS_POS, bme.readPressure() / 100.0F);
-  //Alternativa para leer altitud en m
-  //comunicationManager.updateData(comunicationManager.ALT_POS, bme.readAltitude(SEALEVELPRESSURE_HPA));
+  //Manera alternativa para leer altitud en m
+  comunicationManager.updateData(comunicationManager.ALT_POS, bme.readAltitude(SEALEVELPRESSURE_HPA));
   //Read Hummidity in %
   comunicationManager.updateData(comunicationManager.HUM_POS, bme.readHumidity());
 

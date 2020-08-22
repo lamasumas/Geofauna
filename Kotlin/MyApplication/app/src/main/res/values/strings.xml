@@ -10,6 +10,11 @@
     <string name="tvFecha">Fecha:</string>
     <string name="tvLatitud">Latitud:</string>
     <string name="tvLongitud">Longitud:</string>
+    <string name="tvHumidity">Humedad (%):</string>
+    <string name="tvAltitude">Altitud (m):</string>
+    <string name="tvTemperature">Temperatura (ºC):</string>
+    <string name="tvUv">Indice UV:</string>
+    <string name="tvPressure">Pressión (hPa):</string>
     <string name="etEspecie">Escribe la especie</string>
     <string name="etLongitud">Longitud</string>
     <string name="etLatitud">Latitud</string>
@@ -18,6 +23,11 @@
     <string name="etDia">Día</string>
     <string name="etMes">Mes</string>
     <string name="etAño">Año</string>
+    <string name="etHumidity">Humedad</string>
+    <string name="etAltitude">Altitud </string>
+    <string name="etTemperature">Temperatura</string>
+    <string name="etUv">Indice UV</string>
+    <string name="etPressure">Pressión</string>
     <string name="btnAñadirAvistamiento">Añadir avistamiento</string>
     <string name="tvPais">País:</string>
     <string name="tvLugar">Lugar:</string>
