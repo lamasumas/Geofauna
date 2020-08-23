@@ -50,7 +50,11 @@ class AvistamientoFragment : Fragment() {
 
     private fun setHasmapObserver(index:Int, editTextId:Int, bleController: BleController){
         bleController.sensorData[index]?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            view?.findViewById<EditText>(editTextId)!!.setText(it) })
+            if(it != "e\r\n")
+                view?.findViewById<EditText>(editTextId)!!.setText(it)
+            else
+                view?.findViewById<EditText>(editTextId)!!.setText("No Data") })
+
 
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -116,6 +120,7 @@ class AvistamientoFragment : Fragment() {
             val databaseRepository =  DatabaseRepository(view.context);
             databaseRepository.insertNewAnimalToDB(newDatabaseEntry)
             view.findNavController().navigate(AvistamientoFragmentDirections.actionAvistamiento2ToMainFragment2())
+            bleController.stopTalking();
         }
     }
 

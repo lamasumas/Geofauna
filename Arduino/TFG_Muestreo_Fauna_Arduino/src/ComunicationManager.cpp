@@ -11,7 +11,7 @@ ComunicationManager::ComunicationManager(int tx, int rx, int extraPin): mySerial
 }
 
 void ComunicationManager::checkForImcoming(){
-  //Serial.println(mySerial.available());
+  //mySerial.listen();
     if(mySerial.available()){
       int dataRecieved = mySerial.read() ;
       transmitInfo( dataRecieved);
@@ -41,7 +41,7 @@ void ComunicationManager::transmitInfo(int sensorIndex){
         mySerial.println('e');
       else{  
         Serial.println("Sending: " + String(sensorData[sensorIndex]));
-        mySerial.println( String(sensorData[sensorIndex]));
+        mySerial.println( String(sensorData[sensorIndex], 5));
       }
     }
    

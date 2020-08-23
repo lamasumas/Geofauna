@@ -6,10 +6,11 @@ class ComunicationManager
 private:
     double sensorData[7] = {};
     bool sendingData = false;
-    SoftwareSerial mySerial;
     void transmitInfo(int);
     
 public:
+
+    SoftwareSerial mySerial;
     ComunicationManager(int, int, int);
     const int LAT_POS = 0;
     const int LON_POS = 1;

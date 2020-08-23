@@ -7,7 +7,7 @@ void setup() {
   Serial.begin(9600);
   
   //GPS
-  //serial_conection.begin(9600);
+  serial_conection.begin(9600);
   
   //BME208
   if (!bme.begin(0x76)) {
@@ -19,15 +19,17 @@ void setup() {
 
 void loop() {
  
-  comunicationManager.checkForImcoming();
   updateGPS();
   updateBME();
   updateUV();
+
+  comunicationManager.checkForImcoming();
   if(!comunicationManager.isSendingData())
-    delay(1000);
+    delay(100);
 }
 
 void updateGPS(){
+
   if(serial_conection.available()){
     gps.encode(serial_conection.read());
     }
@@ -38,19 +40,20 @@ void updateGPS(){
     //Leyendo longitud
     comunicationManager.updateData(comunicationManager.LON_POS, gps.location.lng());
     //Leyendo altiud manera de leer la altura
-    //comunicationManager.updateData(comunicationManager.ALT_POS, gps.altitude.meters());
+    comunicationManager.updateData(comunicationManager.ALT_POS, gps.altitude.meters());
   }
 }
 void updateBME(){
  
   // BME208: Temperatura - Presion - Humedad
-  
+
   //Leyendo temperatura en  ºC
   comunicationManager.updateData(comunicationManager.TEMP_POS, bme.readTemperature());
   //Leyendo presion en hPa
   comunicationManager.updateData(comunicationManager.PRESS_POS, bme.readPressure() / 100.0F);
-  //Manera alternativa para leer altitud en m
-  comunicationManager.updateData(comunicationManager.ALT_POS, bme.readAltitude(SEALEVELPRESSURE_HPA));
+  //Manera alternativa para leer altitud en m, pero muy imprecisa ya que la pression a nivel del mar
+  //cambia dependiendo del dia y lugar, mejor usar gps
+  //comunicationManager.updateData(comunicationManager.ALT_POS, bme.readAltitude(SEALEVELPRESSURE_HPA));
   //Read Hummidity in %
   comunicationManager.updateData(comunicationManager.HUM_POS, bme.readHumidity());
 
