@@ -1,19 +1,15 @@
 package com.example.myapplication.fragments
 
-import android.location.Geocoder
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
-import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.observe
 import androidx.navigation.findNavController
-import com.example.myapplication.LocationManager
+import com.example.myapplication.Controller
+import com.example.myapplication.LocationController
 import com.example.myapplication.R
 import com.example.myapplication.bluetooth.BleController
 import com.example.myapplication.bluetooth.BluetoothManager
@@ -23,7 +19,6 @@ import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import java.lang.Exception
 import java.util.*
@@ -32,6 +27,7 @@ class AvistamientoFragment : Fragment() {
 
     private var disposables = CompositeDisposable()
     private val bleController = BleController()
+    private lateinit var  locationController:LocationController
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,8 +44,8 @@ class AvistamientoFragment : Fragment() {
     }
 
 
-    private fun setHasmapObserver(index:Int, editTextId:Int, bleController: BleController){
-        bleController.sensorData[index]?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+    private fun setCommonObserver(index:Int, editTextId:Int, controller: Controller){
+        controller.myData[index]?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             if(it != "e\r\n")
                 view?.findViewById<EditText>(editTextId)!!.setText(it)
             else
@@ -60,8 +56,47 @@ class AvistamientoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val calendar = GregorianCalendar()
-        val geocoder = Geocoder(context)
-        bleController.startTalking(view.context);
+        locationController = LocationController(view.context)
+
+
+        if(BluetoothManager.bleDeviceMac != "") {
+            bleController.startTalking(view.context)
+            setCommonObserver(BluetoothManager.LONGITUDE_SENSOR, R.id.etLongitud,bleController)
+            setCommonObserver(BluetoothManager.LATITUDE_SENSOR, R.id.etLatitud,bleController)
+            setCommonObserver(BluetoothManager.HUMIDITY_SENSOR, R.id.etHumidity,bleController)
+            setCommonObserver(BluetoothManager.ALTITUDE_SENSOR, R.id.etAltitude,bleController)
+            setCommonObserver(BluetoothManager.TEMPERATURE_SENSOR, R.id.etTemperature,bleController)
+            setCommonObserver(BluetoothManager.UV_SENSOR, R.id.etIndexUV,bleController)
+            setCommonObserver(BluetoothManager.PRESSURE_SENSOR, R.id.etPressure,bleController)
+        }
+        else {
+            locationController.startGettingInfinitePositions()
+            setCommonObserver(locationController.LONGITUDE_ID, R.id.etLongitud, locationController)
+            setCommonObserver(locationController.LATITUDE_ID, R.id.etLatitud, locationController)
+            setCommonObserver(locationController.COUNTRY_ID, R.id.etPais, locationController)
+            setCommonObserver(locationController.PLACE_ID, R.id.etLugar, locationController)
+            /*disposables.add(
+
+                        locationController.locationObservable.observeOn(Schedulers.io()).flatMap {
+                        val mylocationObject = MylocationObject(it.longitude, it.latitude, "Not Found", "Not Found")
+                        try {
+                            geocoder.getFromLocation(it.latitude, it.longitude, 3).forEach { address ->
+                                mylocationObject.country = address.countryName;
+                                mylocationObject.place = address.adminArea;
+                            }
+                        } catch (e: Exception) {
+                            //Log.e("Geocoder", "Geocoder didn't found anything");
+                        }
+                        return@flatMap Observable.just(mylocationObject)
+
+                    }.observeOn(AndroidSchedulers.mainThread()).subscribe {
+                        view.findViewById<EditText>(R.id.etLatitud).setText(it.latitude.toString());
+                        view.findViewById<EditText>(R.id.etLongitud).setText(it.longitude.toString());
+                        view.findViewById<EditText>(R.id.etLugar).setText(it.place);
+                        view.findViewById<EditText>(R.id.etPais).setText(it.country)
+                    }
+            )*/
+        }
 
         view.findViewById<EditText>(R.id.etHour).setText(calendar.get(Calendar.HOUR_OF_DAY).toString())
         view.findViewById<EditText>(R.id.etMinute).setText(calendar.get(Calendar.MINUTE).toString())
@@ -69,49 +104,6 @@ class AvistamientoFragment : Fragment() {
         view.findViewById<EditText>(R.id.etMonth).setText(calendar.get(Calendar.MONTH).toString())
         view.findViewById<EditText>(R.id.etYear).setText(calendar.get(Calendar.YEAR).toString())
 
-        setHasmapObserver(BluetoothManager.LONGITUDE_SENSOR, R.id.etLongitud,bleController)
-        setHasmapObserver(BluetoothManager.LATITUDE_SENSOR, R.id.etLatitud,bleController)
-        setHasmapObserver(BluetoothManager.HUMIDITY_SENSOR, R.id.etHumidity,bleController)
-        setHasmapObserver(BluetoothManager.ALTITUDE_SENSOR, R.id.etAltitude,bleController)
-        setHasmapObserver(BluetoothManager.TEMPERATURE_SENSOR, R.id.etTemperature,bleController)
-        setHasmapObserver(BluetoothManager.UV_SENSOR, R.id.etIndexUV,bleController)
-        setHasmapObserver(BluetoothManager.PRESSURE_SENSOR, R.id.etPressure,bleController)
-
-          /* disposables.add(
-                   BluetoothManager.startTalking().subscribe{
-                       when(BluetoothManager.current_sensor_id){
-                           BluetoothManager.LONGITUDE_SENSOR ->  view.findViewById<EditText>(R.id.etLongitud).setText(it)
-                           BluetoothManager.LATITUDE_SENSOR ->  view.findViewById<EditText>(R.id.etLatitud).setText(it)
-                           BluetoothManager.ALTITUDE_SENSOR -> view.findViewById<EditText>(R.id.etAltitude).setText(it)
-                           BluetoothManager.PRESSURE_SENSOR -> view.findViewById<EditText>(R.id.etPressure).setText(it)
-                           BluetoothManager.HUMIDITY_SENSOR -> view.findViewById<EditText>(R.id.etHumidity).setText(it)
-                           BluetoothManager.TEMPERATURE_SENSOR -> view.findViewById<EditText>(R.id.etTemperature).setText(it)
-                           BluetoothManager.UV_SENSOR -> view.findViewById<EditText>(R.id.etIndexUV).setText(it)
-                       }
-
-
-               data class  MylocationObject(var longitude:Double, var latitude:Double, var country: String, var place:String);
-            disposables.add(
-                    LocationManager.getLocationObservable(view.context).observeOn(Schedulers.io()).flatMap {
-                    val mylocationObject = MylocationObject(it.longitude, it.latitude, "Not Found", "Not Found")
-                    try {
-                        geocoder.getFromLocation(it.latitude, it.longitude, 3).forEach { address ->
-                            mylocationObject.country = address.countryName;
-                            mylocationObject.place = address.adminArea;
-                        }
-                    } catch (e: Exception) {
-                        //Log.e("Geocoder", "Geocoder didn't found anything");
-                    }
-                    return@flatMap Observable.just(mylocationObject)
-
-                }.observeOn(AndroidSchedulers.mainThread()).subscribe {
-                    view.findViewById<EditText>(R.id.etLatitud).setText(it.latitude.toString());
-                    view.findViewById<EditText>(R.id.etLongitud).setText(it.longitude.toString());
-                    view.findViewById<EditText>(R.id.etLugar).setText(it.place);
-                    view.findViewById<EditText>(R.id.etPais).setText(it.country)
-                }
-            )
-        }*/
 
 
 
@@ -120,7 +112,8 @@ class AvistamientoFragment : Fragment() {
             val databaseRepository =  DatabaseRepository(view.context);
             databaseRepository.insertNewAnimalToDB(newDatabaseEntry)
             view.findNavController().navigate(AvistamientoFragmentDirections.actionAvistamiento2ToMainFragment2())
-            bleController.stopTalking();
+            if(BluetoothManager.bleDeviceMac != "")
+                bleController.stopTalking();
         }
     }
 
@@ -143,6 +136,7 @@ class AvistamientoFragment : Fragment() {
     override fun onDestroy() {
         disposables.dispose()
         bleController.stopTalking()
+        locationController.stopGettingPositions()
         super.onDestroy()
 
     }

@@ -11,7 +11,6 @@ import io.reactivex.Observable
 
 @SuppressLint("MissingPermission")
 object LocationManager {
-    var isThereArduino = false;
      var locationObservable: Observable<Location>? = null;
 
 
