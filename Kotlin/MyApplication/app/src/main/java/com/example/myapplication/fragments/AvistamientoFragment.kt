@@ -16,11 +16,8 @@ import com.example.myapplication.bluetooth.BluetoothManager
 import com.example.myapplication.room.data_classes.AvistamientoData
 import com.example.myapplication.room.DatabaseRepository
 import com.jakewharton.rxbinding2.view.clicks
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
+import com.jakewharton.rxbinding2.widget.text
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import java.lang.Exception
 import java.util.*
 
 class AvistamientoFragment : Fragment() {
@@ -44,15 +41,6 @@ class AvistamientoFragment : Fragment() {
     }
 
 
-    private fun setCommonObserver(index:Int, editTextId:Int, controller: Controller){
-        controller.myData[index]?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            if(it != "e\r\n")
-                view?.findViewById<EditText>(editTextId)!!.setText(it)
-            else
-                view?.findViewById<EditText>(editTextId)!!.setText("No Data") })
-
-
-    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val calendar = GregorianCalendar()
@@ -61,41 +49,22 @@ class AvistamientoFragment : Fragment() {
 
         if(BluetoothManager.bleDeviceMac != "") {
             bleController.startTalking(view.context)
-            setCommonObserver(BluetoothManager.LONGITUDE_SENSOR, R.id.etLongitud,bleController)
-            setCommonObserver(BluetoothManager.LATITUDE_SENSOR, R.id.etLatitud,bleController)
             setCommonObserver(BluetoothManager.HUMIDITY_SENSOR, R.id.etHumidity,bleController)
             setCommonObserver(BluetoothManager.ALTITUDE_SENSOR, R.id.etAltitude,bleController)
             setCommonObserver(BluetoothManager.TEMPERATURE_SENSOR, R.id.etTemperature,bleController)
             setCommonObserver(BluetoothManager.UV_SENSOR, R.id.etIndexUV,bleController)
             setCommonObserver(BluetoothManager.PRESSURE_SENSOR, R.id.etPressure,bleController)
+            setArduinoLocationObserver(BluetoothManager.LATITUDE_SENSOR, view)
+            setArduinoLocationObserver(BluetoothManager.LONGITUDE_SENSOR, view)
+            checkPositionData(view)
+
         }
         else {
             locationController.startGettingInfinitePositions()
             setCommonObserver(locationController.LONGITUDE_ID, R.id.etLongitud, locationController)
-            setCommonObserver(locationController.LATITUDE_ID, R.id.etLatitud, locationController)
+            setCommonObserver(locationController.LATITUDE_ID,R.id.etLatitud, locationController)
             setCommonObserver(locationController.COUNTRY_ID, R.id.etPais, locationController)
-            setCommonObserver(locationController.PLACE_ID, R.id.etLugar, locationController)
-            /*disposables.add(
-
-                        locationController.locationObservable.observeOn(Schedulers.io()).flatMap {
-                        val mylocationObject = MylocationObject(it.longitude, it.latitude, "Not Found", "Not Found")
-                        try {
-                            geocoder.getFromLocation(it.latitude, it.longitude, 3).forEach { address ->
-                                mylocationObject.country = address.countryName;
-                                mylocationObject.place = address.adminArea;
-                            }
-                        } catch (e: Exception) {
-                            //Log.e("Geocoder", "Geocoder didn't found anything");
-                        }
-                        return@flatMap Observable.just(mylocationObject)
-
-                    }.observeOn(AndroidSchedulers.mainThread()).subscribe {
-                        view.findViewById<EditText>(R.id.etLatitud).setText(it.latitude.toString());
-                        view.findViewById<EditText>(R.id.etLongitud).setText(it.longitude.toString());
-                        view.findViewById<EditText>(R.id.etLugar).setText(it.place);
-                        view.findViewById<EditText>(R.id.etPais).setText(it.country)
-                    }
-            )*/
+            setCommonObserver(locationController.PLACE_ID,R.id.etLugar, locationController)
         }
 
         view.findViewById<EditText>(R.id.etHour).setText(calendar.get(Calendar.HOUR_OF_DAY).toString())
@@ -112,9 +81,58 @@ class AvistamientoFragment : Fragment() {
             val databaseRepository =  DatabaseRepository(view.context);
             databaseRepository.insertNewAnimalToDB(newDatabaseEntry)
             view.findNavController().navigate(AvistamientoFragmentDirections.actionAvistamiento2ToMainFragment2())
-            if(BluetoothManager.bleDeviceMac != "")
+            if(BluetoothManager.bleDeviceMac != ""){
                 bleController.stopTalking();
+            }
+            locationController.stopGettingPositions()
         }
+    }
+
+
+    private fun setCommonObserver(index:Int, editTextId:Int, controller: Controller){
+        controller.myData[index]?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            if(it != "e\r\n")
+                view?.findViewById<EditText>(editTextId)!!.setText(it)
+            else
+                view?.findViewById<EditText>(editTextId)!!.setText("No Data") })
+
+
+    }
+
+    /**
+     * If no satellite is found by the arduino, the phone gps will be use
+     */
+    private fun checkPositionData(view: View){
+        if( view.findViewById<EditText>(R.id.etLatitud).text().toString()  == "No Data" ||
+                view.findViewById<EditText>(R.id.etLongitud).text().toString() == "No Data"){
+            locationController.getOneGPSPosition()
+            setCommonObserver(locationController.LONGITUDE_ID, R.id.etLongitud, locationController)
+            setCommonObserver(locationController.LATITUDE_ID,R.id.etLatitud, locationController)
+            setCommonObserver(locationController.COUNTRY_ID, R.id.etPais, locationController)
+            setCommonObserver(locationController.PLACE_ID,R.id.etLugar, locationController)
+
+        }
+    }
+
+    private fun setArduinoLocationObserver(sensorID:Int, view: View) {
+        bleController.myData[sensorID]?.observe(viewLifecycleOwner,  androidx.lifecycle.Observer{
+        if(bleController.myData[BluetoothManager.LATITUDE_SENSOR]?.value != "e\r\n" &&
+                bleController.myData[BluetoothManager.LONGITUDE_SENSOR]?.value != "e\r\n" &&
+                bleController.myData[BluetoothManager.LATITUDE_SENSOR]?.value != "" &&
+                bleController.myData[BluetoothManager.LONGITUDE_SENSOR]?.value != ""){
+            var tempLocation = locationController.translateGPS2Place(bleController.myData[BluetoothManager.LATITUDE_SENSOR]?.value?.toDouble()!!,
+                    bleController.myData[BluetoothManager.LONGITUDE_SENSOR]?.value?.toDouble()!!)
+            view.findViewById<EditText>(R.id.etLatitud).setText(tempLocation.latitude.toString())
+            view.findViewById<EditText>(R.id.etLongitud).setText(tempLocation.longitude.toString())
+            view.findViewById<EditText>(R.id.etLugar).setText(tempLocation.place)
+            view.findViewById<EditText>(R.id.etPais).setText(tempLocation.country)
+        }
+        else{
+            view.findViewById<EditText>(R.id.etLatitud).setText("No Data")
+            view.findViewById<EditText>(R.id.etLongitud).setText("No Data")
+            view.findViewById<EditText>(R.id.etLugar).setText("No Data")
+            view.findViewById<EditText>(R.id.etPais).setText("No Data")
+        }})
     }
 
     private fun createAvistamientoObject(view:View):AvistamientoData{

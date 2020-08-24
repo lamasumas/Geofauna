@@ -8,6 +8,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.location.*
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -75,7 +76,7 @@ class LocationController :Controller {
     }
 
     fun translateGPS2Place(lon:Double, lat: Double):MylocationObject{
-        val mylocationObject = MylocationObject(lon, lat, "Not Found", "Not Found")
+        val mylocationObject = MylocationObject(lon, lat, "Sin conexión", "Sin conexión")
         try {
         geocoder.getFromLocation(lon, lat,3).forEach { address ->
             mylocationObject.country = address.countryName;
@@ -84,6 +85,17 @@ class LocationController :Controller {
             Log.e("Geocoder", "Geocoder didn't found anything");
         }
         return mylocationObject
+    }
+
+    fun getOneGPSPosition(){
+        locationObservable.singleOrError().observeOn(Schedulers.io())
+                .flatMap { Single.just(translateGPS2Place(it.longitude, it.latitude))}
+                .observeOn(AndroidSchedulers.mainThread()).subscribe {
+                    singleLocation ->
+                    myData[LATITUDE_ID]?.value =  singleLocation.latitude.toString()
+                    myData[LONGITUDE_ID]?.value = singleLocation.longitude.toString()
+                    myData[PLACE_ID]?.value = singleLocation.place
+                    myData[COUNTRY_ID]?.value = singleLocation.country }
     }
 
     fun stopGettingPositions(){
