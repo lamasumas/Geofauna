@@ -2,7 +2,9 @@ package com.example.myapplication.room
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.myapplication.room.data_classes.AvistamientoData
+import com.example.myapplication.room.data_classes.AnimalAdvanceData
+import com.example.myapplication.room.data_classes.AnimalSimpleData
+import com.example.myapplication.room.data_classes.SimpleAdvanceRelation
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Observable
@@ -13,19 +15,31 @@ import io.reactivex.Single
 interface AvistamientoDAO{
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAvistamiento(vararg avistamiento: AvistamientoData): Completable
+    fun insertAnimalSimple(vararg avistamiento: AnimalSimpleData): Completable
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAnimalAdvance(vararg avistamiento: AnimalAdvanceData): Completable
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertRelation(vararg simpleAdvanceRelation: SimpleAdvanceRelation)
 
     @Query("SELECT * FROM animals")
-    fun getAlllAvistamiento(): Observable<List<AvistamientoData>>
+    fun getAnimalSimple(): Observable<List<AnimalSimpleData>>
 
-    @Query("SELECT * FROM animals WHERE uid=:uid")
-    fun getAvistamientoById(vararg uid:Int): Observable<AvistamientoData>
+    @Query("SELECT * FROM animals WHERE simple_id=:uid")
+    fun getAnimalSimpleById(vararg uid:Int): Observable<AnimalSimpleData>
 
     @Update
-    fun updateAvistamiento(vararg avistamientoData: AvistamientoData):Completable
+    fun updateAnimalSimple(vararg avistamientoData: AnimalSimpleData):Completable
 
     @Delete
-    fun deleteAvistamiento(vararg avistamientoData: AvistamientoData):Completable
+    fun deleteAnimalSimple(vararg avistamientoData: AnimalSimpleData):Completable
+
+    @Transaction
+    @Query("SELECT * FROM animals")
+        fun getAllData(): List<SimpleAdvanceRelation>
+
+
 
 
 }

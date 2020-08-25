@@ -12,7 +12,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.myapplication.R
 import com.example.myapplication.room.DatabaseRepository
-import com.example.myapplication.room.data_classes.AvistamientoData
+import com.example.myapplication.room.data_classes.AnimalSimpleData
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.android.schedulers.AndroidSchedulers
 
@@ -38,8 +38,6 @@ class EditSightseen : Fragment() {
         val dbRepository = DatabaseRepository(view.context)
         dbRepository.retrieveAnimal(uid).observeOn(AndroidSchedulers.mainThread()).subscribe {
             view.findViewById<EditText>(R.id.etEspecie).setText(it.especie)
-            view.findViewById<EditText>(R.id.etPais).setText(it.pais)
-            view.findViewById<EditText>(R.id.etLugar).setText(it.lugar)
             view.findViewById<EditText>(R.id.etLongitud).setText(it.longitude.toString())
             view.findViewById<EditText>(R.id.etLatitud).setText(it.latitude.toString())
             val time = it.time.split(":")
@@ -56,7 +54,7 @@ class EditSightseen : Fragment() {
         }
     }
 
-    private fun generateAnimal(view: View, uid: Int): AvistamientoData {
+    private fun generateAnimal(view: View, uid: Int): AnimalSimpleData {
         val species = view.findViewById<EditText>( R.id.etEspecie).text.toString();
         val place = view.findViewById<EditText>( R.id.etLugar).text.toString();
         val country = view.findViewById<EditText>( R.id.etPais).text.toString();
@@ -67,7 +65,7 @@ class EditSightseen : Fragment() {
         val date = view.findViewById<EditText>(R.id.etDay).text.toString() + "/" +
                 view.findViewById<EditText>(R.id.etMonth).text.toString() +
                 "/" + view.findViewById<EditText>(R.id.etYear).text.toString();
-        return AvistamientoData(uid=uid, especie=species, date = date, latitude =  latitude.toDouble(),
-                longitude = longitude.toDouble(), lugar = place, pais = country, time = time);
+        return AnimalSimpleData(uid=uid, especie=species, date = date, latitude =  latitude.toDouble(),
+                longitude = longitude.toDouble(), time = time);
     }
 }

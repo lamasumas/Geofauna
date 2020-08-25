@@ -26,6 +26,10 @@ class BleController : Controller {
     var stopConnection = false
     private var disposable: Disposable? = null
 
+    /**
+     *
+     * Incializacion del hasmap con los valores mutables de los sensores
+     */
     constructor() {
         myData[BluetoothManager.LATITUDE_SENSOR] = MutableLiveData("")
         myData[BluetoothManager.LONGITUDE_SENSOR] = MutableLiveData("")
@@ -37,11 +41,26 @@ class BleController : Controller {
 
     }
 
+    /**
+     * Crea observable con el que se escanea los alrededores buscando dispositivos bluetooth
+     * @param context, contexto necesario para crear el cliente de la libreria RxAndroidBle
+     * @return Observable<ScanResult>, Un observable que emite infinitamente los dispositivos encontrados
+     */
     fun scanDevices(context: Context): Observable<ScanResult> {
 
         return RxBleClient.create(context).scanBleDevices(ScanSettings.Builder().build())
     }
 
+    /**
+     * Funcion que comienza la comunicación con la Arduino y actualiza los valores del hasmap.
+     * Esta función envia al sensor hm-10 de la arduino el id establecido para cada sensor, y recibe
+     * el valor de dicho sensor.
+     * Esta funcion se ejecuta en bucle, pide indices de manera circulas hasta que el valor de  "stopConnection"
+     * cambia, que envia un mensaje al arduino avisand de que se cierra la comunicacion. Finalmente se termina
+     * el proceso con "dispose()"
+     *
+     * @param context, contexto para crear el cliente de la librearía RxAndroidBle
+     */
     fun startTalking(context: Context) {
         disposable = RxBleClient.create(context).getBleDevice(BluetoothManager.bleDeviceMac).establishConnection(false).observeOn(Schedulers.io()).subscribe { bleConnection ->
 
@@ -85,6 +104,9 @@ class BleController : Controller {
 
     }
 
+    /**
+     * Función que cambia el  valor de stopConnection
+     */
     fun stopTalking() {
         stopConnection = true
     }

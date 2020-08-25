@@ -29,6 +29,10 @@ class LocationController :Controller {
     data class  MylocationObject(var longitude:Double, var latitude:Double, var country: String, var place:String)
 
 
+    /**
+     * Se inicializa el hasmap con los valores mutables de la posición.
+     * Aqui tambien se crea el observable infinito con el que se actualiza se pide actualizar la posicion
+     */
     constructor(context: Context){
 
         geocoder = Geocoder(context)
@@ -62,6 +66,10 @@ class LocationController :Controller {
     }
     }
 
+    /**
+     * Función en la que se subscribe al observable creado en el constructor, y en el que se
+     * actualiza los valores del hasmap
+     */
     fun startGettingInfinitePositions(){
         disposables.add(
                 locationObservable.observeOn(Schedulers.io())
@@ -75,6 +83,13 @@ class LocationController :Controller {
 
     }
 
+    /**
+     * Función con la que se obtiene el lugar y pais basandose en una posicion gps
+     * @param lat: Double con la latitud de la posicion a traducir
+     * @param lon: Double con la longitud de la posicion a traducir
+     * @return MylocationObject, objeto de una data class, este objeto contiene la lat, lon, el país
+     * y el lugar obtenidos de Geocoder
+     */
     fun translateGPS2Place(lon:Double, lat: Double):MylocationObject{
         val mylocationObject = MylocationObject(lon, lat, "", "")
         try {
@@ -98,6 +113,9 @@ class LocationController :Controller {
                     myData[COUNTRY_ID]?.value = singleLocation.country })
     }
 
+    /**
+     * Función que termina la subscripción del observable "locaitonObservable"
+     */
     fun stopGettingPositions(){
         disposables.dispose()
     }

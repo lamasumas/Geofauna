@@ -17,8 +17,8 @@ import com.example.myapplication.LocationController
 import com.example.myapplication.R
 import com.example.myapplication.bluetooth.BleController
 import com.example.myapplication.bluetooth.BluetoothManager
-import com.example.myapplication.room.data_classes.AvistamientoData
 import com.example.myapplication.room.DatabaseRepository
+import com.example.myapplication.room.data_classes.AnimalSimpleData
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.text
 import io.reactivex.disposables.CompositeDisposable
@@ -137,19 +137,26 @@ class AvistamientoFragment : Fragment() {
         }})
     }
 
-    private fun createAvistamientoObject(view:View):AvistamientoData{
-        val species = view.findViewById<EditText>( R.id.etEspecie).text.toString();
-        val place = view.findViewById<EditText>( R.id.etLugar).text.toString();
-        val country = view.findViewById<EditText>( R.id.etPais).text.toString();
-        val latitude = view.findViewById<EditText>(R.id.etLatitud).text.toString();
-        val longitude = view.findViewById<EditText>(R.id.etLongitud).text.toString();
+    private fun createAvistamientoObject(view:View):AnimalSimpleData{
+        val species = view.findViewById<EditText>( R.id.etEspecie).text.toString()
+        val place = view.findViewById<EditText>( R.id.etLugar).text.toString()
+        val country = view.findViewById<EditText>( R.id.etPais).text.toString()
+        val latitude = view.findViewById<EditText>(R.id.etLatitud).text.toString()
+        val longitude = view.findViewById<EditText>(R.id.etLongitud).text.toString()
         val time = view.findViewById<EditText>(R.id.etHour).text.toString() +
-                ":"+view.findViewById<EditText>(R.id.etMinute).text.toString();
+                ":"+view.findViewById<EditText>(R.id.etMinute).text.toString()
         val date = view.findViewById<EditText>(R.id.etDay).text.toString() + "/" +
                 view.findViewById<EditText>(R.id.etMonth).text.toString() +
-                "/" + view.findViewById<EditText>(R.id.etYear).text.toString();
-        return AvistamientoData(especie=species, date = date, latitude =  latitude.toDouble(),
-             longitude = longitude.toDouble(), lugar = place, pais = country, time = time);
+                "/" + view.findViewById<EditText>(R.id.etYear).text.toString()
+        val humidity = view.findViewById<EditText>(R.id.etHumidity).toString()
+        val altitude = view.findViewById<EditText>(R.id.etAltitude).toString()
+        val uv = view.findViewById<EditText>(R.id.etIndexUV).toString()
+        val temperature = view.findViewById<EditText>(R.id.etTemperature).toString()
+        val pressure = view.findViewById<EditText>(R.id.etPressure).toString()
+
+
+        return AnimalSimpleData(especie=species, date = date, latitude =  latitude.toDouble(),
+             longitude = longitude.toDouble(), time = time)
 
 
     }

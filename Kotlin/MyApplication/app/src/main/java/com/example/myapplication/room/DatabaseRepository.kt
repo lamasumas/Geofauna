@@ -2,39 +2,37 @@ package com.example.myapplication.room
 
 import android.content.Context
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.room.Room
-import com.example.myapplication.room.data_classes.AvistamientoData
-import io.reactivex.Flowable
+import com.example.myapplication.room.data_classes.AnimalAdvanceData
+import com.example.myapplication.room.data_classes.AnimalSimpleData
 import io.reactivex.Observable
-import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import java.util.*
 
 
 class DatabaseRepository(context: Context){
-    val db =  Room.databaseBuilder(context, AppDatabase::class.java, "application_db").build();
+    val db =  Room.databaseBuilder(context, AppDatabase::class.java, "application_db")
+            .fallbackToDestructiveMigration().build();
 
-    fun insertNewAnimalToDB(animal: AvistamientoData) {
-        db.avistamientoDao().insertAvistamiento(animal).subscribeOn(Schedulers.io()).subscribe{
+    fun insertNewAnimalToDB(animalSimpleData: AnimalSimpleData) {
+        db.avistamientoDao().insertAnimalSimple(animalSimpleData).subscribeOn(Schedulers.io()).subscribe{
             Log.e("Database repository", "Animnal added")}
     }
 
 
-    fun retrieveSightsings(): Observable<List<AvistamientoData>> {
-        return db.avistamientoDao().getAlllAvistamiento()
+    fun retrieveSightsings(): Observable<List<AnimalSimpleData>> {
+        return db.avistamientoDao().getAnimalSimple()
     }
 
-    fun retrieveAnimal(uid:Int):Observable<AvistamientoData>{
-        return db.avistamientoDao().getAvistamientoById(uid)
+    fun retrieveAnimal(uid:Int):Observable<AnimalSimpleData>{
+        return db.avistamientoDao().getAnimalSimpleById(uid)
     }
 
-    fun updateAnimal(animal: AvistamientoData){
-        db.avistamientoDao().updateAvistamiento(animal).subscribeOn(Schedulers.io()).subscribe{
+    fun updateAnimal(animal: AnimalSimpleData){
+        db.avistamientoDao().updateAnimalSimple(animal).subscribeOn(Schedulers.io()).subscribe{
             Log.e("Database repository", "Anmimal updated")}
     }
-    fun deleteAnimal(animal:AvistamientoData){
-        db.avistamientoDao().deleteAvistamiento(animal).subscribe {
+    fun deleteAnimal(animal:AnimalSimpleData){
+        db.avistamientoDao().deleteAnimalSimple(animal).subscribe {
             Log.e("Database repository", "Animnal deleted")
         }
     }

@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.fragments.MainFragmentDirections
 import com.example.myapplication.room.DatabaseRepository
-import com.example.myapplication.room.data_classes.AvistamientoData
+import com.example.myapplication.room.data_classes.AnimalSimpleData
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class DatabaseRvAdapter(val elements:List<AvistamientoData>): RecyclerView.Adapter<AnimalViewHolder>() {
+class DatabaseRvAdapter(val elements:List<AnimalSimpleData>): RecyclerView.Adapter<AnimalViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimalViewHolder {
         val theView = LayoutInflater.from(parent.context).inflate(R.layout.animal_card_scheme, parent,false)
@@ -28,8 +28,6 @@ class DatabaseRvAdapter(val elements:List<AvistamientoData>): RecyclerView.Adapt
         holder.species.text = elements[position].especie
         holder.lon.text = elements[position].longitude.toString()
         holder.lat.text = elements[position].latitude.toString()
-        holder.country.text = elements[position].pais
-        holder.place.text = elements[position].lugar
         holder.time.text = elements[position].time
         holder.date.text = elements[position].date
         holder.uid = elements[position].uid
