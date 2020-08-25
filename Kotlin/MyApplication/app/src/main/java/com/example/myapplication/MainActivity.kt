@@ -9,6 +9,7 @@ import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import androidx.appcompat.app.AlertDialog
@@ -18,6 +19,10 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.myapplication.bluetooth.BluetoothManager
 import com.google.android.material.bottomappbar.BottomAppBar
+import io.reactivex.exceptions.UndeliverableException
+import io.reactivex.plugins.RxJavaPlugins
+import java.io.IOException
+import java.net.SocketException
 import java.util.jar.Manifest
 
 class MainActivity : AppCompatActivity() {
@@ -32,16 +37,17 @@ class MainActivity : AppCompatActivity() {
         getPermissions()
 
 
+
     }
 
 
 
     private fun getPermissions(){
 
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.INTERNET) != PackageManager.PERMISSION_DENIED ||
-            ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_DENIED ||
-            ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_DENIED ||
-            ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION) != PackageManager.PERMISSION_DENIED )
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.INTERNET) == PackageManager.PERMISSION_DENIED ||
+            ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED ||
+            ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_DENIED ||
+            ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_DENIED )
             ActivityCompat.requestPermissions(this, arrayOf<String>(android.Manifest.permission.INTERNET, android.Manifest.permission.ACCESS_FINE_LOCATION,
                 android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION), GPS_PERMISION_CODE);
 
@@ -83,7 +89,8 @@ class MainActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when(requestCode){
             GPS_PERMISION_CODE -> {
-                if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                if(grantResults.isNotEmpty() && ( grantResults[0] == PackageManager.PERMISSION_DENIED  || grantResults[1] == PackageManager.PERMISSION_DENIED
+                                || grantResults[2] == PackageManager.PERMISSION_DENIED  || grantResults[3] == PackageManager.PERMISSION_DENIED)) {
                     val builder = AlertDialog.Builder(this);
                     builder.setTitle(R.string.permisosDenegadosTitulo);
                     builder.setMessage(R.string.permisosDenegadosDescripcion)

@@ -30,7 +30,7 @@ object BluetoothManager{
     val PRESSURE_SENSOR = 5
     val TEMPERATURE_SENSOR = 6
     val FINISH_ID = 7
-    var bleDeviceMac:String = "";
+    var bleDeviceMac:String= ""
 
 
 

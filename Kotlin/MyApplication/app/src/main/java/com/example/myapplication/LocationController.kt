@@ -33,10 +33,10 @@ class LocationController :Controller {
 
         geocoder = Geocoder(context)
 
-        myData[LATITUDE_ID] = MutableLiveData("NOT FOUND")
-        myData[LONGITUDE_ID] = MutableLiveData("NOT FOUND")
-        myData[COUNTRY_ID] = MutableLiveData("NOT FOUND")
-        myData[PLACE_ID] = MutableLiveData("NOT FOUND")
+        myData[LATITUDE_ID] = MutableLiveData("")
+        myData[LONGITUDE_ID] = MutableLiveData("")
+        myData[COUNTRY_ID] = MutableLiveData("")
+        myData[PLACE_ID] = MutableLiveData("")
 
 
        locationObservable = Observable.create { emitter ->
@@ -76,7 +76,7 @@ class LocationController :Controller {
     }
 
     fun translateGPS2Place(lon:Double, lat: Double):MylocationObject{
-        val mylocationObject = MylocationObject(lon, lat, "Sin conexión", "Sin conexión")
+        val mylocationObject = MylocationObject(lon, lat, "", "")
         try {
         geocoder.getFromLocation(lon, lat,3).forEach { address ->
             mylocationObject.country = address.countryName;
@@ -88,14 +88,14 @@ class LocationController :Controller {
     }
 
     fun getOneGPSPosition(){
-        locationObservable.singleOrError().observeOn(Schedulers.io())
+        disposables.add(locationObservable.singleOrError().observeOn(Schedulers.io())
                 .flatMap { Single.just(translateGPS2Place(it.longitude, it.latitude))}
                 .observeOn(AndroidSchedulers.mainThread()).subscribe {
                     singleLocation ->
                     myData[LATITUDE_ID]?.value =  singleLocation.latitude.toString()
                     myData[LONGITUDE_ID]?.value = singleLocation.longitude.toString()
                     myData[PLACE_ID]?.value = singleLocation.place
-                    myData[COUNTRY_ID]?.value = singleLocation.country }
+                    myData[COUNTRY_ID]?.value = singleLocation.country })
     }
 
     fun stopGettingPositions(){

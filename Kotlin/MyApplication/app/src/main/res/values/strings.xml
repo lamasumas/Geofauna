@@ -38,7 +38,7 @@
     <string name="apagadoGPSTitulo">Aviso GPS</string>
     <string name="cerrarAlertBoton">Cerrar</string>
     <string name="permisosDenegadosTitulo">Permisos revocados</string>
-    <string name="permisosDenegadosDescripcion">Esta aplicación necesita permisos de ubicación para así acceder al gps, en caso de que sea necesario</string>
+    <string name="permisosDenegadosDescripcion">Esta aplicación necesita permisos de ubicación e internet para así acceder al gps, en caso de que sea necesario</string>
     <string name="tvEspecieTitulo">Especie</string>
     <string name="tvLongitudTitulo">Longitud</string>
     <string name="tvLatitudTitulo">Latitud</string>
@@ -53,6 +53,11 @@
     <string name="bluetoothDenegadoTitulo">Bluetooth denegado</string>
     <string name="bluetoothDenegadoDescripcion">Si no enciende el bluetooth, no podra utilizar arduino</string>
     <string name="tvBluetoothScanTitulo">Buscando dispositivos bluetooth</string>
+    <string name="tvBluetoothScanTituloAlternativo">Problemas con el bluetooth</string>
+    <string name="tvBluetoothNoDisponible">El bluetooth no esta disponible en este dispositivo android</string>
+    <string name="tvBluetoothDesactivado">El bluetooth se encuentra apagado por favor enciendalo</string>
+    <string name="tvBluetoothLocalizacionConcesion">Los permisos necesarios de localizacion no fueron concedidos</string>
+    <string name="tvBluetoothLocalizacionApagado">La ubicación esta desactivada</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

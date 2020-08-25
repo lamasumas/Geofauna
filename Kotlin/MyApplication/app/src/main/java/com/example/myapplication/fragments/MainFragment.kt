@@ -18,6 +18,7 @@ import com.example.myapplication.bluetooth.dialog.BluetoothScanDialog
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.jakewharton.rxbinding2.view.clicks
+import com.polidea.rxandroidble2.RxBleClient
 import com.polidea.rxandroidble2.scan.ScanResult
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
