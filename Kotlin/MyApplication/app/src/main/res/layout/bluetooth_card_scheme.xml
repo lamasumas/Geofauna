@@ -3,47 +3,55 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/cvBluetooth"
+    android:layout_gravity="center"
     android:layout_margin="10dp">
+
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Device name:"/>
+                android:text="Device name:" />
+
             <TextView
+                android:id="@+id/tvDeviceName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvDeviceName"
-                android:text="dafdf"/>
+                android:text="" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="MAC Address: "/>
+                android:text="MAC Address: " />
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/tvMac"
-                android:textStyle=""/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="" />
         </LinearLayout>
+
         <Button
-            android:layout_width="match_parent"
+            android:id="@+id/btnConnect"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/btnConnect"/>
+            android:text="@string/btnConectar" />
     </LinearLayout>
-
-
-
 
 
 </androidx.cardview.widget.CardView>

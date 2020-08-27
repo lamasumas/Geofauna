@@ -58,6 +58,7 @@
     <string name="tvBluetoothDesactivado">El bluetooth se encuentra apagado por favor enciendalo</string>
     <string name="tvBluetoothLocalizacionConcesion">Los permisos necesarios de localizacion no fueron concedidos</string>
     <string name="tvBluetoothLocalizacionApagado">La ubicación esta desactivada</string>
+    <string name="btnConectar">Seleccionar</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

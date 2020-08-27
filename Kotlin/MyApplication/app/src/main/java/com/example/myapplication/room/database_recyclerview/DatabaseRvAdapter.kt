@@ -25,7 +25,7 @@ class DatabaseRvAdapter(val elements:List<SimpleAdvanceRelation>): RecyclerView.
     override fun getItemCount(): Int {
         return elements.size
     }
-    
+
 
     override fun onBindViewHolder(holder: AnimalViewHolder, position: Int) {
         holder.species.text = elements[position].simpleData.especie
