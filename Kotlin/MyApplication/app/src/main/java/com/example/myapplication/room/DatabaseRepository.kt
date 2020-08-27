@@ -14,15 +14,16 @@ class DatabaseRepository(context: Context){
     val db =  Room.databaseBuilder(context, AppDatabase::class.java, "application_db")
             .fallbackToDestructiveMigration().build();
 
-    fun insertNewAnimalToDB(animalSimpleData: AnimalSimpleData) {
-        db.avistamientoDao().insertAnimalSimple(animalSimpleData).subscribeOn(Schedulers.io()).subscribe{
-            Log.d("Database repository", "Animnal simple added")}
-    }
 
     fun insertNewAnimalToDB(animalSimpleData: AnimalSimpleData, animalAdvanceData: AnimalAdvanceData){
-        insertNewAnimalToDB(animalSimpleData)
-        db.avistamientoDao().insertAnimalAdvance(animalAdvanceData).subscribeOn(Schedulers.io()).subscribe{
-            Log.d("Database repository", "Animnal Advace added")}
+        db.avistamientoDao().insertAnimalSimple(animalSimpleData).subscribeOn(Schedulers.io()).subscribe{returnedRowId ->
+            Log.d("Database repository", "Animnal simple added")
+            animalAdvanceData.simpleId = returnedRowId
+            db.avistamientoDao().insertAnimalAdvance(animalAdvanceData).subscribeOn(Schedulers.io()).subscribe{
+
+            }
+        }
+
     }
 
 

@@ -95,7 +95,7 @@ class LocationController :Controller {
     fun translateGPS2Place(lon:Double, lat: Double):MylocationObject{
         val mylocationObject = MylocationObject(lon, lat, "", "")
         try {
-        geocoder.getFromLocation(lon, lat,3).forEach { address ->
+        geocoder.getFromLocation (lat, lon,3).forEach { address ->
             mylocationObject.country = address.countryName;
             mylocationObject.place = address.adminArea;
         }}catch (e:Exception){

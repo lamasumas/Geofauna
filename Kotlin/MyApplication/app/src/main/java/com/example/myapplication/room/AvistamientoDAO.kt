@@ -15,7 +15,7 @@ import io.reactivex.Single
 interface AvistamientoDAO{
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAnimalSimple( avistamiento: AnimalSimpleData): Completable
+    fun insertAnimalSimple( avistamiento: AnimalSimpleData): Single<Long>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAnimalAdvance( avistamiento: AnimalAdvanceData): Completable

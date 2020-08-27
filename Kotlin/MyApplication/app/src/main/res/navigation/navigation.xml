@@ -34,7 +34,6 @@
             app:destination="@id/mainFragment2" />
         <argument
             android:name="idAnimal"
-            app:argType="integer"
-            android:defaultValue="0" />
+            app:argType="long" />
     </fragment>
 </navigation>

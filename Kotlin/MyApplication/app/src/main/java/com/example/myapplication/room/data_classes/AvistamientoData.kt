@@ -3,7 +3,7 @@ package com.example.myapplication.room.data_classes
 import androidx.room.*
 
 @Entity(tableName = "animals")
-data class AnimalSimpleData(@PrimaryKey(autoGenerate = true)var simpleId:Int = 0,
+data class AnimalSimpleData(@PrimaryKey(autoGenerate = true)var simpleId:Long = 0,
                             @ColumnInfo(name = "specie") val especie: String,
                             @ColumnInfo(name = "longitude") val longitude: Double,
                             @ColumnInfo(name = "latitude")val latitude: Double,
@@ -11,8 +11,8 @@ data class AnimalSimpleData(@PrimaryKey(autoGenerate = true)var simpleId:Int = 0
                             @ColumnInfo(name = "time") val time: String)
 
 @Entity(tableName = "advance_data")
-data class AnimalAdvanceData(@PrimaryKey(autoGenerate = true) @ColumnInfo(name = "advance_id") var uid:Int = 0,
-                             val simpleId: Int,
+data class AnimalAdvanceData(@PrimaryKey(autoGenerate = true) @ColumnInfo(name = "advance_id") var uid:Long = 0,
+                             var simpleId: Long = 0,
                              @ColumnInfo(name = "country")val pais: String?,
                              @ColumnInfo(name = "place")val  lugar: String?,
                              @ColumnInfo(name = "humidity") val humidity: Double?,
@@ -25,7 +25,7 @@ data class AnimalAdvanceData(@PrimaryKey(autoGenerate = true) @ColumnInfo(name =
 data class SimpleAdvanceRelation(
         @Embedded val simpleData:AnimalSimpleData,
         @Relation(parentColumn = "simpleId",
-                entityColumn = "simpleId"
+                entityColumn = "simpleId", entity = AnimalAdvanceData::class
         )
         val advanceData: AnimalAdvanceData
 )

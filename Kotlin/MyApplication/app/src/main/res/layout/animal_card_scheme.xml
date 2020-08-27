@@ -96,6 +96,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/lCvPlace">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -110,6 +114,11 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10px"
                         android:text="Default text" />
+                </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/lCvCountry">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -124,6 +133,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10px"
                         android:text="Default text" />
+                </LinearLayout>
 
                 </LinearLayout>
 
@@ -131,6 +141,10 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:id="@+id/lCvTemperature"
+                        android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -145,6 +159,11 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10px"
                         android:text="Default text" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/lCvHumedad"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -159,6 +178,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10px"
                         android:text="Default text" />
+                    </LinearLayout>
 
 
                 </LinearLayout>
@@ -166,6 +186,10 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:id="@+id/lCvPressure"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -180,7 +204,12 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10px"
                         android:text="Default text" />
+                    </LinearLayout>
 
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/lCvUV">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -194,10 +223,12 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10px"
                         android:text="Default text" />
-
+                </LinearLayout>
 
                 </LinearLayout>
+
                 <LinearLayout
+                    android:id="@+id/lCvAltitud"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -214,7 +245,6 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10px"
                         android:text="Default text" />
-
 
 
                 </LinearLayout>

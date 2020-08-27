@@ -49,7 +49,7 @@ class EditSightseen : AbstractDatabaseFragment() {
             view.findViewById<EditText>(R.id.etYear).setText(date.get(2))
         }
         view.findViewById<Button>(R.id.btnEditDatabaseAnimal).clicks().subscribe {
-            dbRepository.updateAnimal(createSimpleAnimalObject(view, uid))
+            dbRepository.updateAnimal(createSimpleAnimalObject(view))
             view.findNavController().navigate(EditSightseenDirections.actionEditSightseenToMainFragment2())
         }
     }

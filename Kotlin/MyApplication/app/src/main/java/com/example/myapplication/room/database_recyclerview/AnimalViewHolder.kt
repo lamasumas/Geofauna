@@ -17,8 +17,8 @@ class AnimalViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     var time : TextView
     var lon : TextView
     var lat : TextView
-    var idSimple : Int
-    var idAdvance : Int
+    var idSimple : Long
+    var idAdvance : Long
     var humidity: TextView
     var altitude:TextView
     var temperature:TextView
@@ -27,6 +27,7 @@ class AnimalViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     var hiddenViews: LinearLayout
     var btnEdit: Button
     var btnDelete : Button
+    var generalView:View
     init {
         cv = itemView.findViewById(R.id.cvAnimalScheme)
         species = itemView.findViewById(R.id.tvCvSpecies)
@@ -46,6 +47,7 @@ class AnimalViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         uv = itemView.findViewById(R.id.tvCvUV)
         temperature = itemView.findViewById(R.id.tvCvTemperature)
         humidity = itemView.findViewById(R.id.tvCvHumidity)
+        generalView = itemView
     }
 
 

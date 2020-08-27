@@ -86,7 +86,7 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
 
         disposables.add(view.findViewById<Button>(R.id.btnAñadirAvistamiento).clicks().subscribe {
             val newDatabaseSimpleEntry = createSimpleAnimalObject(view)
-            val newDatabaseAdvanceEntry = createAdvanceAnimalObject(view, newDatabaseSimpleEntry.simpleId)
+            val newDatabaseAdvanceEntry = createAdvanceAnimalObject(view)
             val databaseRepository =  DatabaseRepository(view.context);
             databaseRepository.insertNewAnimalToDB(newDatabaseSimpleEntry, newDatabaseAdvanceEntry)
             view.findNavController().navigate(AvistamientoFragmentDirections.actionAvistamiento2ToMainFragment2())
