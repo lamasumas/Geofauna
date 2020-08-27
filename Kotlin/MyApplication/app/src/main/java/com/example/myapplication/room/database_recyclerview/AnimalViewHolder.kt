@@ -17,7 +17,13 @@ class AnimalViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     var time : TextView
     var lon : TextView
     var lat : TextView
-    var uid : Int
+    var idSimple : Int
+    var idAdvance : Int
+    var humidity: TextView
+    var altitude:TextView
+    var temperature:TextView
+    var pressures:TextView
+    var uv: TextView
     var hiddenViews: LinearLayout
     var btnEdit: Button
     var btnDelete : Button
@@ -33,7 +39,13 @@ class AnimalViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         hiddenViews = itemView.findViewById(R.id.hidenCardText)
         btnEdit = itemView.findViewById(R.id.btnEditSightseen)
         btnDelete = itemView.findViewById(R.id.btnDeleteSightseen)
-        uid = 0
+        idSimple = 0
+        idAdvance = 0
+        pressures = itemView.findViewById(R.id.tvCvPressure)
+        altitude = itemView.findViewById(R.id.tvCvAltitude)
+        uv = itemView.findViewById(R.id.tvCvUV)
+        temperature = itemView.findViewById(R.id.tvCvTemperature)
+        humidity = itemView.findViewById(R.id.tvCvHumidity)
     }
 
 

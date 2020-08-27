@@ -5,7 +5,6 @@ import android.content.Context
 import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,20 +17,15 @@ import com.example.myapplication.R
 import com.example.myapplication.bluetooth.BleController
 import com.example.myapplication.bluetooth.BluetoothManager
 import com.example.myapplication.room.DatabaseRepository
-import com.example.myapplication.room.data_classes.AnimalSimpleData
 import com.jakewharton.rxbinding2.view.clicks
-import com.jakewharton.rxbinding2.widget.text
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.plugins.RxJavaPlugins
 import java.util.*
 
-class AvistamientoFragment : Fragment() {
+class AvistamientoFragment : AbstractDatabaseFragment() {
 
-    private var disposables = CompositeDisposable()
-    private val bleController = BleController()
-    private lateinit var  locationController:LocationController
+    private val  bleController:BleController  by lazy { BleController() }
+    private val  locationController:LocationController by lazy { LocationController(requireContext()) }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +51,6 @@ class AvistamientoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val calendar = GregorianCalendar()
-        locationController = LocationController(view.context)
         val checkBluetooth = BluetoothAdapter.getDefaultAdapter()
         val locationManager = view.context.getSystemService(Context.LOCATION_SERVICE) as LocationManager;
 
@@ -91,16 +84,17 @@ class AvistamientoFragment : Fragment() {
 
 
 
-        view.findViewById<Button>(R.id.btnAñadirAvistamiento).clicks().subscribe {
-            val newDatabaseEntry = createAvistamientoObject(view)
+        disposables.add(view.findViewById<Button>(R.id.btnAñadirAvistamiento).clicks().subscribe {
+            val newDatabaseSimpleEntry = createSimpleAnimalObject(view)
+            val newDatabaseAdvanceEntry = createAdvanceAnimalObject(view, newDatabaseSimpleEntry.simpleId)
             val databaseRepository =  DatabaseRepository(view.context);
-            databaseRepository.insertNewAnimalToDB(newDatabaseEntry)
+            databaseRepository.insertNewAnimalToDB(newDatabaseSimpleEntry, newDatabaseAdvanceEntry)
             view.findNavController().navigate(AvistamientoFragmentDirections.actionAvistamiento2ToMainFragment2())
             if(BluetoothManager.bleDeviceMac != ""){
                 bleController.stopTalking();
             }
             locationController.stopGettingPositions()
-        }
+        })
     }
 
 
@@ -137,29 +131,6 @@ class AvistamientoFragment : Fragment() {
         }})
     }
 
-    private fun createAvistamientoObject(view:View):AnimalSimpleData{
-        val species = view.findViewById<EditText>( R.id.etEspecie).text.toString()
-        val place = view.findViewById<EditText>( R.id.etLugar).text.toString()
-        val country = view.findViewById<EditText>( R.id.etPais).text.toString()
-        val latitude = view.findViewById<EditText>(R.id.etLatitud).text.toString()
-        val longitude = view.findViewById<EditText>(R.id.etLongitud).text.toString()
-        val time = view.findViewById<EditText>(R.id.etHour).text.toString() +
-                ":"+view.findViewById<EditText>(R.id.etMinute).text.toString()
-        val date = view.findViewById<EditText>(R.id.etDay).text.toString() + "/" +
-                view.findViewById<EditText>(R.id.etMonth).text.toString() +
-                "/" + view.findViewById<EditText>(R.id.etYear).text.toString()
-        val humidity = view.findViewById<EditText>(R.id.etHumidity).toString()
-        val altitude = view.findViewById<EditText>(R.id.etAltitude).toString()
-        val uv = view.findViewById<EditText>(R.id.etIndexUV).toString()
-        val temperature = view.findViewById<EditText>(R.id.etTemperature).toString()
-        val pressure = view.findViewById<EditText>(R.id.etPressure).toString()
-
-
-        return AnimalSimpleData(especie=species, date = date, latitude =  latitude.toDouble(),
-             longitude = longitude.toDouble(), time = time)
-
-
-    }
     override fun onDestroy() {
         disposables.dispose()
         bleController.stopTalking()

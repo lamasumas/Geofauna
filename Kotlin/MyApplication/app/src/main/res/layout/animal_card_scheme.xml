@@ -54,90 +54,189 @@
                 android:id="@+id/hidenCardText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone"
-                android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10px"
-                    android:text="@string/tvLugar"
-                    android:textStyle="bold" />
-                <TextView
-                    android:id="@+id/tvCvPlace"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10px"
-                    android:text="Default text" />
-                <TextView
-                    android:layout_margin="10px"
-                    android:layout_width="wrap_content"
-                    android:textStyle="bold"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tvPais" />
-                <TextView
-                    android:layout_margin="10px"
-                    android:id="@+id/tvCvCountry"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Default text" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:textStyle="bold"
-                    android:layout_margin="10px"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tvLatitud" />
-                <TextView
-                    android:layout_margin="10px"
-                    android:id="@+id/tvCvLatitude"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Default text" />
-                <TextView
-                    android:textStyle="bold"
-                    android:layout_margin="10px"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tvLongitud" />
-                <TextView
-                    android:layout_margin="10px"
-                    android:id="@+id/tvCvLongitude"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Default text" />
+                android:orientation="vertical"
+                android:visibility="visible">
 
 
-            </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10px"
+                        android:text="@string/tvLatitud"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvCvLatitude"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10px"
+                        android:text="Default text" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10px"
+                        android:text="@string/tvLongitud"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvCvLongitude"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10px"
+                        android:text="Default text" />
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10px"
+                        android:text="@string/tvLugar"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvCvPlace"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10px"
+                        android:text="Default text" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10px"
+                        android:text="@string/tvPais"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvCvCountry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10px"
+                        android:text="Default text" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10px"
+                        android:text="@string/tvTemperature"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvCvTemperature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10px"
+                        android:text="Default text" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10px"
+                        android:text="@string/tvHumidity"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvCvHumidity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10px"
+                        android:text="Default text" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10px"
+                        android:text="@string/tvPressure"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvCvPressure"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10px"
+                        android:text="Default text" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10px"
+                        android:text="@string/tvUv"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvCvUV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10px"
+                        android:text="Default text" />
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10px"
+                        android:text="@string/tvAltitude"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvCvAltitude"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10px"
+                        android:text="Default text" />
+
+
+
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center">
-                <Button
-                    android:id="@+id/btnEditSightseen"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/btnEditar"
-                    android:layout_marginHorizontal="10dp"
-                    />
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnEditSightseen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:text="@string/btnEditar" />
 
                     <Button
                         android:id="@+id/btnDeleteSightseen"
-                        android:layout_marginHorizontal="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/btnBorrar"
-                        />
+                        android:layout_marginHorizontal="10dp"
+                        android:text="@string/btnBorrar" />
 
                 </LinearLayout>
             </LinearLayout>

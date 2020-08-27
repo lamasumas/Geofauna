@@ -16,7 +16,7 @@ import com.example.myapplication.room.data_classes.AnimalSimpleData
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.android.schedulers.AndroidSchedulers
 
-class EditSightseen : Fragment() {
+class EditSightseen : AbstractDatabaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +34,7 @@ class EditSightseen : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val uid:Int = arguments?.get("idAnimal") as Int
+        val uid: Int = arguments?.get("idAnimal") as Int
         val dbRepository = DatabaseRepository(view.context)
         dbRepository.retrieveAnimal(uid).observeOn(AndroidSchedulers.mainThread()).subscribe {
             view.findViewById<EditText>(R.id.etEspecie).setText(it.especie)
@@ -49,23 +49,10 @@ class EditSightseen : Fragment() {
             view.findViewById<EditText>(R.id.etYear).setText(date.get(2))
         }
         view.findViewById<Button>(R.id.btnEditDatabaseAnimal).clicks().subscribe {
-            dbRepository.updateAnimal(generateAnimal(view, uid))
+            dbRepository.updateAnimal(createSimpleAnimalObject(view, uid))
             view.findNavController().navigate(EditSightseenDirections.actionEditSightseenToMainFragment2())
         }
     }
 
-    private fun generateAnimal(view: View, uid: Int): AnimalSimpleData {
-        val species = view.findViewById<EditText>( R.id.etEspecie).text.toString();
-        val place = view.findViewById<EditText>( R.id.etLugar).text.toString();
-        val country = view.findViewById<EditText>( R.id.etPais).text.toString();
-        val latitude = view.findViewById<EditText>(R.id.etLatitud).text.toString();
-        val longitude = view.findViewById<EditText>(R.id.etLongitud).text.toString();
-        val time = view.findViewById<EditText>(R.id.etHour).text.toString() +
-                ":"+view.findViewById<EditText>(R.id.etMinute).text.toString();
-        val date = view.findViewById<EditText>(R.id.etDay).text.toString() + "/" +
-                view.findViewById<EditText>(R.id.etMonth).text.toString() +
-                "/" + view.findViewById<EditText>(R.id.etYear).text.toString();
-        return AnimalSimpleData(uid=uid, especie=species, date = date, latitude =  latitude.toDouble(),
-                longitude = longitude.toDouble(), time = time);
-    }
+
 }

@@ -15,31 +15,25 @@ import io.reactivex.Single
 interface AvistamientoDAO{
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAnimalSimple(vararg avistamiento: AnimalSimpleData): Completable
+    fun insertAnimalSimple( avistamiento: AnimalSimpleData): Completable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAnimalAdvance(vararg avistamiento: AnimalAdvanceData): Completable
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertRelation(vararg simpleAdvanceRelation: SimpleAdvanceRelation)
+    fun insertAnimalAdvance( avistamiento: AnimalAdvanceData): Completable
 
     @Query("SELECT * FROM animals")
     fun getAnimalSimple(): Observable<List<AnimalSimpleData>>
 
-    @Query("SELECT * FROM animals WHERE simple_id=:uid")
-    fun getAnimalSimpleById(vararg uid:Int): Observable<AnimalSimpleData>
+    @Query("SELECT * FROM animals WHERE simpleId=:uid")
+    fun getAnimalSimpleById( uid:Int): Observable<AnimalSimpleData>
 
     @Update
-    fun updateAnimalSimple(vararg avistamientoData: AnimalSimpleData):Completable
+    fun updateAnimalSimple( avistamientoData: AnimalSimpleData):Completable
 
     @Delete
-    fun deleteAnimalSimple(vararg avistamientoData: AnimalSimpleData):Completable
+    fun deleteAnimalSimple( avistamientoData: AnimalSimpleData):Completable
 
     @Transaction
     @Query("SELECT * FROM animals")
-        fun getAllData(): List<SimpleAdvanceRelation>
-
-
-
+    fun getAllData(): Observable<List<SimpleAdvanceRelation>>
 
 }

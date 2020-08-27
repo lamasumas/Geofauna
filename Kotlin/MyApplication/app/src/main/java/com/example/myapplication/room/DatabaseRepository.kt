@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.room.Room
 import com.example.myapplication.room.data_classes.AnimalAdvanceData
 import com.example.myapplication.room.data_classes.AnimalSimpleData
+import com.example.myapplication.room.data_classes.SimpleAdvanceRelation
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 
@@ -15,12 +16,18 @@ class DatabaseRepository(context: Context){
 
     fun insertNewAnimalToDB(animalSimpleData: AnimalSimpleData) {
         db.avistamientoDao().insertAnimalSimple(animalSimpleData).subscribeOn(Schedulers.io()).subscribe{
-            Log.e("Database repository", "Animnal added")}
+            Log.d("Database repository", "Animnal simple added")}
+    }
+
+    fun insertNewAnimalToDB(animalSimpleData: AnimalSimpleData, animalAdvanceData: AnimalAdvanceData){
+        insertNewAnimalToDB(animalSimpleData)
+        db.avistamientoDao().insertAnimalAdvance(animalAdvanceData).subscribeOn(Schedulers.io()).subscribe{
+            Log.d("Database repository", "Animnal Advace added")}
     }
 
 
-    fun retrieveSightsings(): Observable<List<AnimalSimpleData>> {
-        return db.avistamientoDao().getAnimalSimple()
+    fun retrieveSightsings(): Observable<List<SimpleAdvanceRelation>> {
+        return db.avistamientoDao().getAllData()
     }
 
     fun retrieveAnimal(uid:Int):Observable<AnimalSimpleData>{

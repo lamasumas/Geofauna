@@ -24,7 +24,7 @@ class LocationController :Controller {
     val COUNTRY_ID = 2
     val PLACE_ID = 3
 
-    private val geocoder:Geocoder
+    private lateinit var geocoder:Geocoder
     private val disposables = CompositeDisposable()
     data class  MylocationObject(var longitude:Double, var latitude:Double, var country: String, var place:String)
 
@@ -44,27 +44,29 @@ class LocationController :Controller {
 
 
        locationObservable = Observable.create { emitter ->
-        val locationRequest = LocationRequest.create();
-        locationRequest.interval = 10000;
-        locationRequest.fastestInterval = 5000;
-        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY;
+           val locationRequest = LocationRequest.create();
+           locationRequest.interval = 10000;
+           locationRequest.fastestInterval = 5000;
+           locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY;
 
-        val locationCallback = object : LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult?) {
-                super.onLocationResult(locationResult)
-                if (locationResult != null) {
-                    for (location: Location in locationResult.locations) {
-                        if (location != null) {
-                            emitter.onNext(location)
-                        }
-                    }
-                }
-            }
-        }
-        val locationClient = LocationServices.getFusedLocationProviderClient(context)
-        locationClient.requestLocationUpdates(locationRequest,locationCallback, null)
+           val locationCallback = object : LocationCallback() {
+               override fun onLocationResult(locationResult: LocationResult?) {
+                   super.onLocationResult(locationResult)
+                   if (locationResult != null) {
+                       for (location: Location in locationResult.locations) {
+                           if (location != null) {
+                               emitter.onNext(location)
+                           }
+                       }
+                   }
+               }
+           }
+           val locationClient = LocationServices.getFusedLocationProviderClient(context)
+           locationClient.requestLocationUpdates(locationRequest,locationCallback, null)
+       }
+        Log.d("ksdfah","kshdf")
     }
-    }
+
 
     /**
      * Función en la que se subscribe al observable creado en el constructor, y en el que se
