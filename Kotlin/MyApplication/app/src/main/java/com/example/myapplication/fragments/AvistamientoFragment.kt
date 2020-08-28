@@ -36,7 +36,6 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
                 return@setErrorHandler
             }
         }
-
     }
 
     override fun onCreateView(
@@ -63,9 +62,7 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
             setCommonObserver(BluetoothManager.PRESSURE_SENSOR, R.id.etPressure,bleController)
             setArduinoLocationObserver(BluetoothManager.LATITUDE_SENSOR, view)
             setArduinoLocationObserver(BluetoothManager.LONGITUDE_SENSOR, view)
-
-        }
-        else {
+        }else {
             if( locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ) {
                 locationController.startGettingInfinitePositions()
                 setCommonObserver(locationController.LONGITUDE_ID, R.id.etLongitud, locationController)
@@ -82,8 +79,6 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
         view.findViewById<EditText>(R.id.etYear).setText(calendar.get(Calendar.YEAR).toString())
 
 
-
-
         disposables.add(view.findViewById<Button>(R.id.btnAñadirAvistamiento).clicks().subscribe {
             val newDatabaseSimpleEntry = createSimpleAnimalObject(view)
             val newDatabaseAdvanceEntry = createAdvanceAnimalObject(view)
@@ -97,15 +92,12 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
         })
     }
 
-
     private fun setCommonObserver(index:Int, editTextId:Int, controller: Controller){
         controller.myData[index]?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             if(it != "e\r\n")
                 view?.findViewById<EditText>(editTextId)!!.setText(it)
             else
                 view?.findViewById<EditText>(editTextId)!!.setText("No Data") })
-
-
     }
 
     private fun setArduinoLocationObserver(sensorID:Int, view: View) {
@@ -131,11 +123,10 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
         }})
     }
 
-    override fun onDestroy() {
-        disposables.dispose()
+    override fun onDestroyView() {
+        super.onDestroyView()
         bleController.stopTalking()
         locationController.stopGettingPositions()
-        super.onDestroy()
 
     }
 }

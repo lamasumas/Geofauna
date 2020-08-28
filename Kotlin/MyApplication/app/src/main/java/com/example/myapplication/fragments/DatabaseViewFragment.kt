@@ -17,13 +17,9 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 
-class DatabaseViewFragment : Fragment() {
+class DatabaseViewFragment : AbstractDatabaseFragment() {
 
-    private var disposables: CompositeDisposable = CompositeDisposable()
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
+    lateinit var recyclerView: RecyclerView
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -34,24 +30,23 @@ class DatabaseViewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val viewManager = LinearLayoutManager(view.context);
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.rvDatabase).apply {
+        recyclerView = view.findViewById<RecyclerView>(R.id.rvDatabase).apply {
             setHasFixedSize(true)
             layoutManager = viewManager
-            disposables.add(Observable.just(DatabaseRepository(view.context)).observeOn(Schedulers.io()).flatMap {
-                return@flatMap it.retrieveSightseeing()
-            }.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe{
-                adapter= DatabaseRvAdapter(it)
-                visibility =  View.VISIBLE
-                view.findViewById<ProgressBar>(R.id.databaseMiddleware).visibility = View.GONE
-            })
-            }
-
+            Observable.just(DatabaseRepository(view.context)).observeOn(Schedulers.io())
+                    .flatMap { it.retrieveSightseeing() }
+                    .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe {
+                        adapter = DatabaseRvAdapter(it)
+                        visibility = View.VISIBLE
+                             view.findViewById<ProgressBar>(R.id.databaseMiddleware).visibility = View.GONE
+                    }
+        }
 
 
     }
 
     override fun onDestroy() {
-        disposables.dispose()
         super.onDestroy()
+        recyclerView.adapter = null
     }
 }

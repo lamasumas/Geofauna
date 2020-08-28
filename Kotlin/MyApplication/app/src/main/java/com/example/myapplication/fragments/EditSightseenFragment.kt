@@ -19,10 +19,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 
 class EditSightseen : AbstractDatabaseFragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -38,7 +34,7 @@ class EditSightseen : AbstractDatabaseFragment() {
         val idSimple: Long = arguments?.get("idSimple") as Long
         val idAdvance:Long = arguments?.get("idAdvance") as Long
         val dbRepository = DatabaseRepository(view.context)
-        dbRepository.retrieveFullAnimalData(idSimple).observeOn(AndroidSchedulers.mainThread()).subscribe {
+        disposables.add(dbRepository.retrieveFullAnimalData(idSimple).observeOn(AndroidSchedulers.mainThread()).subscribe {
             view.findViewById<EditText>(R.id.etEspecie).setText(it.simpleData.especie)
             view.findViewById<EditText>(R.id.etLongitud).setText(it.simpleData.longitude.toString())
             view.findViewById<EditText>(R.id.etLatitud).setText(it.simpleData.latitude.toString())
@@ -58,11 +54,12 @@ class EditSightseen : AbstractDatabaseFragment() {
             view.findViewById<EditText>(R.id.etAltitude).setText(ifNullEmptyString(it.advanceData.altitude.toString()))
             view.findViewById<EditText>(R.id.etPressure).setText(ifNullEmptyString(it.advanceData.pressure.toString()))
 
-        }
-        view.findViewById<Button>(R.id.btnEditDatabaseAnimal).clicks().subscribe {
+        })
+
+        disposables.add(view.findViewById<Button>(R.id.btnEditDatabaseAnimal).clicks().subscribe {
             dbRepository.updateAnimal(createSimpleAnimalObject(view))
             view.findNavController().navigate(EditSightseenDirections.actionEditSightseenToMainFragment2())
-        }
+        })
     }
 
 

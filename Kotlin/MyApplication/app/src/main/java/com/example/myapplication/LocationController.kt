@@ -35,7 +35,7 @@ class LocationController :Controller {
      */
     constructor(context: Context){
 
-        geocoder = Geocoder(context)
+              geocoder = Geocoder(context)
 
         myData[LATITUDE_ID] = MutableLiveData("")
         myData[LONGITUDE_ID] = MutableLiveData("")

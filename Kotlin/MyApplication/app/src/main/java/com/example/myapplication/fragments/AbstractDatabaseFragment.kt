@@ -61,4 +61,10 @@ abstract class AbstractDatabaseFragment : Fragment() {
         else
             return input
     }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposables.dispose()
+    }
 }

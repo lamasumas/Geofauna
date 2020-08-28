@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.forEach
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -22,15 +23,14 @@ import com.polidea.rxandroidble2.RxBleClient
 import com.polidea.rxandroidble2.scan.ScanResult
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
 class MainFragment : Fragment() {
 
     private val compositeDisposable = CompositeDisposable()
+    lateinit  var viewPager2:ViewPager2
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,14 +49,18 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+
         compositeDisposable.add(view.findViewById<FloatingActionButton>(R.id.fab).clicks()
                 .subscribe {
                     val navController = view.findNavController()
                     if(navController.currentDestination?.id == R.id.mainFragment2)
                         navController.navigate( MainFragmentDirections.actionMainFragment2ToAvistamiento2())
                 })
-        val viewpager = view.findViewById<ViewPager2>(R.id.vpMain)
-        viewpager.adapter = MainAdapter(this);
+        viewPager2 = view.findViewById<ViewPager2>(R.id.vpMain)
+        viewPager2.adapter = MainAdapter(this)
+
 
 
         compositeDisposable.add(view.findViewById<Button>(R.id.bluetoothMenu).clicks().subscribe {
@@ -70,5 +74,13 @@ class MainFragment : Fragment() {
 
     }
 
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.dispose()
+        //Garbage collector
+        viewPager2.adapter = null
+        compositeDisposable.clear()
+    }
 }
 
