@@ -15,10 +15,10 @@ import io.reactivex.Single
 interface AvistamientoDAO{
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAnimalSimple( avistamiento: AnimalSimpleData): Single<Long>
+    fun insertAnimal(avistamiento: AnimalSimpleData): Single<Long>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAnimalAdvance( avistamiento: AnimalAdvanceData): Completable
+    fun insertAnimal(avistamiento: AnimalAdvanceData): Completable
 
     @Query("SELECT * FROM animals")
     fun getAnimalSimple(): Observable<List<AnimalSimpleData>>
@@ -27,10 +27,15 @@ interface AvistamientoDAO{
     fun getAnimalSimpleById( uid:Int): Observable<AnimalSimpleData>
 
     @Update
-    fun updateAnimalSimple( avistamientoData: AnimalSimpleData):Completable
+    fun updateAnimal( avistamientoData: AnimalSimpleData):Completable
+
+    @Update
+    fun updateAnimal( avistamientoData: AnimalAdvanceData):Completable
 
     @Delete
-    fun deleteAnimalSimple( avistamientoData: AnimalSimpleData):Completable
+    fun deleteAnimal( avistamientoData: AnimalSimpleData):Completable
+    @Delete
+    fun deleteAnimal( avistamientoData: AnimalAdvanceData):Completable
 
     @Query("SELECT * FROM animals WHERE simpleId=:simpleId")
     fun getAnimalFullData(simpleId: Long):  Observable<SimpleAdvanceRelation>

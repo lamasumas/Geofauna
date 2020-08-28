@@ -10,16 +10,16 @@ import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 
 
-class DatabaseRepository(context: Context){
-    val db =  Room.databaseBuilder(context, AppDatabase::class.java, "application_db")
+class DatabaseRepository(context: Context) {
+    val db = Room.databaseBuilder(context, AppDatabase::class.java, "application_db")
             .fallbackToDestructiveMigration().build();
 
 
-    fun insertNewAnimalToDB(animalSimpleData: AnimalSimpleData, animalAdvanceData: AnimalAdvanceData){
-        db.avistamientoDao().insertAnimalSimple(animalSimpleData).subscribeOn(Schedulers.io()).subscribe{returnedRowId ->
+    fun insertNewAnimalToDB(animalSimpleData: AnimalSimpleData, animalAdvanceData: AnimalAdvanceData) {
+        db.avistamientoDao().insertAnimal(animalSimpleData).subscribeOn(Schedulers.io()).subscribe { returnedRowId ->
             Log.d("Database repository", "Animnal simple added")
             animalAdvanceData.simpleId = returnedRowId
-            db.avistamientoDao().insertAnimalAdvance(animalAdvanceData).subscribeOn(Schedulers.io()).subscribe{
+            db.avistamientoDao().insertAnimal(animalAdvanceData).subscribeOn(Schedulers.io()).subscribe {
 
             }
         }
@@ -31,21 +31,27 @@ class DatabaseRepository(context: Context){
         return db.avistamientoDao().getAllData()
     }
 
-    fun retrieveSimpleAnimal(uid:Int):Observable<AnimalSimpleData>{
+    fun retrieveSimpleAnimal(uid: Int): Observable<AnimalSimpleData> {
         return db.avistamientoDao().getAnimalSimpleById(uid)
     }
 
-    fun retrieveFullAnimalData(simpleId:Long):Observable<SimpleAdvanceRelation> {
+    fun retrieveFullAnimalData(simpleId: Long): Observable<SimpleAdvanceRelation> {
         return db.avistamientoDao().getAnimalFullData(simpleId)
     }
 
-    fun updateAnimal(animal: AnimalSimpleData){
-        db.avistamientoDao().updateAnimalSimple(animal).subscribeOn(Schedulers.io()).subscribe{
-            Log.e("Database repository", "Anmimal updated")}
+    fun updateAnimal(simple: AnimalSimpleData, advance: AnimalAdvanceData) {
+        db.avistamientoDao().updateAnimal(simple).subscribeOn(Schedulers.io()).subscribe {
+            db.avistamientoDao().updateAnimal(advance).subscribeOn(Schedulers.io()).subscribe {
+                Log.e("Database repository", "Anmimal updated")
+            }
+        }
     }
-    fun deleteAnimal(animal:AnimalSimpleData){
-        db.avistamientoDao().deleteAnimalSimple(animal).subscribe {
-            Log.e("Database repository", "Animnal deleted")
+
+    fun deleteAnimal(simple: AnimalSimpleData, advance: AnimalAdvanceData) {
+        db.avistamientoDao().deleteAnimal(simple).subscribeOn(Schedulers.io()).subscribe {
+            db.avistamientoDao().deleteAnimal(advance).subscribe {
+                Log.e("Database repository", "Animnal deleted")
+            }
         }
     }
 

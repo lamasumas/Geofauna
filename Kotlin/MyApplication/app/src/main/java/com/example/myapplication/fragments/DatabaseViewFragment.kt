@@ -5,21 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
+import com.example.myapplication.fragments.abstracts.AbstractDatabaseFragment
 import com.example.myapplication.room.database_recyclerview.DatabaseRvAdapter
 import com.example.myapplication.room.DatabaseRepository
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 
 class DatabaseViewFragment : AbstractDatabaseFragment() {
 
-    lateinit var recyclerView: RecyclerView
+    var recyclerView: RecyclerView? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -33,13 +32,13 @@ class DatabaseViewFragment : AbstractDatabaseFragment() {
         recyclerView = view.findViewById<RecyclerView>(R.id.rvDatabase).apply {
             setHasFixedSize(true)
             layoutManager = viewManager
-            Observable.just(DatabaseRepository(view.context)).observeOn(Schedulers.io())
+            disposables.add(Observable.just(DatabaseRepository(view.context)).observeOn(Schedulers.io())
                     .flatMap { it.retrieveSightseeing() }
                     .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe {
                         adapter = DatabaseRvAdapter(it)
                         visibility = View.VISIBLE
-                             view.findViewById<ProgressBar>(R.id.databaseMiddleware).visibility = View.GONE
-                    }
+                        view.findViewById<ProgressBar>(R.id.databaseMiddleware).visibility = View.GONE
+                    })
         }
 
 
@@ -47,6 +46,6 @@ class DatabaseViewFragment : AbstractDatabaseFragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        recyclerView.adapter = null
+        recyclerView?.adapter = null
     }
 }

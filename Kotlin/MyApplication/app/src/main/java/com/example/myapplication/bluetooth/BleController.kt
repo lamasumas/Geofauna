@@ -66,11 +66,12 @@ class BleController : Controller {
 
             bleConnection.setupNotification(HM10_CUSTOMCHARACTERISITCS, NotificationSetupMode.QUICK_SETUP)
                     .flatMap {
-                        bleConnection.writeCharacteristic(HM10_CUSTOMCHARACTERISITCS, byteArrayOf(currentSensorId.toChar().toByte())).observeOn(Schedulers.io()).subscribeOn(Schedulers.io()).subscribe ({
+                        bleConnection.writeCharacteristic(HM10_CUSTOMCHARACTERISITCS, byteArrayOf(currentSensorId.toChar().toByte())).observeOn(Schedulers.io()).subscribeOn(Schedulers.io()).subscribe({
                             Log.d("Bluetooth communication", "Starting bluetooth communication ")
-                        },{
+                        }, {
                             if (it !is BleDisconnectedException)
-                            throw it})
+                                throw it
+                        })
                         it
                     }.observeOn(AndroidSchedulers.mainThread()).subscribe({
                         if (!stopConnection) {

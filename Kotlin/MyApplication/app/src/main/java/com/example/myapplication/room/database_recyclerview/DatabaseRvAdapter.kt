@@ -56,8 +56,7 @@ class DatabaseRvAdapter(val elements:List<SimpleAdvanceRelation>): RecyclerView.
             holder.cv.removeAllViews()
     }.observeOn(Schedulers.io()).subscribe {
             val dbRepository = DatabaseRepository(holder.cv.context)
-            dbRepository.deleteAnimal(elements[position].simpleData)
-
+            dbRepository.deleteAnimal(elements[position].simpleData, elements[position].advanceData)
         }
 
 
