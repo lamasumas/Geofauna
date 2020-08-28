@@ -38,7 +38,7 @@ class DatabaseViewFragment : Fragment() {
             setHasFixedSize(true)
             layoutManager = viewManager
             disposables.add(Observable.just(DatabaseRepository(view.context)).observeOn(Schedulers.io()).flatMap {
-                return@flatMap it.retrieveSightsings()
+                return@flatMap it.retrieveSightseeing()
             }.observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe{
                 adapter= DatabaseRvAdapter(it)
                 visibility =  View.VISIBLE

@@ -32,8 +32,12 @@ interface AvistamientoDAO{
     @Delete
     fun deleteAnimalSimple( avistamientoData: AnimalSimpleData):Completable
 
+    @Query("SELECT * FROM animals WHERE simpleId=:simpleId")
+    fun getAnimalFullData(simpleId: Long):  Observable<SimpleAdvanceRelation>
+
     @Transaction
     @Query("SELECT * FROM animals")
     fun getAllData(): Observable<List<SimpleAdvanceRelation>>
+
 
 }

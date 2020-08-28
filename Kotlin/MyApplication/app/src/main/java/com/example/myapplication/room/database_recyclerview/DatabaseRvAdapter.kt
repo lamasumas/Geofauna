@@ -49,7 +49,7 @@ class DatabaseRvAdapter(val elements:List<SimpleAdvanceRelation>): RecyclerView.
         }
 
         holder.btnEdit.clicks().observeOn(AndroidSchedulers.mainThread()).subscribe {
-            holder.btnEdit.findNavController().navigate(MainFragmentDirections.actionMainFragment2ToEditSightseen(holder.idSimple))
+            holder.btnEdit.findNavController().navigate(MainFragmentDirections.actionMainFragment2ToEditSightseen(holder.idAdvance, holder.idSimple))
         }
 
         holder.btnDelete.clicks().observeOn(AndroidSchedulers.mainThread()).doOnNext{

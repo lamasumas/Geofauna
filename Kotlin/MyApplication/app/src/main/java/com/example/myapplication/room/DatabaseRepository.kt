@@ -27,12 +27,16 @@ class DatabaseRepository(context: Context){
     }
 
 
-    fun retrieveSightsings(): Observable<List<SimpleAdvanceRelation>> {
+    fun retrieveSightseeing(): Observable<List<SimpleAdvanceRelation>> {
         return db.avistamientoDao().getAllData()
     }
 
-    fun retrieveAnimal(uid:Int):Observable<AnimalSimpleData>{
+    fun retrieveSimpleAnimal(uid:Int):Observable<AnimalSimpleData>{
         return db.avistamientoDao().getAnimalSimpleById(uid)
+    }
+
+    fun retrieveFullAnimalData(simpleId:Long):Observable<SimpleAdvanceRelation> {
+        return db.avistamientoDao().getAnimalFullData(simpleId)
     }
 
     fun updateAnimal(animal: AnimalSimpleData){

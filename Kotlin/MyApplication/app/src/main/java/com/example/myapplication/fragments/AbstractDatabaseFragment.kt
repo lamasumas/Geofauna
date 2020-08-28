@@ -53,6 +53,12 @@ abstract class AbstractDatabaseFragment : Fragment() {
         }finally {
             return temp
         }
+    }
 
+    fun ifNullEmptyString(input: String?):String{
+        if(input == null || input.equals("null"))
+            return ""
+        else
+            return input
     }
 }

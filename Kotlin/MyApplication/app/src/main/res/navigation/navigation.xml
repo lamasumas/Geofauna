@@ -32,8 +32,10 @@
         <action
             android:id="@+id/action_editSightseen_to_mainFragment2"
             app:destination="@id/mainFragment2" />
+        <argument android:name="idAdvance"
+            app:argType="long" />
         <argument
-            android:name="idAnimal"
+            android:name="idSimple"
             app:argType="long" />
     </fragment>
 </navigation>
