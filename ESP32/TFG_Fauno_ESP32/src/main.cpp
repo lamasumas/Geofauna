@@ -12,14 +12,14 @@ void setup() {
 		Serial.println("Could not find a valid BME280 sensor, check wiring!");
 		while (1);
 	}
-
+comunicationManager.checkForImcoming();
 }
 
 void loop() {
  
   //updateGPS();
   //updateBME();
-  updateUV();
+  //updateUV();
 
   //checkForImcoming();
   //if(!comunicationManager.isSendingData())
