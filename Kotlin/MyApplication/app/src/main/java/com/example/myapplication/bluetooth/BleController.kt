@@ -15,14 +15,24 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import java.nio.ByteBuffer
 import java.util.*
 import kotlin.collections.HashMap
 
 class BleController : Controller {
 
     private var disposables: CompositeDisposable = CompositeDisposable()
-    private val HM10_CUSTOMCHARACTERISITCS = UUID.fromString("0000FFE1-0000-1000-8000-00805F9B34FB")
-    private var currentSensorId = BluetoothManager.START_ID
+    private val SERVICE_UUID = UUID.fromString("c953d4c6-5270-4bd9-83f4-b4d1b6a5b0da")
+    private val HUMIDITY_UUID = UUID.fromString( "be478561-30c0-46db-85fc-cde641b51553")
+    private val TEMPERATURE_UUID = UUID.fromString( "be478562-30c0-46db-85fc-cde641b51553")
+    private val PRESSURE_UUID = UUID.fromString("be478563-30c0-46db-85fc-cde641b51553")
+    private val ALTITUDE_UUID= UUID.fromString( "be478564-30c0-46db-85fc-cde641b51553")
+    private val LONGITUDE_UUID= UUID.fromString( "be478565-30c0-46db-85fc-cde641b51553")
+    private val LATITUDE_UUID = UUID.fromString("be478566-30c0-46db-85fc-cde641b51553")
+    private val UV_UUID= UUID.fromString( "be478560-30c7-46db-85fc-cde641b51553")
+
+
+
     var stopConnection = false
     private var disposable: Disposable? = null
 
@@ -38,7 +48,6 @@ class BleController : Controller {
         myData[BluetoothManager.UV_SENSOR] = MutableLiveData("")
         myData[BluetoothManager.ALTITUDE_SENSOR] = MutableLiveData("")
         myData[BluetoothManager.TEMPERATURE_SENSOR] = MutableLiveData("")
-
     }
 
     /**
@@ -64,53 +73,47 @@ class BleController : Controller {
     fun startTalking(context: Context) {
         disposable = RxBleClient.create(context).getBleDevice(BluetoothManager.bleDeviceMac).establishConnection(false).observeOn(Schedulers.io()).subscribe { bleConnection ->
 
-            bleConnection.setupNotification(HM10_CUSTOMCHARACTERISITCS, NotificationSetupMode.QUICK_SETUP)
-                    .flatMap {
-                        bleConnection.writeCharacteristic(HM10_CUSTOMCHARACTERISITCS, byteArrayOf(currentSensorId.toChar().toByte())).observeOn(Schedulers.io()).subscribeOn(Schedulers.io()).subscribe({
-                            Log.d("Bluetooth communication", "Starting bluetooth communication ")
-                        }, {
-                            if (it !is BleDisconnectedException)
-                                throw it
-                        })
-                        it
-                    }.observeOn(AndroidSchedulers.mainThread()).subscribe({
-                        if (!stopConnection) {
-                            val receivedSensorValue = String(it)
-                            if (myData[currentSensorId]?.value != receivedSensorValue)
-                                myData[currentSensorId]?.value = receivedSensorValue
-                            currentSensorId++
-                            if (currentSensorId == BluetoothManager.FINISH_ID)
-                                currentSensorId = BluetoothManager.START_ID
+            bleConnection.readCharacteristic(TEMPERATURE_UUID).subscribe{ byteArray ->
+                myData[BluetoothManager.TEMPERATURE_SENSOR]?.value =  String(byteArray)
+            }
+            bleConnection.setupNotification(TEMPERATURE_UUID, NotificationSetupMode.QUICK_SETUP).flatMap{it}.observeOn(AndroidSchedulers.mainThread()).subscribe{
+                myData[BluetoothManager.TEMPERATURE_SENSOR]?.value =  ByteBuffer.wrap(it).double.toString()
+            }
 
-                            disposables.add(bleConnection.writeCharacteristic(HM10_CUSTOMCHARACTERISITCS, byteArrayOf(currentSensorId.toChar().toByte())).observeOn(Schedulers.io()).subscribeOn(Schedulers.io()).subscribe({
-                                Log.d("Bluetooth communication", "Asking HM-10 for more data")
-                            }, {
-                                if (it !is BleDisconnectedException)
-                                    throw it
-                            }))
-                        } else {
-                            disposables.add(bleConnection.writeCharacteristic(HM10_CUSTOMCHARACTERISITCS, byteArrayOf(BluetoothManager.FINISH_ID.toChar().toByte())).subscribe({
-                                disposable?.dispose()
-                            }, {
-                                if (it !is BleDisconnectedException)
-                                    throw it
-                            }))
-                        }
 
+                /*if (!stopConnection) {
+                    val receivedSensorValue = String(it)
+                    if (myData[currentSensorId]?.value != receivedSensorValue)
+                        myData[currentSensorId]?.value = receivedSensorValue
+                    currentSensorId++
+                    if (currentSensorId == BluetoothManager.FINISH_ID)
+                        currentSensorId = BluetoothManager.START_ID
+
+                    disposables.add(bleConnection.writeCharacteristic(HM10_CUSTOMCHARACTERISITCS, byteArrayOf(currentSensorId.toChar().toByte())).observeOn(Schedulers.io()).subscribeOn(Schedulers.io()).subscribe({
+                        Log.d("Bluetooth communication", "Asking HM-10 for more data")
                     }, {
-
-
-                    })
-        }
+                        if (it !is BleDisconnectedException)
+                            throw it
+                    }))
+                } else {
+                    disposables.add(bleConnection.writeCharacteristic(HM10_CUSTOMCHARACTERISITCS, byteArrayOf(BluetoothManager.FINISH_ID.toChar().toByte())).subscribe({
+                        disposable?.dispose()
+            }, {
+                if (it !is BleDisconnectedException)
+                    throw it
+            })
+        }*/
 
     }
 
-    /**
-     * Función que cambia el  valor de stopConnection
-     */
-    fun stopTalking() {
-        stopConnection = true
-    }
+}
+
+/**
+ * Función que cambia el  valor de stopConnection
+ */
+fun stopTalking() {
+    stopConnection = true
+}
 
 
 }
