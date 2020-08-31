@@ -34,8 +34,8 @@ class DatabaseViewFragment : AbstractDatabaseFragment() {
             layoutManager = viewManager
             disposables.add(Observable.just(DatabaseRepository(view.context)).observeOn(Schedulers.io())
                     .flatMap { it.retrieveSightseeing() }
-                    .observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe {
-                        adapter = DatabaseRvAdapter(it)
+                    .observeOn(AndroidSchedulers.mainThread()).subscribe {
+                        adapter = DatabaseRvAdapter(it, disposables)
                         visibility = View.VISIBLE
                         view.findViewById<ProgressBar>(R.id.databaseMiddleware).visibility = View.GONE
                     })

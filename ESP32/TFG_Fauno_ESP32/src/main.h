@@ -3,7 +3,7 @@
 #include <HardwareSerial.h>
 #include <TinyGPS++.h>
 #include <ComunicationManager.h>
-#include<Arduino.h>
+#include <Arduino.h>
 #include <Adafruit_Sensor.h>
 
 //Constants
@@ -18,7 +18,6 @@ Adafruit_BME280 bme;
 //GPS variables
 HardwareSerial serial_conection(1); //RX = 9 ,RT= 10,
 TinyGPSPlus gps;
-
 
 // Functions
 void loop();

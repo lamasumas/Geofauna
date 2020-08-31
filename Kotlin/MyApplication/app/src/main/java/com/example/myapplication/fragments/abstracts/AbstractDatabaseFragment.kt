@@ -27,7 +27,7 @@ abstract class AbstractDatabaseFragment : GeneralFragmentRx() {
         disposables.add(view.findViewById<FloatingActionButton>(R.id.btnAñadirAvistamiento).clicks().subscribe {
             val newDatabaseSimpleEntry = createSimpleAnimalObject(view)
             val newDatabaseAdvanceEntry = createAdvanceAnimalObject(view)
-            dbRepository.insertNewAnimalToDB(newDatabaseSimpleEntry, newDatabaseAdvanceEntry)
+            disposables.add(dbRepository.insertNewAnimalToDB(newDatabaseSimpleEntry, newDatabaseAdvanceEntry))
             view.findNavController().navigate(AvistamientoFragmentDirections.actionAvistamiento2ToMainFragment2())
 
         })
@@ -46,7 +46,7 @@ abstract class AbstractDatabaseFragment : GeneralFragmentRx() {
                     tempSimple.simpleId = idSimple
                     tempAdvance.uid = idAdvance
                     tempAdvance.simpleId= idSimple
-                    dbRepository.updateAnimal(tempSimple, tempAdvance)
+                    disposables.add(dbRepository.updateAnimal(tempSimple, tempAdvance))
                 }.subscribe {
                     view.findNavController().navigate(EditSightseenDirections.actionEditSightseenToMainFragment2())
                 })

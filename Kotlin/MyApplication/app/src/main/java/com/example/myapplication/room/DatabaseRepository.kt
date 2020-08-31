@@ -7,6 +7,7 @@ import com.example.myapplication.room.data_classes.AnimalAdvanceData
 import com.example.myapplication.room.data_classes.AnimalSimpleData
 import com.example.myapplication.room.data_classes.SimpleAdvanceRelation
 import io.reactivex.Observable
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 
@@ -15,8 +16,8 @@ class DatabaseRepository(context: Context) {
             .fallbackToDestructiveMigration().build();
 
 
-    fun insertNewAnimalToDB(animalSimpleData: AnimalSimpleData, animalAdvanceData: AnimalAdvanceData) {
-        db.avistamientoDao().insertAnimal(animalSimpleData).subscribeOn(Schedulers.io()).subscribe { returnedRowId ->
+    fun insertNewAnimalToDB(animalSimpleData: AnimalSimpleData, animalAdvanceData: AnimalAdvanceData) : Disposable{
+        return db.avistamientoDao().insertAnimal(animalSimpleData).subscribeOn(Schedulers.io()).subscribe { returnedRowId ->
             Log.d("Database repository", "Animnal simple added")
             animalAdvanceData.simpleId = returnedRowId
             db.avistamientoDao().insertAnimal(animalAdvanceData).subscribeOn(Schedulers.io()).subscribe {
@@ -39,16 +40,16 @@ class DatabaseRepository(context: Context) {
         return db.avistamientoDao().getAnimalFullData(simpleId)
     }
 
-    fun updateAnimal(simple: AnimalSimpleData, advance: AnimalAdvanceData) {
-        db.avistamientoDao().updateAnimal(simple).subscribeOn(Schedulers.io()).subscribe {
+    fun updateAnimal(simple: AnimalSimpleData, advance: AnimalAdvanceData) : Disposable{
+        return db.avistamientoDao().updateAnimal(simple).subscribeOn(Schedulers.io()).subscribe {
             db.avistamientoDao().updateAnimal(advance).subscribeOn(Schedulers.io()).subscribe {
                 Log.e("Database repository", "Anmimal updated")
             }
         }
     }
 
-    fun deleteAnimal(simple: AnimalSimpleData, advance: AnimalAdvanceData) {
-        db.avistamientoDao().deleteAnimal(simple).subscribeOn(Schedulers.io()).subscribe {
+    fun deleteAnimal(simple: AnimalSimpleData, advance: AnimalAdvanceData): Disposable {
+        return db.avistamientoDao().deleteAnimal(simple).subscribeOn(Schedulers.io()).subscribe {
             db.avistamientoDao().deleteAnimal(advance).subscribe {
                 Log.e("Database repository", "Animnal deleted")
             }
