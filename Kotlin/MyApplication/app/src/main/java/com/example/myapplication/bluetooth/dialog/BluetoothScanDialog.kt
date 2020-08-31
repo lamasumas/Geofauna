@@ -37,7 +37,7 @@ class BluetoothScanDialog(context:Context): Dialog(context) {
                 layoutManager = LinearLayoutManager(this.context)
                 adapter = bluetoothAdapter
                 visibility = View.VISIBLE
-                disposable = bleController.scanDevices(context).subscribe {
+                disposable = bleController.scanDevices(context).take(1).subscribe {
                     bluetoothAdapter.addScanResult(it)
                 }
             }

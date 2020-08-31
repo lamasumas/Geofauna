@@ -21,7 +21,6 @@ import java.util.*
 
 object BluetoothManager{
 
-    val START_ID = 0
     val LATITUDE_SENSOR = 0
     val LONGITUDE_SENSOR = 1
     val ALTITUDE_SENSOR = 2

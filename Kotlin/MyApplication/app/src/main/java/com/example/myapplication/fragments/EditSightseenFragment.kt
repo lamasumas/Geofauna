@@ -1,44 +1,38 @@
 package com.example.myapplication.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.navArgs
 import com.example.myapplication.R
+import com.example.myapplication.fragments.abstracts.AbstractDatabaseFragment
 import com.example.myapplication.room.DatabaseRepository
-import com.example.myapplication.room.data_classes.AnimalSimpleData
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.android.schedulers.AndroidSchedulers
 
 class EditSightseen : AbstractDatabaseFragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_avistamiento, container, false)
-        view.findViewById<Button>(R.id.btnAñadirAvistamiento).visibility = View.GONE
-        view.findViewById<Button>(R.id.btnEditDatabaseAnimal).visibility = View.VISIBLE
+        view.findViewById<FloatingActionButton>(R.id.btnAñadirAvistamiento).hide()
+        view.findViewById<FloatingActionButton>(R.id.btnEditDatabaseAnimal).show()
         return view;
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val idSimple: Long = arguments?.get("idSimple") as Long
-        val idAdvance:Long = arguments?.get("idAdvance") as Long
+        val idAdvance: Long = arguments?.get("idAdvance") as Long
         val dbRepository = DatabaseRepository(view.context)
-        dbRepository.retrieveFullAnimalData(idSimple).observeOn(AndroidSchedulers.mainThread()).subscribe {
+        setGeneralButtonActions(view, true, idSimple, idAdvance)
+        disposables.add(dbRepository.retrieveFullAnimalData(idSimple).observeOn(AndroidSchedulers.mainThread()).subscribe {
             view.findViewById<EditText>(R.id.etEspecie).setText(it.simpleData.especie)
             view.findViewById<EditText>(R.id.etLongitud).setText(it.simpleData.longitude.toString())
             view.findViewById<EditText>(R.id.etLatitud).setText(it.simpleData.latitude.toString())
@@ -57,12 +51,9 @@ class EditSightseen : AbstractDatabaseFragment() {
             view.findViewById<EditText>(R.id.etIndexUV).setText(ifNullEmptyString(it.advanceData.index_uv.toString()))
             view.findViewById<EditText>(R.id.etAltitude).setText(ifNullEmptyString(it.advanceData.altitude.toString()))
             view.findViewById<EditText>(R.id.etPressure).setText(ifNullEmptyString(it.advanceData.pressure.toString()))
+        })
 
-        }
-        view.findViewById<Button>(R.id.btnEditDatabaseAnimal).clicks().subscribe {
-            dbRepository.updateAnimal(createSimpleAnimalObject(view))
-            view.findNavController().navigate(EditSightseenDirections.actionEditSightseenToMainFragment2())
-        }
+
     }
 
 

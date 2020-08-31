@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.AvistamientoFragment">
@@ -39,201 +40,6 @@
                 android:ems="10"
                 android:hint="@string/etEspecie"
                 android:inputType="textPersonName" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvPaís"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/tvPais"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-            <EditText
-                android:id="@+id/etPais"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="@string/etPais"
-                android:inputType="textPersonName" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvLugar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/tvLugar"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-            <EditText
-                android:id="@+id/etLugar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="@string/etLugar"
-                android:inputType="textPersonName" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvLatitud"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tvLatitud"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-            <EditText
-                android:id="@+id/etLatitud"
-                android:layout_width="257dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="@string/etLatitud"
-                android:inputType="number" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvLongitud"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tvLongitud"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-            <EditText
-                android:id="@+id/etLongitud"
-                android:layout_width="257dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="@string/etLongitud"
-                android:inputType="number" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvHumidity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tvHumidity"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-            <EditText
-                android:id="@+id/etHumidity"
-                android:layout_width="257dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="@string/etHumidity"
-                android:inputType="number" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvAltitude"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tvAltitude"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-            <EditText
-                android:id="@+id/etAltitude"
-                android:layout_width="257dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="@string/etAltitude"
-                android:inputType="number" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvIndexUV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tvUv"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-            <EditText
-                android:id="@+id/etIndexUV"
-                android:layout_width="257dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="@string/etUv"
-                android:inputType="number" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvTemperature"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tvTemperature"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-            <EditText
-                android:id="@+id/etTemperature"
-                android:layout_width="257dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="@string/etTemperature"
-                android:inputType="number" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvPressure"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tvPressure"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-            <EditText
-                android:id="@+id/etPressure"
-                android:layout_width="257dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="@string/etPressure"
-                android:inputType="number" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -307,30 +113,269 @@
                 android:inputType="date" />
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvLatitud"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tvLatitud"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+            <EditText
+                android:id="@+id/etLatitud"
+                android:layout_width="257dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="@string/etLatitud"
+                android:inputType="number" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btnAñadirAvistamiento"
+            <TextView
+                android:id="@+id/tvLongitud"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/btnAñadirAvistamiento" />
-            <Button
-                android:layout_width="wrap_content"
+                android:text="@string/tvLongitud"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+            <EditText
+                android:id="@+id/etLongitud"
+                android:layout_width="257dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/btnEditAnimal"
-                android:id="@+id/btnEditDatabaseAnimal"
-                android:visibility="gone"
+                android:ems="10"
+                android:hint="@string/etLongitud"
+                android:inputType="number" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/opcional"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:text="Opcional"/>
+
+            <LinearLayout
+                android:id="@+id/lhidden"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvPaís"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/tvPais"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                    <EditText
+                        android:id="@+id/etPais"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/etPais"
+                        android:inputType="textPersonName" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvLugar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/tvLugar"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                    <EditText
+                        android:id="@+id/etLugar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/etLugar"
+                        android:inputType="textPersonName" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvHumidity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tvHumidity"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                    <EditText
+                        android:id="@+id/etHumidity"
+                        android:layout_width="257dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/etHumidity"
+                        android:inputType="number" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvAltitude"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tvAltitude"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                    <EditText
+                        android:id="@+id/etAltitude"
+                        android:layout_width="257dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/etAltitude"
+                        android:inputType="number" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvIndexUV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tvUv"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                    <EditText
+                        android:id="@+id/etIndexUV"
+                        android:layout_width="257dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/etUv"
+                        android:inputType="number" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvTemperature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tvTemperature"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                    <EditText
+                        android:id="@+id/etTemperature"
+                        android:layout_width="257dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/etTemperature"
+                        android:inputType="number" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvPressure"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tvPressure"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                    <EditText
+                        android:id="@+id/etPressure"
+                        android:layout_width="257dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:hint="@string/etPressure"
+                        android:inputType="number" />
+                </LinearLayout>
+
+            </LinearLayout>
+         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:gravity="bottom|center"
+            android:layout_weight="1"
+            android:id="@+id/lButton"
+            android:orientation="horizontal">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnBack"
+                android:layout_marginHorizontal="13pt"
+                android:layout_gravity="center_horizontal"
+                app:backgroundTint="@color/design_default_color_primary_dark"
+                android:src="@drawable/back_icon"
                 />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnAñadirAvistamiento"
+                android:layout_marginHorizontal="13pt"
+                app:elevation="0dp"
+                app:layout_anchor="@id/lButton"
+                app:backgroundTint="@color/design_default_color_primary_dark"
+                android:src="@drawable/add_icon"
+                />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnEditDatabaseAnimal"
+                android:layout_marginHorizontal="13pt"
+                app:elevation="0dp"
+                android:visibility="gone"
+                app:layout_anchor="@id/lButton"
+                app:backgroundTint="@color/design_default_color_primary_dark"
+                android:src="@drawable/edit_icon"
+                />
+
 
 
         </LinearLayout>

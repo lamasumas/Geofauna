@@ -13,9 +13,10 @@ import com.example.myapplication.room.DatabaseRepository
 import com.example.myapplication.room.data_classes.SimpleAdvanceRelation
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class DatabaseRvAdapter(val elements:List<SimpleAdvanceRelation>): RecyclerView.Adapter<AnimalViewHolder>() {
+class DatabaseRvAdapter(val elements:List<SimpleAdvanceRelation>, val disposables:CompositeDisposable): RecyclerView.Adapter<AnimalViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimalViewHolder {
         val theView = LayoutInflater.from(parent.context).inflate(R.layout.animal_card_scheme, parent,false)
@@ -44,21 +45,20 @@ class DatabaseRvAdapter(val elements:List<SimpleAdvanceRelation>): RecyclerView.
         holder.idAdvance = elements[position].advanceData.uid
         hideNullTextViews(holder)
 
-        holder.cv.clicks().subscribe {
+        disposables.add(holder.cv.clicks().subscribe {
             holder.hiddenViews.visibility = if (holder.hiddenViews.isShown()) View.GONE else View.VISIBLE
-        }
-
+        })
+        disposables.add(
         holder.btnEdit.clicks().observeOn(AndroidSchedulers.mainThread()).subscribe {
             holder.btnEdit.findNavController().navigate(MainFragmentDirections.actionMainFragment2ToEditSightseen(holder.idAdvance, holder.idSimple))
-        }
+        })
 
-        holder.btnDelete.clicks().observeOn(AndroidSchedulers.mainThread()).doOnNext{
+        disposables.add(holder.btnDelete.clicks().observeOn(AndroidSchedulers.mainThread()).doOnNext{
             holder.cv.removeAllViews()
     }.observeOn(Schedulers.io()).subscribe {
             val dbRepository = DatabaseRepository(holder.cv.context)
-            dbRepository.deleteAnimal(elements[position].simpleData)
-
-        }
+            dbRepository.deleteAnimal(elements[position].simpleData, elements[position].advanceData)
+        })
 
 
     }

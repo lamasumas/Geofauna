@@ -1,12 +1,15 @@
 package com.example.myapplication.bluetooth
 
 import android.content.Context
+import android.os.ParcelUuid
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.myapplication.Controller
 import com.polidea.rxandroidble2.NotificationSetupMode
 import com.polidea.rxandroidble2.RxBleClient
+import com.polidea.rxandroidble2.RxBleConnection
 import com.polidea.rxandroidble2.exceptions.BleDisconnectedException
+import com.polidea.rxandroidble2.scan.ScanFilter
 import com.polidea.rxandroidble2.scan.ScanResult
 import com.polidea.rxandroidble2.scan.ScanSettings
 import io.reactivex.Observable
@@ -15,14 +18,24 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import java.nio.ByteBuffer
 import java.util.*
 import kotlin.collections.HashMap
 
 class BleController : Controller {
 
     private var disposables: CompositeDisposable = CompositeDisposable()
-    private val HM10_CUSTOMCHARACTERISITCS = UUID.fromString("0000FFE1-0000-1000-8000-00805F9B34FB")
-    private var currentSensorId = BluetoothManager.START_ID
+    //Todas las UUIDs necesarias
+    private val SERVICE_UUID = ParcelUuid.fromString("c953d4c6-5270-4bd9-83f4-b4d1b6a5b0da")
+    private val HUMIDITY_UUID = UUID.fromString("be478561-30c0-46db-85fc-cde641b51553")
+    private val TEMPERATURE_UUID = UUID.fromString("be478562-30c0-46db-85fc-cde641b51553")
+    private val PRESSURE_UUID = UUID.fromString("be478563-30c0-46db-85fc-cde641b51553")
+    private val ALTITUDE_UUID = UUID.fromString("be478564-30c0-46db-85fc-cde641b51553")
+    private val LONGITUDE_UUID = UUID.fromString("be478565-30c0-46db-85fc-cde641b51553")
+    private val LATITUDE_UUID = UUID.fromString("be478566-30c0-46db-85fc-cde641b51553")
+    private val UV_UUID = UUID.fromString("be478560-30c7-46db-85fc-cde641b51553")
+
+
     var stopConnection = false
     private var disposable: Disposable? = null
 
@@ -38,77 +51,65 @@ class BleController : Controller {
         myData[BluetoothManager.UV_SENSOR] = MutableLiveData("")
         myData[BluetoothManager.ALTITUDE_SENSOR] = MutableLiveData("")
         myData[BluetoothManager.TEMPERATURE_SENSOR] = MutableLiveData("")
-
     }
 
     /**
-     * Crea observable con el que se escanea los alrededores buscando dispositivos bluetooth
+     * Crea un observable que escanea los alredores buscando un dispositivo bluetooth con una uuid de
+     * servicio concreta, es decir, la que hemos creado nosotros.
      * @param context, contexto necesario para crear el cliente de la libreria RxAndroidBle
-     * @return Observable<ScanResult>, Un observable que emite infinitamente los dispositivos encontrados
+     * @return Observable<ScanResult>, Un observable que emite un ScanResul
      */
     fun scanDevices(context: Context): Observable<ScanResult> {
 
-        return RxBleClient.create(context).scanBleDevices(ScanSettings.Builder().build())
+        return RxBleClient.create(context).scanBleDevices(ScanSettings.Builder().build(),
+                ScanFilter.Builder()
+                        .setServiceUuid(SERVICE_UUID)
+                        .build()).take(1)
     }
 
     /**
-     * Funcion que comienza la comunicación con la Arduino y actualiza los valores del hasmap.
-     * Esta función envia al sensor hm-10 de la arduino el id establecido para cada sensor, y recibe
-     * el valor de dicho sensor.
-     * Esta funcion se ejecuta en bucle, pide indices de manera circulas hasta que el valor de  "stopConnection"
-     * cambia, que envia un mensaje al arduino avisand de que se cierra la comunicacion. Finalmente se termina
-     * el proceso con "dispose()"
-     *
+     * Esta función da comencio a la comunicación entre el dispositivo android y el del ble,
+     * aqui se configura todas las caracteristivas del dispositivo ble.
      * @param context, contexto para crear el cliente de la librearía RxAndroidBle
      */
     fun startTalking(context: Context) {
         disposable = RxBleClient.create(context).getBleDevice(BluetoothManager.bleDeviceMac).establishConnection(false).observeOn(Schedulers.io()).subscribe { bleConnection ->
 
-            bleConnection.setupNotification(HM10_CUSTOMCHARACTERISITCS, NotificationSetupMode.QUICK_SETUP)
-                    .flatMap {
-                        bleConnection.writeCharacteristic(HM10_CUSTOMCHARACTERISITCS, byteArrayOf(currentSensorId.toChar().toByte())).observeOn(Schedulers.io()).subscribeOn(Schedulers.io()).subscribe ({
-                            Log.d("Bluetooth communication", "Starting bluetooth communication ")
-                        },{
-                            if (it !is BleDisconnectedException)
-                            throw it})
-                        it
-                    }.observeOn(AndroidSchedulers.mainThread()).subscribe({
-                        if (!stopConnection) {
-                            val receivedSensorValue = String(it)
-                            if (myData[currentSensorId]?.value != receivedSensorValue)
-                                myData[currentSensorId]?.value = receivedSensorValue
-                            currentSensorId++
-                            if (currentSensorId == BluetoothManager.FINISH_ID)
-                                currentSensorId = BluetoothManager.START_ID
-
-                            disposables.add(bleConnection.writeCharacteristic(HM10_CUSTOMCHARACTERISITCS, byteArrayOf(currentSensorId.toChar().toByte())).observeOn(Schedulers.io()).subscribeOn(Schedulers.io()).subscribe({
-                                Log.d("Bluetooth communication", "Asking HM-10 for more data")
-                            }, {
-                                if (it !is BleDisconnectedException)
-                                    throw it
-                            }))
-                        } else {
-                            disposables.add(bleConnection.writeCharacteristic(HM10_CUSTOMCHARACTERISITCS, byteArrayOf(BluetoothManager.FINISH_ID.toChar().toByte())).subscribe({
-                                disposable?.dispose()
-                            }, {
-                                if (it !is BleDisconnectedException)
-                                    throw it
-                            }))
-                        }
-
-                    }, {
+            setupCharacteristic(TEMPERATURE_UUID, BluetoothManager.TEMPERATURE_SENSOR, bleConnection)
+            setupCharacteristic(HUMIDITY_UUID, BluetoothManager.HUMIDITY_SENSOR, bleConnection)
+            setupCharacteristic(UV_UUID, BluetoothManager.UV_SENSOR, bleConnection)
+            setupCharacteristic(LATITUDE_UUID, BluetoothManager.LATITUDE_SENSOR, bleConnection)
+            setupCharacteristic(LONGITUDE_UUID, BluetoothManager.LONGITUDE_SENSOR, bleConnection)
+            setupCharacteristic(ALTITUDE_UUID, BluetoothManager.ALTITUDE_SENSOR, bleConnection)
+            setupCharacteristic(PRESSURE_UUID, BluetoothManager.PRESSURE_SENSOR, bleConnection)
 
 
-                    })
         }
 
     }
 
     /**
-     * Función que cambia el  valor de stopConnection
+     * Esta función configura una caracteristica concreta del microcontrolador
+     * @param bleConnection, conection con el dispositivio ble
+     * @param characteristicUUID, UUID de la caracteristica
+     * @param sensorPosition, key del hasmap donde estan todos los valores de los sensores
+     */
+    private fun setupCharacteristic(characteristicUUID: UUID, sensorPosition: Int, bleConnection: RxBleConnection) {
+        disposables.add(bleConnection.readCharacteristic(characteristicUUID).observeOn(AndroidSchedulers.mainThread()).subscribe { byteArray ->
+            myData[sensorPosition]?.value = String(byteArray)
+            bleConnection.setupNotification(characteristicUUID, NotificationSetupMode.COMPAT).flatMap { it }.observeOn(AndroidSchedulers.mainThread()).subscribe {
+                myData[sensorPosition]?.value = String(it)
+            }
+        }
+        )
+    }
+
+    /**
+     * Funcion que termina la conexión
      */
     fun stopTalking() {
-        stopConnection = true
+        disposables.dispose()
+        disposable?.dispose()
     }
 
 
