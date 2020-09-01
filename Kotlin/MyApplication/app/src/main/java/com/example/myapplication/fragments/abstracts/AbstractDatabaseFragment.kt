@@ -45,13 +45,11 @@ abstract class AbstractDatabaseFragment : GeneralFragmentRx() {
 
             val btn = view.findViewById<Button>(R.id.btnExpand)
             val hiddenView = view.findViewById<LinearLayout>(R.id.lhidden)
-            if(hiddenView.visibility == View.VISIBLE) {
+            if(hiddenView.visibility == View.VISIBLE)
                 hiddenView.visibility = View.GONE
-                btn.text = "+"
-            }else {
+            else
                 hiddenView.visibility = View.VISIBLE
-                btn.text = "-"
-            }
+
 
         })
 

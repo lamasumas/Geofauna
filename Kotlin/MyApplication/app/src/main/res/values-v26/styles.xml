@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="myEditText" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">40dp</item>
+        <item name="android:textSize">17dp</item>
+        <item name="android:layout_marginHorizontal">3dp</item>
+
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textColorHint">@color/colorQuintoPaleta</item>
+        <item name="backgroundTint">@color/colorTerciarioPaleta</item>
+    </style>
+</resources>
