@@ -1,10 +1,30 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme"  parent="Theme.MaterialComponents.Light.DarkActionBar" >
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorSecundarioPaleta</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryPaleta</item>
+        <item name="colorAccent">@color/colorTerciarioPaleta</item>
     </style>
+
+    <style name="backgroundLight">
+        <item name="android:background">@color/colorPrimaryPaleta</item>
+    </style>
+
+    <style name="backgroundStrong">
+        <item name="android:background">@color/colorSecundarioPaleta</item>
+    </style>
+
+    <style name="myEditLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="myEditText" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">4dp</item>
+        <item name="backgroundTint">@color/colorTerciarioPaleta</item>
+    </style>
+
 
 </resources>

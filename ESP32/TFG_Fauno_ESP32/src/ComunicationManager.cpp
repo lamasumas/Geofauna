@@ -11,9 +11,14 @@ BLECharacteristic *pLatitudeCharacteristic;
 BLECharacteristic *pPressureCharacteristic;
 BLECharacteristic *pUVCharacteristic;
 
+/**
+ *  Esta función configura el ESP32 para que se inicie el ble
+ *  Primero crea una dispositivo ble, luego un servidor, a continuación una caracteristica
+ *  por sensor y por ultimo los hace visibles a los demas dispositivos
+ * */
 void bleSetUp()
 {
-    BLEDevice::init("Pokedex");
+    BLEDevice::init("Fauna Salvaje");
     pServer = BLEDevice::createServer();
     pService = pServer->createService(SERVICE_UUID);
 
@@ -29,6 +34,10 @@ void bleSetUp()
     pServer->getAdvertising()->start();
 }
 
+/**
+ * Transforma los valores de los sensores a char* para luego actualizar los valores
+ *  de una caracteristica concreta. Finalmente notifica del cambio si hay alguien escuchando.
+ * */
 void updateData(const char *sensorUUID, double newData, int numberOfDecimals)
 {
 
@@ -42,6 +51,9 @@ void updateData(const char *sensorUUID, double newData, int numberOfDecimals)
     pService->getCharacteristic(sensorUUID)->notify();
 }
 
+/**
+ * Configuración base de cada caracteritica. Se especifica un UUID concreto.
+ * */
 BLECharacteristic *setupCharacteristic(const char *specificUUID, BLEService *theService)
 {
     BLECharacteristic *tempChar = theService->createCharacteristic(
