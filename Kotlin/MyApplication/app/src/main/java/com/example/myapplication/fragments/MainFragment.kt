@@ -1,14 +1,18 @@
 package com.example.myapplication.fragments
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Environment
 import android.view.*
 import android.widget.Button
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
+import com.example.myapplication.ExportManager
 import com.example.myapplication.adapters.MainAdapter
 import com.example.myapplication.R
 import com.example.myapplication.bluetooth.dialog.BluetoothScanDialog
 import com.example.myapplication.fragments.abstracts.GeneralFragmentRx
+import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.jakewharton.rxbinding2.view.clicks
 
@@ -27,7 +31,6 @@ class MainFragment : GeneralFragmentRx() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_bb, menu)
-
     }
 
 
@@ -46,6 +49,20 @@ class MainFragment : GeneralFragmentRx() {
         disposables.add(view.findViewById<Button>(R.id.bluetoothMenu).clicks().subscribe {
             BluetoothScanDialog(view.context).show()
         })
+
+
+        view.findViewById<BottomAppBar>(R.id.bar).setOnMenuItemClickListener {
+            when(it.itemId){
+                R.id.aboutMenu -> {
+                    var file = view.context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
+                    ExportManager().exportToExcel(file!!, view.context)
+                    true
+                }
+                else -> false
+
+        }
+        }
+
 
 
     }

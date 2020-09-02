@@ -26,37 +26,37 @@ import java.net.SocketException
 import java.util.jar.Manifest
 
 class MainActivity : AppCompatActivity() {
-    companion object{
+    companion object {
         const val GPS_PERMISION_CODE = 55
         const val BLUETOOTH_CODE = 56
 
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         getPermissions()
 
 
-
     }
 
 
-
-    private fun getPermissions(){
+    private fun getPermissions() {
 
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.INTERNET) == PackageManager.PERMISSION_DENIED ||
-            ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED ||
-            ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_DENIED ||
-            ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_DENIED )
-            ActivityCompat.requestPermissions(this, arrayOf<String>(android.Manifest.permission.INTERNET, android.Manifest.permission.ACCESS_FINE_LOCATION,
-                android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION), GPS_PERMISION_CODE);
+                ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED ||
+                ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_DENIED ||
+                ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_DENIED ||
+                ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED)
+            ActivityCompat.requestPermissions(this, arrayOf<String>(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.INTERNET, android.Manifest.permission.ACCESS_FINE_LOCATION,
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION), GPS_PERMISION_CODE);
 
-        val locationManager:LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager;
-        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+        val locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager;
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
             startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
 
         val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-        if(!bluetoothAdapter.isEnabled){
+        if (!bluetoothAdapter.isEnabled) {
             startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), BLUETOOTH_CODE)
         }
 
@@ -65,10 +65,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        when(requestCode){
+        when (requestCode) {
 
             BLUETOOTH_CODE -> {
-                if(resultCode == Activity.RESULT_CANCELED){
+                if (resultCode == Activity.RESULT_CANCELED) {
                     val builder = AlertDialog.Builder(this);
                     builder.setTitle(R.string.bluetoothDenegadoTitulo);
                     builder.setMessage(R.string.bluetoothDenegadoDescripcion)
@@ -82,15 +82,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when(requestCode){
+        when (requestCode) {
             GPS_PERMISION_CODE -> {
-                if(grantResults.isNotEmpty() && ( grantResults[0] == PackageManager.PERMISSION_DENIED  || grantResults[1] == PackageManager.PERMISSION_DENIED
-                                || grantResults[2] == PackageManager.PERMISSION_DENIED  || grantResults[3] == PackageManager.PERMISSION_DENIED)) {
+                if (grantResults.isNotEmpty() && (grantResults[0] == PackageManager.PERMISSION_DENIED || grantResults[1] == PackageManager.PERMISSION_DENIED
+                                || grantResults[2] == PackageManager.PERMISSION_DENIED || grantResults[3] == PackageManager.PERMISSION_DENIED)) {
                     val builder = AlertDialog.Builder(this);
                     builder.setTitle(R.string.permisosDenegadosTitulo);
                     builder.setMessage(R.string.permisosDenegadosDescripcion)
@@ -102,10 +102,8 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            }
         }
-
-
+    }
 
 
 }
