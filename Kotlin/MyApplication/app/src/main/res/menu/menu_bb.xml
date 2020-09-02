@@ -11,9 +11,9 @@
         android:id="@+id/languageMenu"
         android:title="@string/languageMenu"
         />
+
     <item
         android:id="@+id/aboutMenu"
         android:title="@string/aboutMenu"/>
-
 
 </menu>

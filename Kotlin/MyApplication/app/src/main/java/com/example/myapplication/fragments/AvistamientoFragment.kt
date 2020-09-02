@@ -1,18 +1,23 @@
 package com.example.myapplication.fragments
 
-import android.animation.ValueAnimator
+
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.LayoutTransition
 import android.bluetooth.BluetoothAdapter
 import android.content.Context
 import android.location.LocationManager
 import android.os.Bundle
+import androidx.transition.TransitionManager
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.navigation.findNavController
+import androidx.transition.Fade
+import androidx.transition.Slide
+import androidx.transition.Transition
 import com.example.myapplication.Controller
 import com.example.myapplication.LocationController
 import com.example.myapplication.R
@@ -58,6 +63,7 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
         setGeneralButtonActions(view)
 
 
+
         if (BluetoothManager.bleDeviceMac != "" && checkBluetooth.isEnabled && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             bleController.startTalking(view.context)
             setCommonObserver(BluetoothManager.HUMIDITY_SENSOR, R.id.etHumidity, bleController)
@@ -82,7 +88,6 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
         view.findViewById<EditText>(R.id.etDay).setText(calendar.get(Calendar.DATE).toString())
         view.findViewById<EditText>(R.id.etMonth).setText(calendar.get(Calendar.MONTH).toString())
         view.findViewById<EditText>(R.id.etYear).setText(calendar.get(Calendar.YEAR).toString())
-
 
 
     }
@@ -121,7 +126,7 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        if(BluetoothManager.bleDeviceMac != "")
+        if (BluetoothManager.bleDeviceMac != "")
             bleController.stopTalking()
         locationController.stopGettingPositions()
 

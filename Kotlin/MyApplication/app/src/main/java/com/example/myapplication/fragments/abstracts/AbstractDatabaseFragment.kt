@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.navigation.findNavController
 import com.example.myapplication.R
 import com.example.myapplication.fragments.AvistamientoFragmentDirections
@@ -37,6 +39,18 @@ abstract class AbstractDatabaseFragment : GeneralFragmentRx() {
                 view.findNavController().navigate(EditSightseenDirections.actionEditSightseenToMainFragment2())
             else
                 view.findNavController().navigate(AvistamientoFragmentDirections.actionAvistamiento2ToMainFragment2())
+        })
+
+        disposables.add(view.findViewById<TextView>(R.id.btnExpand).clicks().subscribe {
+
+            val btn = view.findViewById<Button>(R.id.btnExpand)
+            val hiddenView = view.findViewById<LinearLayout>(R.id.lhidden)
+            if(hiddenView.visibility == View.VISIBLE)
+                hiddenView.visibility = View.GONE
+            else
+                hiddenView.visibility = View.VISIBLE
+
+
         })
 
         disposables.add(view.findViewById<Button>(R.id.btnEditDatabaseAnimal).clicks().observeOn(Schedulers.io())

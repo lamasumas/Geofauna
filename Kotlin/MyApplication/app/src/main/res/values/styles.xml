@@ -1,10 +1,46 @@
 <resources>
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="AppTheme"  parent="Theme.MaterialComponents.Light.DarkActionBar" >
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/colorSecundarioPaleta</item>
+        <item name="colorPrimaryDark">@color/colorSecundarioPaleta</item>
+        <item name="colorAccent">@color/colorTerciarioPaleta</item>
+        <item name="android:itemBackground">@color/colorSecundarioPaleta</item>
+    </style>
+
+    <style name="backgroundLight">
+        <item name="android:background">@color/colorPrimaryPaleta</item>
+    </style>
+
+    <style name="backgroundStrong">
+        <item name="android:background">@color/colorSecundarioPaleta</item>
+    </style>
+
+    <style name="myEditLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="hintTextColor">@color/colorQuintoPaleta</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">3dp</item>
+        <item name="android:layout_marginRight">3dp</item>
+    </style>
+
+    <style name="myEditText" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">40dp</item>
+        <item name="android:textSize">17dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textColorHint">@color/colorQuintoPaleta</item>
+        <item name="backgroundTint">@color/colorSecundarioPaleta</item>
+    </style>
+
+    <style name="myFab">
+        <item name="backgroundTint">@color/colorSecundarioPaleta</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="elevation">0dp</item>
     </style>
 
 </resources>

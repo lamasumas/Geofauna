@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryPaleta"
     tools:context=".MainActivity">
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -24,7 +25,7 @@
         android:layout_width="match_parent"
         style="@style/Widget.MaterialComponents.BottomAppBar"
         android:layout_gravity="bottom"
-        app:backgroundTint="@color/design_default_color_primary_dark"
+        app:backgroundTint="@color/colorSecundarioPaleta"
         app:fabAlignmentMode="center"
         android:id="@+id/bar"
         app:hideOnScroll="true"
@@ -32,13 +33,10 @@
         app:menu="@menu/menu_bb"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/fab"
-        app:elevation="0dp"
         app:layout_anchor="@id/bar"
-        app:backgroundTint="@color/design_default_color_primary_dark"
         android:src="@drawable/add_icon"
+        style="@style/myFab"
         />
 
 
