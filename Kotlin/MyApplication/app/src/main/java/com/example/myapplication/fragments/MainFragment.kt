@@ -45,8 +45,6 @@ class MainFragment : GeneralFragmentRx() {
 
         disposables.add(view.findViewById<Button>(R.id.bluetoothMenu).clicks().subscribe {
             BluetoothScanDialog(view.context).show()
-
-
         })
 
 

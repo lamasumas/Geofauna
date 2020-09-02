@@ -9,6 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryPaleta"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -49,6 +50,7 @@
         <Button
             android:id="@+id/btnConnect"
             android:layout_width="wrap_content"
+            android:backgroundTint="@color/colorSecundarioPaleta"
             android:layout_height="match_parent"
             android:text="@string/btnConectar" />
     </LinearLayout>

@@ -1,10 +1,10 @@
 <resources>
-    <!-- Base application theme. -->
     <style name="AppTheme"  parent="Theme.MaterialComponents.Light.DarkActionBar" >
-        <!-- Customize your theme here. -->
+        <item name="windowNoTitle">true</item>
         <item name="colorPrimary">@color/colorSecundarioPaleta</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryPaleta</item>
+        <item name="colorPrimaryDark">@color/colorSecundarioPaleta</item>
         <item name="colorAccent">@color/colorTerciarioPaleta</item>
+        <item name="android:itemBackground">@color/colorSecundarioPaleta</item>
     </style>
 
     <style name="backgroundLight">
@@ -30,11 +30,17 @@
         <item name="cornerFamily">cut</item>
         <item name="cornerSize">40dp</item>
         <item name="android:textSize">17dp</item>
-        
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:textColorHint">@color/colorQuintoPaleta</item>
-        <item name="backgroundTint">@color/colorTerciarioPaleta</item>
+        <item name="backgroundTint">@color/colorSecundarioPaleta</item>
+    </style>
+
+    <style name="myFab">
+        <item name="backgroundTint">@color/colorSecundarioPaleta</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="elevation">0dp</item>
     </style>
 
 </resources>

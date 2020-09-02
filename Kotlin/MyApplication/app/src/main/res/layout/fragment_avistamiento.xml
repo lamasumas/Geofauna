@@ -191,7 +191,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -323,9 +323,6 @@
 
         </LinearLayout>
 
-
-
-
         <LinearLayout
             android:id="@+id/lButton"
             android:layout_width="match_parent"
@@ -337,34 +334,25 @@
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnBack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginHorizontal="13pt"
                 android:src="@drawable/back_icon"
-                app:backgroundTint="@color/design_default_color_primary_dark" />
+                style="@style/myFab"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnAñadirAvistamiento"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/myFab"
                 android:layout_marginHorizontal="13pt"
                 android:src="@drawable/add_icon"
-                app:backgroundTint="@color/design_default_color_primary_dark"
-                app:elevation="0dp"
                 app:layout_anchor="@id/lButton" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnEditDatabaseAnimal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="13pt"
                 android:src="@drawable/edit_icon"
                 android:visibility="gone"
-                app:backgroundTint="@color/design_default_color_primary_dark"
-                app:elevation="0dp"
-                app:layout_anchor="@id/lButton" />
-
+                app:layout_anchor="@id/lButton"
+                style="@style/myFab"/>
 
         </LinearLayout>
     </LinearLayout>

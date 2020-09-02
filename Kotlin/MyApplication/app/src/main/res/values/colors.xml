@@ -6,7 +6,7 @@
 
     <!--Paleta de colores -->
     <color name="colorPrimaryPaleta">#F0DECC </color>
-    <color name="colorSecundarioPaleta">#B38D66</color>
+    <color name="colorSecundarioPaleta">#7BAB73</color>
     <color name="colorTerciarioPaleta">#A3978B</color>
     <color name="colorCuartoPaleta">#F5AB5A</color>
     <color name="colorQuintoPaleta">#736A62</color>
