@@ -1,16 +1,15 @@
 package com.example.myapplication.fragments
 
-import android.content.Intent
 import android.os.Bundle
-import android.os.Environment
 import android.view.*
 import android.widget.Button
 import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
-import com.example.myapplication.ExportManager
+import com.example.myapplication.export.ExportManager
 import com.example.myapplication.adapters.MainAdapter
 import com.example.myapplication.R
 import com.example.myapplication.bluetooth.dialog.BluetoothScanDialog
+import com.example.myapplication.export.dialog.ExportDialog
 import com.example.myapplication.fragments.abstracts.GeneralFragmentRx
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -52,18 +51,24 @@ class MainFragment : GeneralFragmentRx() {
 
 
         view.findViewById<BottomAppBar>(R.id.bar).setOnMenuItemClickListener {
-            when(it.itemId){
-                R.id.aboutMenu -> {
-                    var file = view.context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
-                    ExportManager().exportToExcel(file!!, view.context)
+            when (it.itemId) {
+                R.id.exportarMenu -> {
+
+                   /* val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                        addCategory(Intent.CATEGORY_OPENABLE)
+                        type = "text/csv"
+                        putExtra(Intent.EXTRA_TITLE, "Avistamientos.csv")}
+                    requireActivity().startActivityForResult(intent, MainActivity.EXPORT_CODE)
+
+                    ExportManager().exportToDrive(view.context.applicationContext);*/
+
+                    ExportDialog(requireContext(), requireActivity()).show()
+
                     true
                 }
                 else -> false
-
+            }
         }
-        }
-
-
 
     }
 
@@ -71,5 +76,6 @@ class MainFragment : GeneralFragmentRx() {
         super.onDestroy()
         viewPager2?.adapter = null
     }
+
 }
 

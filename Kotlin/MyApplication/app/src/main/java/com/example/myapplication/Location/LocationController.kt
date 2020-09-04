@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Location;
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -6,6 +6,7 @@ import android.location.Geocoder
 import android.location.Location
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.example.myapplication.Controller
 import com.google.android.gms.location.*
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -16,7 +17,7 @@ import java.lang.Exception
 
 
 @SuppressLint("MissingPermission")
-class LocationController :Controller {
+class LocationController : Controller {
 
     var locationObservable: Observable<Location>
     val LATITUDE_ID = 0
@@ -92,7 +93,7 @@ class LocationController :Controller {
      * @return MylocationObject, objeto de una data class, este objeto contiene la lat, lon, el país
      * y el lugar obtenidos de Geocoder
      */
-    fun translateGPS2Place(lon:Double, lat: Double):MylocationObject{
+    fun translateGPS2Place(lon:Double, lat: Double): MylocationObject {
         val mylocationObject = MylocationObject(lon, lat, "", "")
         try {
         geocoder.getFromLocation (lat, lon,3).forEach { address ->

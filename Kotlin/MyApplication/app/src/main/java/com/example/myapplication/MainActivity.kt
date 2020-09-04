@@ -9,26 +9,16 @@ import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.viewpager2.widget.ViewPager2
-import com.example.myapplication.bluetooth.BluetoothManager
-import com.google.android.material.bottomappbar.BottomAppBar
-import io.reactivex.exceptions.UndeliverableException
-import io.reactivex.plugins.RxJavaPlugins
-import java.io.IOException
-import java.net.SocketException
-import java.util.jar.Manifest
+import com.example.myapplication.export.ExportManager
 
 class MainActivity : AppCompatActivity() {
     companion object {
         const val GPS_PERMISION_CODE = 55
         const val BLUETOOTH_CODE = 56
+        const val EXPORT_CODE = 57
 
     }
 
@@ -47,9 +37,10 @@ class MainActivity : AppCompatActivity() {
                 ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED ||
                 ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_DENIED ||
                 ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_DENIED ||
-                ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED)
-            ActivityCompat.requestPermissions(this, arrayOf<String>(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.INTERNET, android.Manifest.permission.ACCESS_FINE_LOCATION,
-                    android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION), GPS_PERMISION_CODE);
+                ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED ||
+                ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED)
+            ActivityCompat.requestPermissions(this, arrayOf<String>(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.INTERNET, android.Manifest.permission.ACCESS_FINE_LOCATION,
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION, android.Manifest.permission.READ_EXTERNAL_STORAGE), GPS_PERMISION_CODE);
 
         val locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager;
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
@@ -78,8 +69,16 @@ class MainActivity : AppCompatActivity() {
                     builder.create().show()
                 }
             }
+
+            EXPORT_CODE -> {
+                if (resultCode == Activity.RESULT_OK)
+                    ExportManager().exportToCSV(data?.data, this)
+            }
+
+
         }
     }
+
 
     override fun onRequestPermissionsResult(
             requestCode: Int,

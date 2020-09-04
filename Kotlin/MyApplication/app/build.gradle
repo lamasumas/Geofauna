@@ -101,6 +101,5 @@ dependencies {
     implementation "com.polidea.rxandroidble2:rxandroidble:1.11.1"
     //Leak-canary for leak memory
     //debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
-    implementation group: 'net.sourceforge.jexcelapi', name: 'jxl', version: '2.6'
 
 }
