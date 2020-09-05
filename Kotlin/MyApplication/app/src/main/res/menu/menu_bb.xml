@@ -12,9 +12,5 @@
         android:title="@string/exportarMenu"
         />
 
-    <item
-        android:id="@+id/aboutMenu"
-
-        android:title="@string/aboutMenu"/>
 
 </menu>

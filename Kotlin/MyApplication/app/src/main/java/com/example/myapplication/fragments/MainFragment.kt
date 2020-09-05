@@ -54,14 +54,6 @@ class MainFragment : GeneralFragmentRx() {
             when (it.itemId) {
                 R.id.exportarMenu -> {
 
-                   /* val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-                        addCategory(Intent.CATEGORY_OPENABLE)
-                        type = "text/csv"
-                        putExtra(Intent.EXTRA_TITLE, "Avistamientos.csv")}
-                    requireActivity().startActivityForResult(intent, MainActivity.EXPORT_CODE)
-
-                    ExportManager().exportToDrive(view.context.applicationContext);*/
-
                     ExportDialog(requireContext(), requireActivity()).show()
 
                     true
