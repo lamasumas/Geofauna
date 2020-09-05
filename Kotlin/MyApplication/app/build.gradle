@@ -30,6 +30,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -101,5 +104,7 @@ dependencies {
     implementation "com.polidea.rxandroidble2:rxandroidble:1.11.1"
     //Leak-canary for leak memory
     //debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
+
+    implementation  "org.mockito:mockito-core:2.+"
 
 }

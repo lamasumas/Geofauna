@@ -177,7 +177,7 @@
                     android:layout_marginHorizontal="10dp"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-                    android:text="Opcional"
+                    android:text="@string/btnOptional"
                     android:textColor="@color/colorQuintoPaleta"
                     app:backgroundTint="@android:color/transparent"
                     app:cornerRadius="100dp"

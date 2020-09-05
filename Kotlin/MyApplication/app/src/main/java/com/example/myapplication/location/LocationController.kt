@@ -1,4 +1,4 @@
-package com.example.myapplication.Location;
+package com.example.myapplication.location;
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -36,7 +36,7 @@ class LocationController : Controller {
      */
     constructor(context: Context){
 
-              geocoder = Geocoder(context)
+        geocoder = Geocoder(context)
 
         myData[LATITUDE_ID] = MutableLiveData("")
         myData[LONGITUDE_ID] = MutableLiveData("")
@@ -65,7 +65,6 @@ class LocationController : Controller {
            val locationClient = LocationServices.getFusedLocationProviderClient(context)
            locationClient.requestLocationUpdates(locationRequest,locationCallback, null)
        }
-        Log.d("ksdfah","kshdf")
     }
 
 
@@ -100,7 +99,7 @@ class LocationController : Controller {
             mylocationObject.country = address.countryName;
             mylocationObject.place = address.adminArea;
         }}catch (e:Exception){
-            Log.e("Geocoder", "Geocoder didn't found anything");
+            Log.d("Geocoder", "Geocoder didn't found anything");
         }
         return mylocationObject
     }

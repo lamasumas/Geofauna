@@ -9,7 +9,7 @@
     <string name="tvHora">Hora:</string>
     <string name="tvFecha">Fecha:</string>
     <string name="tvLatitud">Latitud:</string>
-    <string name="tvLongitud">Longitud:</string>
+    <string name="tvLongitud">Altitud (m)</string>
     <string name="tvHumidity">Humedad (%):</string>
     <string name="tvAltitude">Altitud (m):</string>
     <string name="tvTemperature">Temperatura (ºC):</string>
@@ -23,11 +23,11 @@
     <string name="etDia">Día</string>
     <string name="etMes">Mes</string>
     <string name="etAño">Año</string>
-    <string name="etHumidity">Humedad</string>
+    <string name="etHumidity">Humedad (%)</string>
     <string name="etAltitude">Altitud </string>
-    <string name="etTemperature">Temperatura</string>
+    <string name="etTemperature">Temperatura (ºC)</string>
     <string name="etUv">Indice UV</string>
-    <string name="etPressure">Pressión</string>
+    <string name="etPressure">Pressión (hPa)</string>
     <string name="btnAñadirAvistamiento">Añadir avistamiento</string>
     <string name="tvPais">País:</string>
     <string name="tvLugar">Lugar:</string>
@@ -51,7 +51,7 @@
     <string name="btnEditar">Editar</string>
     <string name="btnBorrar">Borrar</string>
     <string name="bluetoothDenegadoTitulo">Bluetooth denegado</string>
-    <string name="bluetoothDenegadoDescripcion">Si no enciende el bluetooth, no podra utilizar arduino</string>
+    <string name="bluetoothDenegadoDescripcion">Si no enciende el bluetooth, no podra utilizar arduino.</string>
     <string name="tvBluetoothScanTitulo">Buscando dispositivos bluetooth</string>
     <string name="tvBluetoothScanTituloAlternativo">Problemas con el bluetooth</string>
     <string name="tvBluetoothNoDisponible">El bluetooth no esta disponible en este dispositivo android</string>
@@ -62,6 +62,7 @@
     <string name="tvDialogTitle">Exportar: </string>
     <string name="btnPhone">Movil</string>
     <string name="btnOtro">Otro</string>
+    <string name="btnOptional">Opcional</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
