@@ -45,7 +45,7 @@
     <string name="tvHoraTitulo">Hora</string>
     <string name="tvDiaTitulo">Día</string>
     <string name="bluetoothMenu">Bluetooth </string>
-    <string name="languageMenu">Lenguaje</string>
+    <string name="exportarMenu">Exportar...</string>
     <string name="aboutMenu">Saber mas</string>
     <string name="btnEditAnimal">Editar entrada de animal</string>
     <string name="btnEditar">Editar</string>
@@ -59,6 +59,9 @@
     <string name="tvBluetoothLocalizacionConcesion">Los permisos necesarios de localizacion no fueron concedidos</string>
     <string name="tvBluetoothLocalizacionApagado">La ubicación esta desactivada</string>
     <string name="btnConectar">Seleccionar</string>
+    <string name="tvDialogTitle">Exportar: </string>
+    <string name="btnPhone">Movil</string>
+    <string name="btnOtro">Otro</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

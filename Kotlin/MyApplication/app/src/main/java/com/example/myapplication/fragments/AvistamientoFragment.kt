@@ -1,32 +1,19 @@
 package com.example.myapplication.fragments
 
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.animation.LayoutTransition
 import android.bluetooth.BluetoothAdapter
 import android.content.Context
 import android.location.LocationManager
 import android.os.Bundle
-import androidx.transition.TransitionManager
 import android.util.Log
 import android.view.*
 import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.navigation.findNavController
-import androidx.transition.Fade
-import androidx.transition.Slide
-import androidx.transition.Transition
 import com.example.myapplication.Controller
-import com.example.myapplication.LocationController
+import com.example.myapplication.Location.LocationController
 import com.example.myapplication.R
 import com.example.myapplication.bluetooth.BleController
 import com.example.myapplication.bluetooth.BluetoothManager
 import com.example.myapplication.fragments.abstracts.AbstractDatabaseFragment
-import com.example.myapplication.room.DatabaseRepository
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.plugins.RxJavaPlugins
 import java.util.*
