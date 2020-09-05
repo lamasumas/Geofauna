@@ -30,7 +30,7 @@ abstract class AbstractDatabaseFragment : GeneralFragmentRx() {
             val newDatabaseSimpleEntry = createSimpleAnimalObject(view)
             val newDatabaseAdvanceEntry = createAdvanceAnimalObject(view)
             disposables.add(dbRepository.insertNewAnimalToDB(newDatabaseSimpleEntry, newDatabaseAdvanceEntry))
-            view.findNavController().navigate(AvistamientoFragmentDirections.actionAvistamiento2ToMainFragment2())
+
 
         })
 
