@@ -53,7 +53,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etHour"
                     style="@style/myEditText"
-                    android:hint="@string/etHora" />
+                    android:hint="@string/etHora"
+                    android:inputType="number" />
 
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -67,7 +68,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etMinute"
                     style="@style/myEditText"
-                    android:hint="@string/etMinuto" />
+                    android:hint="@string/etMinuto"
+                    android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -88,7 +90,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etDay"
                     style="@style/myEditText"
-                    android:hint="@string/etDia" />
+                    android:hint="@string/etDia"
+                    android:inputType="number" />
 
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -131,7 +134,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etLatitud"
                     style="@style/myEditText"
-                    android:hint="@string/etLatitud" />
+                    android:hint="@string/etLatitud"
+                    android:inputType="numberDecimal" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
@@ -148,7 +152,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etLongitud"
                     style="@style/myEditText"
-                    android:hint="@string/etLongitud" />
+                    android:hint="@string/etLongitud"
+                    android:inputType="numberDecimal" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
@@ -245,7 +250,8 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etHumidity"
                             style="@style/myEditText"
-                            android:hint="@string/etHumidity" />
+                            android:hint="@string/etHumidity"
+                            android:inputType="numberDecimal" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -258,7 +264,8 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etAltitude"
                             style="@style/myEditText"
-                            android:hint="@string/etAltitude" />
+                            android:hint="@string/etAltitude"
+                            android:inputType="numberSigned|number|numberDecimal" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
@@ -278,7 +285,8 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etTemperature"
                             style="@style/myEditText"
-                            android:hint="@string/etTemperature" />
+                            android:hint="@string/etTemperature"
+                            android:inputType="numberSigned|numberDecimal" />
                     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -292,7 +300,8 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etIndexUV"
                             style="@style/myEditText"
-                            android:hint="@string/etUv" />
+                            android:hint="@string/etUv"
+                            android:inputType="number" />
                     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -355,6 +364,7 @@
                 style="@style/myFab"/>
 
         </LinearLayout>
+
     </LinearLayout>
     </ScrollView>
 </FrameLayout>

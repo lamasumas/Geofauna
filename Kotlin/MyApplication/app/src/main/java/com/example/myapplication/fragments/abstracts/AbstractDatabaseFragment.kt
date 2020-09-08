@@ -1,9 +1,8 @@
 package com.example.myapplication.fragments.abstracts
 
-import android.os.Bundle
+import android.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -17,7 +16,6 @@ import com.example.myapplication.room.data_classes.AnimalAdvanceData
 import com.example.myapplication.room.data_classes.AnimalSimpleData
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.jakewharton.rxbinding2.view.clicks
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.lang.NumberFormatException
 
@@ -27,10 +25,26 @@ abstract class AbstractDatabaseFragment : GeneralFragmentRx() {
 
         val dbRepository = DatabaseRepository(view.context)
         disposables.add(view.findViewById<FloatingActionButton>(R.id.btnAñadirAvistamiento).clicks().subscribe {
-            val newDatabaseSimpleEntry = createSimpleAnimalObject(view)
-            val newDatabaseAdvanceEntry = createAdvanceAnimalObject(view)
-            disposables.add(dbRepository.insertNewAnimalToDB(newDatabaseSimpleEntry, newDatabaseAdvanceEntry))
+            if (checkValidSimpleData(view)) {
 
+                var builder = AlertDialog.Builder(view.context, R.style.alertDialog)
+                val newDatabaseSimpleEntry = createSimpleAnimalObject(view)
+                val newDatabaseAdvanceEntry = createAdvanceAnimalObject(view)
+                disposables.add(dbRepository.insertNewAnimalToDB(newDatabaseSimpleEntry, newDatabaseAdvanceEntry))
+
+                val alertView = LayoutInflater.from(view.context).inflate(R.layout.animal_added_dialog, null)
+                builder.setView(alertView).create().also { dialog ->
+                    dialog.setCanceledOnTouchOutside(true)
+                    disposables.add(alertView.findViewById<Button>(R.id.btnAdded).clicks().subscribe {
+                        dialog.dismiss()
+                    })
+                    dialog.show()
+                }
+            } else
+                AlertDialog.Builder(view.context).setMessage(R.string.wrongInputMessage)
+                        .setTitle(R.string.wrongInputTitulo)
+                        .setNeutralButton(R.string.cerrarAlertBoton) { dialog, id -> dialog.dismiss() }
+                        .create().show()
 
         })
 
@@ -45,7 +59,7 @@ abstract class AbstractDatabaseFragment : GeneralFragmentRx() {
 
             val btn = view.findViewById<Button>(R.id.btnExpand)
             val hiddenView = view.findViewById<LinearLayout>(R.id.lhidden)
-            if(hiddenView.visibility == View.VISIBLE)
+            if (hiddenView.visibility == View.VISIBLE)
                 hiddenView.visibility = View.GONE
             else
                 hiddenView.visibility = View.VISIBLE
@@ -59,11 +73,27 @@ abstract class AbstractDatabaseFragment : GeneralFragmentRx() {
                     val tempAdvance = createAdvanceAnimalObject(view)
                     tempSimple.simpleId = idSimple
                     tempAdvance.uid = idAdvance
-                    tempAdvance.simpleId= idSimple
+                    tempAdvance.simpleId = idSimple
                     disposables.add(dbRepository.updateAnimal(tempSimple, tempAdvance))
                 }.subscribe {
                     view.findNavController().navigate(EditSightseenDirections.actionEditSightseenToMainFragment2())
                 })
+    }
+
+    private fun checkValidSimpleData(view: View): Boolean {
+        return checkValidEditText(R.id.etEspecie, view) &&
+                checkValidEditText(R.id.etLatitud, view) &&
+                checkValidEditText(R.id.etLongitud, view) &&
+                checkValidEditText(R.id.etHour, view) &&
+                checkValidEditText(R.id.etMinute, view) &&
+                checkValidEditText(R.id.etDay, view) &&
+                checkValidEditText(R.id.etMonth, view) &&
+                checkValidEditText(R.id.etYear, view)
+
+    }
+
+    private fun checkValidEditText(id: Int, view: View): Boolean {
+        return view.findViewById<EditText>(id).text.isNotEmpty() && view.findViewById<EditText>(id).text.isNotBlank()
     }
 
     protected fun createSimpleAnimalObject(view: View): AnimalSimpleData {
@@ -91,12 +121,12 @@ abstract class AbstractDatabaseFragment : GeneralFragmentRx() {
         val temperature = view.findViewById<EditText>(R.id.etTemperature).text.toString()
         val pressure = view.findViewById<EditText>(R.id.etPressure).text.toString()
 
-        return AnimalAdvanceData(pais = country, lugar = place, humidity = checkDataInput(humidity),
-                temperature = checkDataInput(temperature), pressure = checkDataInput(pressure),
-                altitude = checkDataInput(altitude), index_uv = checkDataInput(uv)?.toInt())
+        return AnimalAdvanceData(pais = country, lugar = place, humidity = checkDouebleNullInput(humidity),
+                temperature = checkDouebleNullInput(temperature), pressure = checkDouebleNullInput(pressure),
+                altitude = checkDouebleNullInput(altitude), index_uv = checkDouebleNullInput(uv)?.toInt())
     }
 
-    private fun checkDataInput(input: String): Double? {
+    private fun checkDouebleNullInput(input: String): Double? {
         var temp: Double? = null
         try {
             temp = input.toDouble()
