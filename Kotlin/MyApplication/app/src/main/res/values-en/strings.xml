@@ -67,4 +67,9 @@
     <string name="btnOptional">Optional</string>
     <string name="wrongInputMessage">You left unfull filled an obligatory field</string>
     <string name="wrongInputTitulo">Missing Data</string>
+    <string name="btnDeleteAll">Clean database</string>
+    <string name="dangerTitle">Danger</string>
+    <string name="dangerMessage">Are you sure of this? Once you done it, the data will be lost</string>
+    <string name="btnCancel">Cancel</string>
+    <string name="tvEmptyDatabase">There are no animals registered in the database</string>
 </resources>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,8 +10,33 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center">
 
+        <TextView
+            android:id="@+id/tvEmptyDatabase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tvEmptyDatabase"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textStyle="italic"
+            android:visibility="gone"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDeleteAll"
+            android:layout_margin="10dp"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginHorizontal="10dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/btnDeleteAll"
+            android:textColor="@color/colorQuintoPaleta"
+            app:backgroundTint="@android:color/transparent"
+            app:cornerRadius="100dp"
+            app:strokeColor="@color/colorQuintoPaleta"
+            app:strokeWidth="1dp" />
         <ProgressBar
             android:id="@+id/databaseMiddleware"
             style="?android:attr/progressBarStyle"

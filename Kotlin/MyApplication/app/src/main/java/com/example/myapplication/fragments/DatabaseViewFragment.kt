@@ -1,5 +1,6 @@
 package com.example.myapplication.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import com.example.myapplication.R
 import com.example.myapplication.fragments.abstracts.AbstractDatabaseFragment
 import com.example.myapplication.room.database_recyclerview.DatabaseRvAdapter
 import com.example.myapplication.room.DatabaseRepository
+import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -18,7 +20,8 @@ import io.reactivex.schedulers.Schedulers
 
 class DatabaseViewFragment : AbstractDatabaseFragment() {
 
-    var recyclerView: RecyclerView? = null
+    lateinit var recyclerView: RecyclerView
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -27,18 +30,20 @@ class DatabaseViewFragment : AbstractDatabaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewManager = LinearLayoutManager(view.context);
 
-        recyclerView = view.findViewById<RecyclerView>(R.id.rvDatabase).apply {
-            setHasFixedSize(true)
-            layoutManager = viewManager
-            disposables.add(Observable.just(DatabaseRepository(view.context)).observeOn(Schedulers.io())
-                    .flatMap { it.retrieveSightseeing() }
-                    .observeOn(AndroidSchedulers.mainThread()).subscribe {
-                        adapter = DatabaseRvAdapter(it, disposables)
-                        visibility = View.VISIBLE
-                        view.findViewById<ProgressBar>(R.id.databaseMiddleware).visibility = View.GONE
-                    })
+        recyclerView = view.findViewById<RecyclerView>(R.id.rvDatabase)
+        setDatabaseRecyclerView(recyclerView, view)
+        view.findViewById<Button>(R.id.btnDeleteAll).clicks().subscribe {
+            AlertDialog.Builder(view.context).setMessage(R.string.dangerMessage)
+                    .setTitle(R.string.dangerTitle)
+                    .setNegativeButton(R.string.btnCancel) { dialog, id -> dialog.dismiss() }
+                    .setPositiveButton(R.string.btnDeleteAll) { dialog, id ->
+                        DatabaseRepository(view.context).cleanDatabase()
+                        resetIndicators(view)
+                        view.findViewById<TextView>(R.id.tvEmptyDatabase).visibility = View.VISIBLE
+
+                    }
+                    .create().show()
         }
 
 
@@ -47,5 +52,38 @@ class DatabaseViewFragment : AbstractDatabaseFragment() {
     override fun onDestroy() {
         super.onDestroy()
         recyclerView?.adapter = null
+    }
+
+    private fun setDatabaseRecyclerView(theRecyclerView: RecyclerView, view: View) {
+        resetIndicators(view)
+        val viewManager = LinearLayoutManager(view.context);
+        theRecyclerView.apply {
+            setHasFixedSize(true)
+            layoutManager = viewManager
+            disposables.add(Observable.just(DatabaseRepository(view.context)).observeOn(Schedulers.io())
+                    .flatMap {
+                        view.findViewById<ProgressBar>(R.id.databaseMiddleware).visibility = View.VISIBLE
+                        it.retrieveSightseeing()
+                    }
+                    .observeOn(AndroidSchedulers.mainThread()).subscribe {
+                        view.findViewById<ProgressBar>(R.id.databaseMiddleware).visibility = View.GONE
+                        if (it.isNotEmpty()) {
+                            adapter = DatabaseRvAdapter(it, disposables)
+                            visibility = View.VISIBLE
+                            view.findViewById<Button>(R.id.btnDeleteAll).visibility = View.VISIBLE
+                        } else {
+
+                            view.findViewById<TextView>(R.id.tvEmptyDatabase).visibility = View.VISIBLE
+                        }
+                    })
+        }
+
+    }
+
+    private fun resetIndicators(view: View) {
+        view.findViewById<RecyclerView>(R.id.rvDatabase).visibility = View.GONE
+        view.findViewById<Button>(R.id.btnDeleteAll).visibility = View.GONE
+        view.findViewById<TextView>(R.id.tvEmptyDatabase).visibility = View.GONE
+        view.findViewById<ProgressBar>(R.id.databaseMiddleware).visibility = View.GONE
     }
 }

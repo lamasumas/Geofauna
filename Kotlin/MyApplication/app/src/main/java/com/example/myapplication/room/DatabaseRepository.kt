@@ -56,4 +56,10 @@ class DatabaseRepository(context: Context) {
         }
     }
 
+    fun cleanDatabase() {
+        Observable.just(db).observeOn(Schedulers.io()).subscribeOn(Schedulers.io()).subscribe {
+            it.clearAllTables()
+        }
+    }
+
 }

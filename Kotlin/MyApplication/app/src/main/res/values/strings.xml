@@ -65,6 +65,11 @@
     <string name="btnOptional">Opcional</string>
     <string name="wrongInputMessage">Has dejado algún campo obligatorio sin rellenar</string>
     <string name="wrongInputTitulo">Faltan Datos</string>
+    <string name="btnDeleteAll">Limpiar base de datos</string>
+    <string name="dangerTitle">Peligro</string>
+    <string name="dangerMessage">¿Estás seguro de borrar la base de datos? Una vez hecho no habrá vuelta atras.</string>
+    <string name="btnCancel">Cancelar</string>
+    <string name="tvEmptyDatabase">No hay registros de avistamientos.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
