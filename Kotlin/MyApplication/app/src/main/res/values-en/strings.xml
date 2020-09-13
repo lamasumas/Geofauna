@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Muestreo_Fauna_Salvaje</string>
+    <string name="app_name">Sampling app</string>
     <string name="btnResumen">Summary</string>
     <string name="btnAñadir">Add animal</string>
     <string name="btnEstadisticas">Statistics</string>

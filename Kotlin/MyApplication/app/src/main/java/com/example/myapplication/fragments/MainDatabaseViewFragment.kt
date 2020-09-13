@@ -15,7 +15,7 @@ import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.jakewharton.rxbinding2.view.clicks
 
-class MainFragment : GeneralFragmentRx() {
+class MainDatabaseViewFragment : GeneralFragmentRx() {
 
     private var viewPager2: ViewPager2? = null
 
@@ -40,7 +40,7 @@ class MainFragment : GeneralFragmentRx() {
                 .subscribe {
                     val navController = view.findNavController()
                     if (navController.currentDestination?.id == R.id.mainFragment2)
-                        navController.navigate(MainFragmentDirections.actionMainFragment2ToAvistamiento2())
+                        navController.navigate(MainDatabaseViewFragmentDirections.actionMainFragment2ToAvistamiento2())
                 })
         viewPager2 = view.findViewById<ViewPager2>(R.id.vpMain)
         viewPager2?.adapter = MainAdapter(this)

@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.example.myapplication.fragments.MainFragmentDirections
+import com.example.myapplication.fragments.MainDatabaseViewFragmentDirections
 import com.example.myapplication.room.DatabaseRepository
 import com.example.myapplication.room.data_classes.SimpleAdvanceRelation
 import com.jakewharton.rxbinding2.view.clicks
@@ -50,7 +50,7 @@ class DatabaseRvAdapter(val elements:List<SimpleAdvanceRelation>, val disposable
         })
         disposables.add(
         holder.btnEdit.clicks().observeOn(AndroidSchedulers.mainThread()).subscribe {
-            holder.btnEdit.findNavController().navigate(MainFragmentDirections.actionMainFragment2ToEditSightseen(holder.idAdvance, holder.idSimple))
+            holder.btnEdit.findNavController().navigate(MainDatabaseViewFragmentDirections.actionMainFragment2ToEditSightseen(holder.idAdvance, holder.idSimple))
         })
 
         disposables.add(holder.btnDelete.clicks().observeOn(AndroidSchedulers.mainThread()).doOnNext{

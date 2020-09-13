@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Muestreo_Fauna_Salvaje</string>
+    <string name="app_name">Muestreo app</string>
     <string name="tituloAplicacion">Muestreo de Fauna Salvaje</string>
     <string name="btnResumen">Resumen</string>
     <string name="btnAñadir">Añadir avistamiento</string>

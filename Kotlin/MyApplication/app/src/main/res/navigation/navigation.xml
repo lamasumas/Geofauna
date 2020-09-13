@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/mainFragment2">
+    app:startDestination="@id/menuPrincipal">
     <fragment
         android:id="@+id/mainFragment2"
-        android:name="com.example.myapplication.fragments.MainFragment"
+        android:name="com.example.myapplication.fragments.MainDatabaseViewFragment"
         android:label="MainFragment" >
         <action
             android:id="@+id/action_mainFragment2_to_avistamiento2"
@@ -37,5 +37,14 @@
         <argument
             android:name="idSimple"
             app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/menuPrincipal"
+        android:name="com.example.myapplication.fragments.InitialMenuFragment"
+        android:label="fragment_menu_principal"
+        tools:layout="@layout/fragment_menu_principal" >
+        <action
+            android:id="@+id/action_menuPrincipal_to_mainFragment2"
+            app:destination="@id/mainFragment2" />
     </fragment>
 </navigation>

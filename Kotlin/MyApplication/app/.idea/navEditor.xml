@@ -55,8 +55,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="143" />
-                            <option name="y" value="-241" />
+                            <option name="x" value="142" />
+                            <option name="y" value="-275" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -67,6 +67,27 @@
                               </value>
                             </entry>
                             <entry key="action_mainFragment2_to_editSightseen">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="menuPrincipal">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-160" />
+                            <option name="y" value="-276" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_menuPrincipal_to_mainFragment2">
                               <value>
                                 <LayoutPositions />
                               </value>
