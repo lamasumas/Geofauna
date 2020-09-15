@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/menuPrincipal"
-        android:name="com.example.myapplication.fragments.InitialMenuFragment"
+        android:name="com.example.myapplication.fragments.transects.TransectFragment"
         android:label="fragment_menu_principal"
         tools:layout="@layout/fragment_menu_principal" >
         <action

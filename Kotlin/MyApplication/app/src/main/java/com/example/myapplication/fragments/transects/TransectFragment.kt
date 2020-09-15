@@ -1,18 +1,18 @@
-package com.example.myapplication.fragments
+package com.example.myapplication.fragments.transects
 
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import com.example.myapplication.R
 import com.example.myapplication.fragments.abstracts.GeneralFragmentRx
+import com.example.myapplication.fragments.transects.dialog.NewTransectDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.jakewharton.rxbinding2.view.clicks
 
 
-class InitialMenuFragment : GeneralFragmentRx() {
+class TransectFragment : GeneralFragmentRx() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,9 +29,9 @@ class InitialMenuFragment : GeneralFragmentRx() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        disposables.add(view.findViewById<FloatingActionButton>(R.id.btnStart).clicks()
+        disposables.add(view.findViewById<FloatingActionButton>(R.id.btnAddNewTransect).clicks()
                 .subscribe {
-                    view.findNavController().navigate(InitialMenuFragmentDirections.actionMenuPrincipalToMainFragment2())
+                    NewTransectDialog(view.context).show()
                 })
     }
 }

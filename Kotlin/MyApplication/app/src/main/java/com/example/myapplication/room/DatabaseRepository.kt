@@ -3,9 +3,7 @@ package com.example.myapplication.room
 import android.content.Context
 import android.util.Log
 import androidx.room.Room
-import com.example.myapplication.room.data_classes.AnimalAdvanceData
-import com.example.myapplication.room.data_classes.AnimalSimpleData
-import com.example.myapplication.room.data_classes.SimpleAdvanceRelation
+import com.example.myapplication.room.data_classes.*
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -16,9 +14,15 @@ class DatabaseRepository(context: Context) {
             .fallbackToDestructiveMigration().build();
 
 
+
+    fun insertNewTransect(transect: Transect):Disposable{
+        return db.avistamientoDao().insertAnimal(transect).subscribeOn(Schedulers.io()).subscribe{ x ->
+            Log.d("Database Repository", "Transect added")
+        }
+    }
+
     fun insertNewAnimalToDB(animalSimpleData: AnimalSimpleData, animalAdvanceData: AnimalAdvanceData) : Disposable{
         return db.avistamientoDao().insertAnimal(animalSimpleData).subscribeOn(Schedulers.io()).subscribe { returnedRowId ->
-            Log.d("Database repository", "Animnal simple added")
             animalAdvanceData.simpleId = returnedRowId
             db.avistamientoDao().insertAnimal(animalAdvanceData).subscribeOn(Schedulers.io()).subscribe {
 

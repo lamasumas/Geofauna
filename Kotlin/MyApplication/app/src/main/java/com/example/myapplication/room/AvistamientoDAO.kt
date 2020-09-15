@@ -2,9 +2,7 @@ package com.example.myapplication.room
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.myapplication.room.data_classes.AnimalAdvanceData
-import com.example.myapplication.room.data_classes.AnimalSimpleData
-import com.example.myapplication.room.data_classes.SimpleAdvanceRelation
+import com.example.myapplication.room.data_classes.*
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Observable
@@ -13,6 +11,16 @@ import io.reactivex.Single
 
 @Dao
 interface AvistamientoDAO{
+
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAnimal(muestreo: Transect): Single<Long>
+
+    @Query("SELECT * FROM muestreos")
+    fun getMuestreos():Observable<List<Transect>>
+
+    @Delete
+    fun deleteMuestreos(muestreo: Transect):Completable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAnimal(avistamiento: AnimalSimpleData): Single<Long>

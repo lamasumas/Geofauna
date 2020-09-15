@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    style="@style/full_screen_dialog"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryPaleta"
+    android:orientation="vertical">
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/myEditLayout"
+        app:startIconContentDescription="@string/etTransectName"
+        app:startIconDrawable="@drawable/name_icon">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etTransectName"
+            style="@style/myEditText"
+            android:hint="@string/etTransectName" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/myEditLayout"
+        app:startIconContentDescription="@string/etAnimalsList"
+        app:startIconDrawable="@drawable/mariposa_icon">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etAnimales"
+            style="@style/myEditText"
+            android:hint="@string/etAnimalsList" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/myEditLayout"
+        app:startIconContentDescription="@string/etPais"
+        app:startIconDrawable="@drawable/pais_icon">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etCountry"
+            style="@style/myEditText"
+            android:hint="@string/etPais" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/myEditLayout"
+        app:startIconContentDescription="@string/etLocalidad"
+        app:startIconDrawable="@drawable/pais_icon">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etLocalidad"
+            style="@style/myEditText"
+            android:hint="@string/etLocalidad" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/myEditLayout"
+        app:startIconContentDescription="@string/etLugar"
+        app:startIconDrawable="@drawable/place_icon">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etLugar"
+            style="@style/myEditText"
+            android:hint="@string/etLugar" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnStoreTransect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btnCreateTransect"
+        android:layout_gravity="center"
+        />
+
+
+
+</LinearLayout>

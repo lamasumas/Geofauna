@@ -8,6 +8,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.navigation.findNavController
+import com.example.myapplication.utils.InputValidator
 import com.example.myapplication.R
 import com.example.myapplication.fragments.AvistamientoFragmentDirections
 import com.example.myapplication.fragments.EditSightseenDirections
@@ -17,7 +18,6 @@ import com.example.myapplication.room.data_classes.AnimalSimpleData
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.schedulers.Schedulers
-import java.lang.NumberFormatException
 
 abstract class AbstractDatabaseFragment : GeneralFragmentRx() {
 
@@ -120,29 +120,15 @@ abstract class AbstractDatabaseFragment : GeneralFragmentRx() {
         val uv = view.findViewById<EditText>(R.id.etIndexUV).text.toString()
         val temperature = view.findViewById<EditText>(R.id.etTemperature).text.toString()
         val pressure = view.findViewById<EditText>(R.id.etPressure).text.toString()
-
-        return AnimalAdvanceData(pais = country, lugar = place, humidity = checkDouebleNullInput(humidity),
-                temperature = checkDouebleNullInput(temperature), pressure = checkDouebleNullInput(pressure),
-                altitude = checkDouebleNullInput(altitude), index_uv = checkDouebleNullInput(uv)?.toInt())
+        val validator = InputValidator()
+        return AnimalAdvanceData(pais = country, lugar = place, humidity = validator.doubleOrNull(humidity),
+                temperature = validator.doubleOrNull(temperature), pressure = validator.doubleOrNull(pressure),
+                altitude = validator.doubleOrNull(altitude), index_uv = validator.doubleOrNull(uv)?.toInt())
     }
 
-    private fun checkDouebleNullInput(input: String): Double? {
-        var temp: Double? = null
-        try {
-            temp = input.toDouble()
-        } catch (e: NumberFormatException) {
-            return null
-        } finally {
-            return temp
-        }
-    }
 
-    fun ifNullEmptyString(input: String?): String {
-        if (input == null || input.equals("null"))
-            return ""
-        else
-            return input
-    }
+
+
 
 
 }

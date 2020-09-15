@@ -15,6 +15,14 @@ data class AnimalSimpleData(@PrimaryKey(autoGenerate = true) var simpleId: Long 
     }
 }
 
+@Entity(tableName = "muestreos")
+data class Transect(@PrimaryKey(autoGenerate = true) @ColumnInfo(name="muestreo_id") var uid: Long= 0,
+                     @ColumnInfo(name = "nome") val name:String,
+                     @ColumnInfo(name="country") val country:String,
+                     @ColumnInfo(name="locality") val locality:String,
+                     @ColumnInfo(name="animal_list") val aniamlList:String?
+                     )
+
 @Entity(tableName = "advance_data")
 data class AnimalAdvanceData(@PrimaryKey(autoGenerate = true) @ColumnInfo(name = "advance_id") var uid: Long = 0,
                              var simpleId: Long = 0,

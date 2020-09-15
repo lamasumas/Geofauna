@@ -4,14 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
-import androidx.navigation.findNavController
+import com.example.myapplication.utils.InputValidator
 import com.example.myapplication.R
 import com.example.myapplication.fragments.abstracts.AbstractDatabaseFragment
 import com.example.myapplication.room.DatabaseRepository
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.android.schedulers.AndroidSchedulers
 
 class EditSightseen : AbstractDatabaseFragment() {
@@ -31,6 +29,7 @@ class EditSightseen : AbstractDatabaseFragment() {
         val idSimple: Long = arguments?.get("idSimple") as Long
         val idAdvance: Long = arguments?.get("idAdvance") as Long
         val dbRepository = DatabaseRepository(view.context)
+        val validator = InputValidator()
         setGeneralButtonActions(view, true, idSimple, idAdvance)
         disposables.add(dbRepository.retrieveFullAnimalData(idSimple).observeOn(AndroidSchedulers.mainThread()).subscribe {
             view.findViewById<EditText>(R.id.etEspecie).setText(it.simpleData.especie)
@@ -43,14 +42,13 @@ class EditSightseen : AbstractDatabaseFragment() {
             view.findViewById<EditText>(R.id.etDay).setText(date.get(0))
             view.findViewById<EditText>(R.id.etMonth).setText(date.get(1))
             view.findViewById<EditText>(R.id.etYear).setText(date.get(2))
-
-            view.findViewById<EditText>(R.id.etHumidity).setText(ifNullEmptyString(it.advanceData.humidity.toString()))
-            view.findViewById<EditText>(R.id.etPais).setText(ifNullEmptyString(it.advanceData.pais))
-            view.findViewById<EditText>(R.id.etLugar).setText(ifNullEmptyString(it.advanceData.lugar))
-            view.findViewById<EditText>(R.id.etTemperature).setText(ifNullEmptyString(it.advanceData.temperature.toString()))
-            view.findViewById<EditText>(R.id.etIndexUV).setText(ifNullEmptyString(it.advanceData.index_uv.toString()))
-            view.findViewById<EditText>(R.id.etAltitude).setText(ifNullEmptyString(it.advanceData.altitude.toString()))
-            view.findViewById<EditText>(R.id.etPressure).setText(ifNullEmptyString(it.advanceData.pressure.toString()))
+            view.findViewById<EditText>(R.id.etHumidity).setText(validator.nullOrEmpty(it.advanceData.humidity.toString()))
+            view.findViewById<EditText>(R.id.etPais).setText(validator.nullOrEmpty(it.advanceData.pais))
+            view.findViewById<EditText>(R.id.etLugar).setText(validator.nullOrEmpty(it.advanceData.lugar))
+            view.findViewById<EditText>(R.id.etTemperature).setText(validator.nullOrEmpty(it.advanceData.temperature.toString()))
+            view.findViewById<EditText>(R.id.etIndexUV).setText(validator.nullOrEmpty(it.advanceData.index_uv.toString()))
+            view.findViewById<EditText>(R.id.etAltitude).setText(validator.nullOrEmpty(it.advanceData.altitude.toString()))
+            view.findViewById<EditText>(R.id.etPressure).setText(validator.nullOrEmpty(it.advanceData.pressure.toString()))
         })
 
 

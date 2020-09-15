@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.EditText
-import com.example.myapplication.Controller
+import com.example.myapplication.utils.Controller
 import com.example.myapplication.location.LocationController
 import com.example.myapplication.R
 import com.example.myapplication.bluetooth.BleController

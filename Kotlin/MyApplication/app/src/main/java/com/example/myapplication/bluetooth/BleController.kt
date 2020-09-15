@@ -2,25 +2,20 @@ package com.example.myapplication.bluetooth
 
 import android.content.Context
 import android.os.ParcelUuid
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.myapplication.Controller
+import com.example.myapplication.utils.Controller
 import com.polidea.rxandroidble2.NotificationSetupMode
 import com.polidea.rxandroidble2.RxBleClient
 import com.polidea.rxandroidble2.RxBleConnection
-import com.polidea.rxandroidble2.exceptions.BleDisconnectedException
 import com.polidea.rxandroidble2.scan.ScanFilter
 import com.polidea.rxandroidble2.scan.ScanResult
 import com.polidea.rxandroidble2.scan.ScanSettings
 import io.reactivex.Observable
-import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import java.nio.ByteBuffer
 import java.util.*
-import kotlin.collections.HashMap
 
 class BleController : Controller {
 

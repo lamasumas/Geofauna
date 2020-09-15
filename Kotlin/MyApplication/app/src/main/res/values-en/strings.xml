@@ -72,4 +72,12 @@
     <string name="dangerMessage">Are you sure of this? Once you done it, the data will be lost</string>
     <string name="btnCancel">Cancel</string>
     <string name="tvEmptyDatabase">There are no animals registered in the database</string>
+    <string name="btnNewTransect">New transect</string>
+    <string name="tvTransectListTitle">Stored transects:</string>
+    <string name="etTransectName">Name for the transect</string>
+    <string name="etAnimalsList">Animal or animal list separated by ","</string>
+    <string name="etLocalidad">County</string>
+    <string name="btnCreateTransect">Store Transect</string>
+    <string name="alertTitleTransect">Missing data</string>
+    <string name="alertMessageTransect">The transect name and the country are mandatory</string>
 </resources>
