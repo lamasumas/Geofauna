@@ -1,5 +1,4 @@
 package com.example.myapplication.fragments
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import com.example.myapplication.fragments.abstracts.AbstractDatabaseFragment
 import com.example.myapplication.room.DatabaseRepository
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.reactivex.android.schedulers.AndroidSchedulers
-
 class EditSightseen : AbstractDatabaseFragment() {
 
 

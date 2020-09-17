@@ -22,6 +22,9 @@ interface AvistamientoDAO{
     @Delete
     fun deleteMuestreos(muestreo: Transect):Completable
 
+    @Query("SELECT * FROM muestreos")
+    fun getAllTransect(): Observable<List<Transect>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAnimal(avistamiento: AnimalSimpleData): Single<Long>
 

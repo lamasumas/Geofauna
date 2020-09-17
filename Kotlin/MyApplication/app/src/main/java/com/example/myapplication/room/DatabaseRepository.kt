@@ -21,6 +21,11 @@ class DatabaseRepository(context: Context) {
         }
     }
 
+    fun retrieveTransects():Observable<List<Transect>>{
+        return db.avistamientoDao().getAllTransect()
+
+    }
+
     fun insertNewAnimalToDB(animalSimpleData: AnimalSimpleData, animalAdvanceData: AnimalAdvanceData) : Disposable{
         return db.avistamientoDao().insertAnimal(animalSimpleData).subscribeOn(Schedulers.io()).subscribe { returnedRowId ->
             animalAdvanceData.simpleId = returnedRowId

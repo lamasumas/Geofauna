@@ -7,11 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.bluetooth.BleController
 import com.example.myapplication.bluetooth.BluetoothManager
+import com.example.myapplication.fragments.abstracts.AbstractRecyclerViewAdapter
 import com.jakewharton.rxbinding2.view.clicks
 import com.polidea.rxandroidble2.scan.ScanResult
 
 
-class BluetoothRvAdapter(val dialog: BluetoothScanDialog): RecyclerView.Adapter<BluetoothViewHolder>() {
+class BluetoothRvAdapter(val dialog: BluetoothScanDialog): AbstractRecyclerViewAdapter<BluetoothViewHolder>() {
 
     private val devices = mutableListOf<ScanResult>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BluetoothViewHolder {

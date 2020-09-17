@@ -1,4 +1,4 @@
-package com.example.myapplication.fragments
+package com.example.myapplication.fragments.animals_database
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.fragments.abstracts.AbstractDatabaseFragment
-import com.example.myapplication.room.database_recyclerview.DatabaseRvAdapter
+import com.example.myapplication.fragments.animals_database.database_recyclerview.DatabaseRvAdapter
 import com.example.myapplication.room.DatabaseRepository
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.Observable
@@ -18,7 +18,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 
-class DatabaseViewFragment : AbstractDatabaseFragment() {
+class AnimalsDatabaseViewFragment : AbstractDatabaseFragment() {
 
     lateinit var recyclerView: RecyclerView
 

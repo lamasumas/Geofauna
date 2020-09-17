@@ -2,7 +2,7 @@ package com.example.myapplication.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.myapplication.fragments.DatabaseViewFragment
+import com.example.myapplication.fragments.animals_database.AnimalsDatabaseViewFragment
 
 class MainAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int {
@@ -11,8 +11,8 @@ class MainAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
     override fun createFragment(position: Int): Fragment {
         when(position) {
-            0 -> return DatabaseViewFragment();
-            else -> return DatabaseViewFragment();
+            0 -> return AnimalsDatabaseViewFragment();
+            else -> return AnimalsDatabaseViewFragment();
         }
     }
 

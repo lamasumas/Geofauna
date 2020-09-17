@@ -4,30 +4,67 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.transects.TransectFragment"
     android:background="@color/colorPrimaryPaleta"
-    android:orientation="vertical">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tvTransectListTitle"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:textSize="20dp"/>
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".fragments.transects.TransectFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMuestreos"
-        android:layout_margin="10dp"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="vertical"/>
+        android:layout_margin="10dp"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btnAddNewTransect"
-        android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
+            android:text="@string/tvTransectListTitle"
+            android:textSize="20dp" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTransects"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/btnNewTransect"
-        android:layout_gravity="bottom|center"/>
+        android:orientation="horizontal">
 
+        <Button
+            android:layout_margin="5dp"
+            android:id="@+id/btnUse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:text="Usar"
+            android:layout_gravity="end"/>
 
+        <Button
+
+            android:id="@+id/btnAddNewTransect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="0.05"
+            android:text="+"
+            android:layout_gravity="end"/>
+
+        <Button
+
+            android:layout_gravity="end"
+            android:layout_margin="5dp"
+            android:text="-"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.05" />
+
+    </LinearLayout>
 </LinearLayout>

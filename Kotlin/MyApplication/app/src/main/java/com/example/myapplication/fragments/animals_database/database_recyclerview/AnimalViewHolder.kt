@@ -1,4 +1,4 @@
-package com.example.myapplication.room.database_recyclerview
+package com.example.myapplication.fragments.animals_database.database_recyclerview
 
 import android.view.View
 import android.widget.Button

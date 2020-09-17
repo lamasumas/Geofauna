@@ -11,28 +11,41 @@ import com.example.myapplication.room.DatabaseRepository
 import com.example.myapplication.room.data_classes.Transect
 import com.example.myapplication.utils.InputValidator
 import com.jakewharton.rxbinding2.view.clicks
+import io.reactivex.disposables.CompositeDisposable
+import kotlinx.android.synthetic.main.new_transect_dialog.*
 
 class NewTransectDialog(theContext: Context) : Dialog(theContext) {
+    val disposables = CompositeDisposable()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.new_transect_dialog)
+        val etTransect = findViewById<EditText>(R.id.etTransectName)
+        val etCountry = findViewById<EditText>(R.id.etCountry)
+        val etAnimales = findViewById<EditText>(R.id.etAnimales)
+        val etLocalidad = findViewById<EditText>(R.id.etLocalidad)
         setCanceledOnTouchOutside(true);
         val validator = InputValidator()
-        findViewById<Button>(R.id.btnStoreTransect).clicks().subscribe {
-            if (validator.isEditTextEmpty(findViewById(R.id.etTransectName)) ||
-                    validator.isEditTextEmpty(findViewById(R.id.etCountry))) {
+        disposables.add(findViewById<Button>(R.id.btnStoreTransect).clicks().subscribe {
+            if (validator.isEditTextEmpty(etTransectName) ||
+                    validator.isEditTextEmpty(etCountry)) {
                 AlertDialog.Builder(context).setTitle(R.string.alertTitleTransect)
                         .setMessage(R.string.alertMessageTransect)
-                        .setNeutralButton(R.string.cerrarAlertBoton){dialogInterface, i -> dialogInterface.dismiss() }
+                        .setNeutralButton(R.string.cerrarAlertBoton) { dialogInterface, i -> dialogInterface.dismiss() }
+                        .show()
             } else {
                 DatabaseRepository(context).insertNewTransect(Transect(
-                        name = findViewById<EditText>(R.id.etTransectName).text.toString(),
-                        aniamlList = validator.nullOrEmpty(findViewById<EditText>(R.id.etAnimales).toString()),
-                        country = findViewById<EditText>(R.id.etCountry).text.toString(),
-                        locality = findViewById<EditText>(R.id.etLocalidad).text.toString())
+                        name = etTransect.text.toString(),
+                        aniamlList = validator.nullOrEmpty(etAnimales.text.toString()),
+                        country = etCountry.text.toString(),
+                        locality = validator.nullOrEmpty(etLocalidad.text.toString()))
                 )
+                this.dismiss()
             }
-        }
+        })
     }
 
+    override fun dismiss() {
+        disposables.dispose()
+        super.dismiss()
+    }
 }

@@ -1,4 +1,4 @@
-package com.example.myapplication.room.database_recyclerview
+package com.example.myapplication.fragments.animals_database.database_recyclerview
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +9,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.fragments.MainDatabaseViewFragmentDirections
+import com.example.myapplication.fragments.abstracts.AbstractRecyclerViewAdapter
 import com.example.myapplication.room.DatabaseRepository
 import com.example.myapplication.room.data_classes.SimpleAdvanceRelation
 import com.jakewharton.rxbinding2.view.clicks
@@ -16,10 +17,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class DatabaseRvAdapter(val elements:List<SimpleAdvanceRelation>, val disposables:CompositeDisposable): RecyclerView.Adapter<AnimalViewHolder>() {
+class DatabaseRvAdapter(val elements: List<SimpleAdvanceRelation>, val disposables: CompositeDisposable) : AbstractRecyclerViewAdapter<AnimalViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimalViewHolder {
-        val theView = LayoutInflater.from(parent.context).inflate(R.layout.animal_card_scheme, parent,false)
+        val theView = LayoutInflater.from(parent.context).inflate(R.layout.animal_card_scheme, parent, false)
         return AnimalViewHolder(theView)
     }
 
@@ -43,42 +44,33 @@ class DatabaseRvAdapter(val elements:List<SimpleAdvanceRelation>, val disposable
         holder.pressures.text = elements[position].advanceData.pressure.toString()
         holder.idSimple = elements[position].simpleData.simpleId
         holder.idAdvance = elements[position].advanceData.uid
-        hideNullTextViews(holder)
+        val temp = listOf<TempViewsHolders>(
+                TempViewsHolders(holder.altitude, R.id.lCvAltitud, holder.generalView),
+                TempViewsHolders(holder.pressures, R.id.lCvPressure, holder.generalView),
+                TempViewsHolders(holder.uv, R.id.lCvUV, holder.generalView),
+                TempViewsHolders(holder.temperature, R.id.lCvTemperature, holder.generalView),
+                TempViewsHolders(holder.place, R.id.lCvPlace, holder.generalView),
+                TempViewsHolders(holder.country, R.id.lCvCountry, holder.generalView),
+                TempViewsHolders(holder.humidity, R.id.lCvHumedad, holder.generalView)
+        )
+        hideNullTextViews(temp)
 
         disposables.add(holder.cv.clicks().subscribe {
             holder.hiddenViews.visibility = if (holder.hiddenViews.isShown()) View.GONE else View.VISIBLE
         })
         disposables.add(
-        holder.btnEdit.clicks().observeOn(AndroidSchedulers.mainThread()).subscribe {
-            holder.btnEdit.findNavController().navigate(MainDatabaseViewFragmentDirections.actionMainFragment2ToEditSightseen(holder.idAdvance, holder.idSimple))
-        })
+                holder.btnEdit.clicks().observeOn(AndroidSchedulers.mainThread()).subscribe {
+                    holder.btnEdit.findNavController().navigate(MainDatabaseViewFragmentDirections.actionMainFragment2ToEditSightseen(holder.idAdvance, holder.idSimple))
+                })
 
-        disposables.add(holder.btnDelete.clicks().observeOn(AndroidSchedulers.mainThread()).doOnNext{
+        disposables.add(holder.btnDelete.clicks().observeOn(AndroidSchedulers.mainThread()).doOnNext {
             holder.cv.removeAllViews()
-    }.observeOn(Schedulers.io()).subscribe {
+        }.observeOn(Schedulers.io()).subscribe {
             val dbRepository = DatabaseRepository(holder.cv.context)
             dbRepository.deleteAnimal(elements[position].simpleData, elements[position].advanceData)
         })
 
 
-    }
-
-    private fun hideNullTextViews(holder: AnimalViewHolder) {
-        hideIfNull(holder.altitude, R.id.lCvAltitud, holder.generalView)
-        hideIfNull(holder.pressures, R.id.lCvPressure, holder.generalView)
-        hideIfNull(holder.uv, R.id.lCvUV, holder.generalView)
-        hideIfNull(holder.temperature, R.id.lCvTemperature, holder.generalView)
-        hideIfNull(holder.place, R.id.lCvPlace, holder.generalView)
-        hideIfNull(holder.country, R.id.lCvCountry, holder.generalView)
-        hideIfNull(holder.humidity, R.id.lCvHumedad, holder.generalView)
-    }
-
-
-    private fun hideIfNull(textView: TextView, titleId:Int, itemView:View){
-        if(textView.text == null || textView.text == "null" || textView.text == ""){
-            itemView.findViewById<LinearLayout>(titleId).visibility = LinearLayout.GONE
-
-        }
     }
 
 }
