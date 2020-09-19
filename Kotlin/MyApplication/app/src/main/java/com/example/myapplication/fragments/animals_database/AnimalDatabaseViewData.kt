@@ -16,7 +16,8 @@ class AnimalDatabaseViewData(private val transectId:Long, context: Context) : Ab
         if (disposable != null)
             disposable?.dispose()
         disposable = dbRepository.retrieveAllAnimalDataFromATransect(transectId)
-                ?.subscribeOn(Schedulers.io())?.subscribe {dataList.value?.add(it)}
+                ?.subscribeOn(Schedulers.io())?.subscribe {
+                    dataList.value?.add(it)}
     }
 
 }

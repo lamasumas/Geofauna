@@ -6,7 +6,7 @@
     app:startDestination="@id/menuPrincipal">
     <fragment
         android:id="@+id/mainFragment2"
-        android:name="com.example.myapplication.fragments.MainDatabaseViewFragment"
+        android:name="com.example.myapplication.fragments.animals_database.AnimalDatabaseViewFragment"
         android:label="MainFragment" >
         <action
             android:id="@+id/action_mainFragment2_to_avistamiento2"
