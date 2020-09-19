@@ -4,6 +4,7 @@ import androidx.room.*
 
 @Entity(tableName = "animals")
 data class AnimalSimpleData(@PrimaryKey(autoGenerate = true) var simpleId: Long = 0,
+                            var transect_id: Long,
                             @ColumnInfo(name = "specie") val especie: String,
                             @ColumnInfo(name = "longitude") val longitude: Double,
                             @ColumnInfo(name = "latitude") val latitude: Double,
@@ -43,7 +44,7 @@ data class AnimalAdvanceData(@PrimaryKey(autoGenerate = true) @ColumnInfo(name =
 data class TransectAnimalRelation(
         @Embedded val transect: Transect,
         @Relation(parentColumn = "transect_id",
-                entityColumn = "simpleId"
+                entityColumn = "transect_id"
         )
         val simpleData: List<AnimalSimpleData>
 )

@@ -6,7 +6,7 @@ import com.example.myapplication.room.data_classes.AnimalAdvanceData
 import com.example.myapplication.room.data_classes.AnimalSimpleData
 import com.example.myapplication.room.data_classes.Transect
 
-@Database(entities = arrayOf(AnimalSimpleData::class, AnimalAdvanceData::class, Transect::class), version = 10)
+@Database(entities = arrayOf(AnimalSimpleData::class, AnimalAdvanceData::class, Transect::class), version = 11)
 abstract class AppDatabase:RoomDatabase(){
     abstract fun avistamientoDao():AvistamientoDAO;
 }

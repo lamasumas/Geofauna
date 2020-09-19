@@ -35,15 +35,16 @@ class MainDatabaseViewFragment : GeneralFragmentRx() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val idTransect =  arguments?.getLong("transectId") as Long
 
         disposables.add(view.findViewById<FloatingActionButton>(R.id.fab).clicks()
                 .subscribe {
                     val navController = view.findNavController()
                     if (navController.currentDestination?.id == R.id.mainFragment2)
-                        navController.navigate(MainDatabaseViewFragmentDirections.actionMainFragment2ToAvistamiento2())
+                        navController.navigate(MainDatabaseViewFragmentDirections.actionMainFragment2ToAvistamiento2( idTransect))
                 })
         viewPager2 = view.findViewById<ViewPager2>(R.id.vpMain)
-        viewPager2?.adapter = MainAdapter(this)
+        viewPager2?.adapter = MainAdapter(this, idTransect)
 
         disposables.add(view.findViewById<Button>(R.id.bluetoothMenu).clicks().subscribe {
             BluetoothScanDialog(view.context).show()

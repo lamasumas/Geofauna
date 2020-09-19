@@ -2,6 +2,7 @@ package com.example.myapplication.fragments.transects.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.fragments.abstracts.AbstractRecyclerViewAdapter
@@ -11,7 +12,7 @@ import io.reactivex.disposables.CompositeDisposable
 
 class TransectAdapter(private val storedTransects: List<Transect>) : AbstractRecyclerViewAdapter<TransectViewHolder>() {
     private var secondColor = false
-    var selectedHolder: TransectViewHolder? = null
+    var selectedHolder = MutableLiveData<TransectViewHolder>()
     val disposables = CompositeDisposable()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransectViewHolder {
@@ -40,9 +41,9 @@ class TransectAdapter(private val storedTransects: List<Transect>) : AbstractRec
         )
         disposables.add(
                 holder.carView.clicks().subscribe {
-                    selectedHolder?.carView?.setCardBackgroundColor(selectedHolder?.originalColor)
+                    selectedHolder?.value?.carView?.setCardBackgroundColor(selectedHolder?.value?.originalColor)
                     holder.carView.setCardBackgroundColor(holder.carView.resources.getColor(R.color.colorSecundarioPaleta, null))
-                    selectedHolder = holder
+                    selectedHolder.value = holder
                 })
         hideNullTextViews(temp)
 
@@ -52,7 +53,4 @@ class TransectAdapter(private val storedTransects: List<Transect>) : AbstractRec
         return storedTransects.size
     }
 
-    fun returnSelectedElement(): TransectViewHolder? {
-        return selectedHolder
-    }
 }

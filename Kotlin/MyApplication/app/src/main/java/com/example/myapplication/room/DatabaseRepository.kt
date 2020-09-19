@@ -71,9 +71,9 @@ class DatabaseRepository(context: Context) {
         }
     }
 
-    fun cleanDatabase() {
-        Observable.just(db).observeOn(Schedulers.io()).subscribeOn(Schedulers.io()).subscribe {
-            it.clearAllTables()
+    fun cleanTransectAnaimals(transectId: Long) {
+        retrieveAllAnimalDataFromATransect(transectId)?.subscribeOn(Schedulers.io())?.subscribe {
+            deleteAnimal(it.simpleData, it.advanceData)
         }
     }
 

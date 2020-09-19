@@ -20,18 +20,17 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.schedulers.Schedulers
 
-abstract class AbstractDatabaseFragment : GeneralFragmentRx() {
-    var transectId = lazy { arguments?.get("transectId") as Long }
+abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
 
 
-    protected fun setGeneralButtonActions(view: View, isEdit: Boolean = false, idSimple: Long = 0, idAdvance: Long = 0) {
+    protected fun setGeneralButtonActions(view: View, isEdit: Boolean = false, idSimple: Long = 0, idAdvance: Long = 0, idTransect:Long) {
 
         val dbRepository = DatabaseRepository(view.context)
         disposables.add(view.findViewById<FloatingActionButton>(R.id.btnAñadirAvistamiento).clicks().subscribe {
             if (checkValidSimpleData(view)) {
 
                 var builder = AlertDialog.Builder(view.context, R.style.alertDialog)
-                val newDatabaseSimpleEntry = createSimpleAnimalObject(view)
+                val newDatabaseSimpleEntry = createSimpleAnimalObject(view, idTransect)
                 val newDatabaseAdvanceEntry = createAdvanceAnimalObject(view)
                 disposables.add(dbRepository.insertNewAnimalToDB(newDatabaseSimpleEntry, newDatabaseAdvanceEntry))
 
@@ -53,9 +52,9 @@ abstract class AbstractDatabaseFragment : GeneralFragmentRx() {
 
         disposables.add(view.findViewById<FloatingActionButton>(R.id.btnBack).clicks().subscribe {
             if (isEdit)
-                view.findNavController().navigate(EditSightseenDirections.actionEditSightseenToMainFragment2(transectId.value))
+                view.findNavController().navigate(EditSightseenDirections.actionEditSightseenToMainFragment2(idTransect))
             else
-                view.findNavController().navigate(AvistamientoFragmentDirections.actionAvistamiento2ToMainFragment2(transectId.value))
+                view.findNavController().navigate(AvistamientoFragmentDirections.actionAvistamiento2ToMainFragment2(idTransect))
         })
 
         disposables.add(view.findViewById<TextView>(R.id.btnExpand).clicks().subscribe {
@@ -72,14 +71,14 @@ abstract class AbstractDatabaseFragment : GeneralFragmentRx() {
 
         disposables.add(view.findViewById<Button>(R.id.btnEditDatabaseAnimal).clicks().observeOn(Schedulers.io())
                 .doOnNext {
-                    val tempSimple = createSimpleAnimalObject(view)
+                    val tempSimple = createSimpleAnimalObject(view, idTransect)
                     val tempAdvance = createAdvanceAnimalObject(view)
                     tempSimple.simpleId = idSimple
                     tempAdvance.uid = idAdvance
                     tempAdvance.simpleId = idSimple
                     disposables.add(dbRepository.updateAnimal(tempSimple, tempAdvance))
                 }.subscribe {
-                    view.findNavController().navigate(EditSightseenDirections.actionEditSightseenToMainFragment2(transectId.value))
+                    view.findNavController().navigate(EditSightseenDirections.actionEditSightseenToMainFragment2(idTransect))
                 })
     }
 
@@ -99,7 +98,7 @@ abstract class AbstractDatabaseFragment : GeneralFragmentRx() {
         return view.findViewById<EditText>(id).text.isNotEmpty() && view.findViewById<EditText>(id).text.isNotBlank()
     }
 
-    protected fun createSimpleAnimalObject(view: View): AnimalSimpleData {
+    protected fun createSimpleAnimalObject(view: View, transectId: Long): AnimalSimpleData {
         val species = view.findViewById<EditText>(R.id.etEspecie).text.toString()
         val latitude = view.findViewById<EditText>(R.id.etLatitud).text.toString()
         val longitude = view.findViewById<EditText>(R.id.etLongitud).text.toString()
@@ -110,7 +109,7 @@ abstract class AbstractDatabaseFragment : GeneralFragmentRx() {
                 "/" + view.findViewById<EditText>(R.id.etYear).text.toString()
 
         return AnimalSimpleData(especie = species, date = date, latitude = latitude.toDouble(),
-                longitude = longitude.toDouble(), time = time)
+                longitude = longitude.toDouble(), time = time, transect_id = transectId )
 
 
     }

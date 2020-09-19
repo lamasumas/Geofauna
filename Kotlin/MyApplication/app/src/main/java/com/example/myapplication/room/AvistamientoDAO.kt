@@ -58,4 +58,5 @@ interface AvistamientoDAO{
     @Transaction
     @Query("Select * From muestreos WHERE transect_id=:transectId")
     fun getRelationAnimalsTransect(transectId:Long):Observable<TransectAnimalRelation>
+
 }

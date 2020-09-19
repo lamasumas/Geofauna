@@ -26,6 +26,9 @@
             android:id="@+id/action_avistamiento2_to_mainFragment2"
             app:destination="@id/mainFragment2"
             app:enterAnim="@anim/nav_default_enter_anim" />
+        <argument
+            android:name="transectId"
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/editSightseen"
@@ -38,6 +41,9 @@
             app:argType="long" />
         <argument
             android:name="idSimple"
+            app:argType="long" />
+        <argument
+            android:name="transectId"
             app:argType="long" />
     </fragment>
     <fragment

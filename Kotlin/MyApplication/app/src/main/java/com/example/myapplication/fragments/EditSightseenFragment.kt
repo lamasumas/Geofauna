@@ -10,7 +10,7 @@ import com.example.myapplication.fragments.abstracts.AbstractDatabaseFragment
 import com.example.myapplication.room.DatabaseRepository
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.reactivex.android.schedulers.AndroidSchedulers
-class EditSightseen : AbstractDatabaseFragment() {
+class EditSightseen() : AbstractDatabaseFragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -28,9 +28,10 @@ class EditSightseen : AbstractDatabaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         val idSimple: Long = arguments?.get("idSimple") as Long
         val idAdvance: Long = arguments?.get("idAdvance") as Long
+        val idTransect:Long = arguments?.get("transectId") as Long
         val dbRepository = DatabaseRepository(view.context)
         val validator = InputValidator()
-        setGeneralButtonActions(view, true, idSimple, idAdvance)
+        setGeneralButtonActions(view, true, idSimple, idAdvance, idTransect )
         disposables.add(dbRepository.retrieveFullAnimalData(idSimple).observeOn(AndroidSchedulers.mainThread()).subscribe {
             view.findViewById<EditText>(R.id.etEspecie).setText(it.simpleData.especie)
             view.findViewById<EditText>(R.id.etLongitud).setText(it.simpleData.longitude.toString())

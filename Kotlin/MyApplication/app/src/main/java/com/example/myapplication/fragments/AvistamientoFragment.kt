@@ -18,7 +18,7 @@ import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.plugins.RxJavaPlugins
 import java.util.*
 
-class AvistamientoFragment : AbstractDatabaseFragment() {
+class AvistamientoFragment() : AbstractDatabaseFragment() {
 
     private val bleController: BleController by lazy { BleController() }
     private val locationController: LocationController by lazy { LocationController(requireContext()) }
@@ -46,8 +46,8 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
         val calendar = GregorianCalendar()
         val checkBluetooth = BluetoothAdapter.getDefaultAdapter()
         val locationManager = view.context.getSystemService(Context.LOCATION_SERVICE) as LocationManager;
-
-        setGeneralButtonActions(view)
+        val idTransect = arguments?.get("transectId") as Long
+        setGeneralButtonActions(view, idTransect = idTransect )
 
 
 
