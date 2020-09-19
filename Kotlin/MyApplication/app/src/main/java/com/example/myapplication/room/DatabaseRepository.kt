@@ -36,6 +36,12 @@ class DatabaseRepository(context: Context) {
 
     }
 
+    fun retrieveAllAnimalDataFromATransect(transectId:Long): Observable<SimpleAdvanceRelation>? {
+        return db.avistamientoDao().getRelationAnimalsTransect(transectId).observeOn(Schedulers.io())
+                .flatMapIterable { it.simpleData }
+                .flatMap { db.avistamientoDao().getAnimalFullData(it.simpleId) }
+    }
+
 
     fun retrieveSightseeing(): Observable<List<SimpleAdvanceRelation>> {
         return db.avistamientoDao().getAllData()

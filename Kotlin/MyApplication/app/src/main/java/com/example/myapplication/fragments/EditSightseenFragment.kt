@@ -15,6 +15,8 @@ class EditSightseen : AbstractDatabaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        super.onCreateView(inflater, container, savedInstanceState)
+
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_avistamiento, container, false)
         view.findViewById<FloatingActionButton>(R.id.btnAñadirAvistamiento).hide()

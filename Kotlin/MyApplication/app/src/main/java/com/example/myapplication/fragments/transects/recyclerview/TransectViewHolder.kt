@@ -15,6 +15,7 @@ class TransectViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     val county :TextView
     val animalList :TextView
     var originalColor:ColorStateList
+    var idDb:Long
 
     init {
         carView = itemView.findViewById(R.id.cvTrasnectCard)
@@ -23,6 +24,7 @@ class TransectViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         county = itemView.findViewById(R.id.tvCounty)
         animalList = itemView.findViewById(R.id.tvAnimals)
         originalColor = carView.cardBackgroundColor
+        idDb=0
     }
 
 }

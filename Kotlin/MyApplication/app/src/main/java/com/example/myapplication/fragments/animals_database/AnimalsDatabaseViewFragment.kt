@@ -33,7 +33,7 @@ class AnimalsDatabaseViewFragment : AbstractDatabaseFragment() {
 
         recyclerView = view.findViewById<RecyclerView>(R.id.rvDatabase)
         setDatabaseRecyclerView(recyclerView, view)
-        view.findViewById<Button>(R.id.btnDeleteAll).clicks().subscribe {
+        disposables.add(view.findViewById<Button>(R.id.btnDeleteAll).clicks().subscribe {
             AlertDialog.Builder(view.context).setMessage(R.string.dangerMessage)
                     .setTitle(R.string.dangerTitle)
                     .setNegativeButton(R.string.btnCancel) { dialog, id -> dialog.dismiss() }
@@ -45,6 +45,7 @@ class AnimalsDatabaseViewFragment : AbstractDatabaseFragment() {
                     }
                     .create().show()
         }
+        )
 
 
     }
@@ -63,12 +64,13 @@ class AnimalsDatabaseViewFragment : AbstractDatabaseFragment() {
             disposables.add(Observable.just(DatabaseRepository(view.context)).observeOn(Schedulers.io())
                     .flatMap {
                         view.findViewById<ProgressBar>(R.id.databaseMiddleware).visibility = View.VISIBLE
-                        it.retrieveSightseeing()
+                        it.retrieveAllAnimalDataFromATransect(transectId.value)
                     }
-                    .observeOn(AndroidSchedulers.mainThread()).subscribe {
+                    .observeOn(AndroidSchedulers.mainThread()).toList().subscribe { animalList ->
+
                         view.findViewById<ProgressBar>(R.id.databaseMiddleware).visibility = View.GONE
-                        if (it.isNotEmpty()) {
-                            adapter = DatabaseRvAdapter(it, disposables)
+                        if (animalList.isNotEmpty()) {
+                            adapter = DatabaseRvAdapter(animalList, disposables)
                             visibility = View.VISIBLE
                             view.findViewById<Button>(R.id.btnDeleteAll).visibility = View.VISIBLE
                         } else {

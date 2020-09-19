@@ -1,6 +1,7 @@
 package com.example.myapplication.fragments.abstracts
 
 import android.app.AlertDialog
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
@@ -20,6 +21,8 @@ import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.schedulers.Schedulers
 
 abstract class AbstractDatabaseFragment : GeneralFragmentRx() {
+    var transectId = lazy { arguments?.get("transectId") as Long }
+
 
     protected fun setGeneralButtonActions(view: View, isEdit: Boolean = false, idSimple: Long = 0, idAdvance: Long = 0) {
 
@@ -50,9 +53,9 @@ abstract class AbstractDatabaseFragment : GeneralFragmentRx() {
 
         disposables.add(view.findViewById<FloatingActionButton>(R.id.btnBack).clicks().subscribe {
             if (isEdit)
-                view.findNavController().navigate(EditSightseenDirections.actionEditSightseenToMainFragment2())
+                view.findNavController().navigate(EditSightseenDirections.actionEditSightseenToMainFragment2(transectId.value))
             else
-                view.findNavController().navigate(AvistamientoFragmentDirections.actionAvistamiento2ToMainFragment2())
+                view.findNavController().navigate(AvistamientoFragmentDirections.actionAvistamiento2ToMainFragment2(transectId.value))
         })
 
         disposables.add(view.findViewById<TextView>(R.id.btnExpand).clicks().subscribe {
@@ -76,7 +79,7 @@ abstract class AbstractDatabaseFragment : GeneralFragmentRx() {
                     tempAdvance.simpleId = idSimple
                     disposables.add(dbRepository.updateAnimal(tempSimple, tempAdvance))
                 }.subscribe {
-                    view.findNavController().navigate(EditSightseenDirections.actionEditSightseenToMainFragment2())
+                    view.findNavController().navigate(EditSightseenDirections.actionEditSightseenToMainFragment2(transectId.value))
                 })
     }
 

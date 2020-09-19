@@ -16,7 +16,7 @@ data class AnimalSimpleData(@PrimaryKey(autoGenerate = true) var simpleId: Long 
 }
 
 @Entity(tableName = "muestreos")
-data class Transect(@PrimaryKey(autoGenerate = true) @ColumnInfo(name="muestreo_id") var uid: Long= 0,
+data class Transect(@PrimaryKey(autoGenerate = true) @ColumnInfo(name="transect_id") var uid: Long= 0,
                      @ColumnInfo(name = "nome") val name:String,
                      @ColumnInfo(name="country") val country:String,
                      @ColumnInfo(name="locality") val locality:String,
@@ -38,6 +38,15 @@ data class AnimalAdvanceData(@PrimaryKey(autoGenerate = true) @ColumnInfo(name =
         return temp.joinToString(separator = ",")
     }
 }
+
+
+data class TransectAnimalRelation(
+        @Embedded val transect: Transect,
+        @Relation(parentColumn = "transect_id",
+                entityColumn = "simpleId"
+        )
+        val simpleData: List<AnimalSimpleData>
+)
 
 
 data class SimpleAdvanceRelation(

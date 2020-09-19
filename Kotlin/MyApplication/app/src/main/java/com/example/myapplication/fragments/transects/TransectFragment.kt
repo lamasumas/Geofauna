@@ -1,12 +1,15 @@
 package com.example.myapplication.fragments.transects
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.annotation.MainThread
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
@@ -39,26 +42,39 @@ class TransectFragment : GeneralFragmentRx() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        loadRecyclerView(view)
+
+        disposables.add(view.findViewById<FloatingActionButton>(R.id.btnAddNewTransect).clicks()
+                .subscribe {
+                    val dialog = NewTransectDialog(view.context)
+                    dialog.setOnDismissListener {
+                        loadRecyclerView(view)
+                    }
+                    dialog.show()
+
+
+                })
+
+        disposables.add(view.findViewById<Button>(R.id.btnUse).clicks().subscribeOn(AndroidSchedulers.mainThread()).subscribe {
+
+            (view.findViewById<RecyclerView>(R.id.rvTransects).adapter as TransectAdapter).also {
+                findNavController().navigate(TransectFragmentDirections.actionMenuPrincipalToMainFragment2(it.selectedHolder!!.idDb))
+                it.disposables.dispose()
+            }
+
+        })
+
+    }
+
+    private fun loadRecyclerView(view: View) {
+
         view.findViewById<RecyclerView>(R.id.rvTransects).apply {
             layoutManager = LinearLayoutManager(view.context)
             disposables.add(Observable.just(DatabaseRepository(view.context)).flatMap { it.retrieveTransects() }.subscribe {
-                adapter = TransectAdapter(it).also { adapter ->
-                    view.findViewById<Button>(R.id.btnUse).clicks().subscribeOn(AndroidSchedulers.mainThread()).subscribe {
-                        //
-                        //PassIt to the avistamiento fragment
-                        //
-                    }
-                }
+                adapter = TransectAdapter(it)
                 visibility = View.VISIBLE
             })
 
         }
-
-
-
-
-        disposables.add(view.findViewById<FloatingActionButton>(R.id.btnAddNewTransect).clicks()
-                .subscribe { NewTransectDialog(view.context).show() }
-        )
     }
 }

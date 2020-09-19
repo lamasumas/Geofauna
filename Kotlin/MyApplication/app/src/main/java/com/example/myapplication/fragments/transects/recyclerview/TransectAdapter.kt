@@ -7,13 +7,15 @@ import com.example.myapplication.R
 import com.example.myapplication.fragments.abstracts.AbstractRecyclerViewAdapter
 import com.example.myapplication.room.data_classes.Transect
 import com.jakewharton.rxbinding2.view.clicks
+import io.reactivex.disposables.CompositeDisposable
 
-class TransectAdapter( private val storedTransects:List<Transect>) : AbstractRecyclerViewAdapter<TransectViewHolder>() {
+class TransectAdapter(private val storedTransects: List<Transect>) : AbstractRecyclerViewAdapter<TransectViewHolder>() {
     private var secondColor = false
-    var selectedHolder:TransectViewHolder? = null
+    var selectedHolder: TransectViewHolder? = null
+    val disposables = CompositeDisposable()
 
-    override fun onCreateViewHolder( parent: ViewGroup, viewType: Int): TransectViewHolder {
-        val theView = LayoutInflater.from(parent.context).inflate(R.layout.transect_card_scheme, parent,false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransectViewHolder {
+        val theView = LayoutInflater.from(parent.context).inflate(R.layout.transect_card_scheme, parent, false)
         return TransectViewHolder(theView)
     }
 
@@ -22,23 +24,26 @@ class TransectAdapter( private val storedTransects:List<Transect>) : AbstractRec
         holder.country.setText(storedTransects[position].country)
         holder.county.setText(storedTransects[position].locality)
         holder.animalList.setText(storedTransects[position].aniamlList)
-        if(secondColor) {
-            holder.carView.setCardBackgroundColor( holder.carView.resources.getColor(R.color.colorTerciarioPaletaVariante, null))
+        holder.idDb = storedTransects[position].uid
+
+        if (secondColor) {
+            holder.carView.setCardBackgroundColor(holder.carView.resources.getColor(R.color.colorTerciarioPaletaVariante, null))
             holder.originalColor = holder.carView.cardBackgroundColor
             secondColor = false
-        }else{
-            secondColor= true
+        } else {
+            secondColor = true
         }
 
         val temp = listOf<TempViewsHolders>(
                 TempViewsHolders(holder.county, R.id.lTvCounty, holder.carView),
-                TempViewsHolders(holder.animalList, R.id.lTvAnimals,holder.carView)
+                TempViewsHolders(holder.animalList, R.id.lTvAnimals, holder.carView)
         )
-        holder.carView.clicks().subscribe{
-            selectedHolder?.carView?.setCardBackgroundColor(selectedHolder?.originalColor)
-            holder.carView.setCardBackgroundColor(holder.carView.resources.getColor(R.color.colorSecundarioPaleta, null))
-            selectedHolder = holder
-        }
+        disposables.add(
+                holder.carView.clicks().subscribe {
+                    selectedHolder?.carView?.setCardBackgroundColor(selectedHolder?.originalColor)
+                    holder.carView.setCardBackgroundColor(holder.carView.resources.getColor(R.color.colorSecundarioPaleta, null))
+                    selectedHolder = holder
+                })
         hideNullTextViews(temp)
 
     }
@@ -47,7 +52,7 @@ class TransectAdapter( private val storedTransects:List<Transect>) : AbstractRec
         return storedTransects.size
     }
 
-    fun returnSelectedElement(): TransectViewHolder?{
+    fun returnSelectedElement(): TransectViewHolder? {
         return selectedHolder
     }
 }
