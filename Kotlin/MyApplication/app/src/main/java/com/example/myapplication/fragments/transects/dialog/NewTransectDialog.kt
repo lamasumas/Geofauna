@@ -11,11 +11,12 @@ import com.example.myapplication.R
 import com.example.myapplication.room.DatabaseRepository
 import com.example.myapplication.room.data_classes.Transect
 import com.example.myapplication.utils.InputValidator
+import com.example.myapplication.viewmodels.TransectViewModel
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.new_transect_dialog.*
 
-class NewTransectDialog(theContext: Context) : Dialog(theContext) {
+class NewTransectDialog(theContext: Context, private val transectViewModel: TransectViewModel) : Dialog(theContext) {
     val disposables = CompositeDisposable()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,18 +28,18 @@ class NewTransectDialog(theContext: Context) : Dialog(theContext) {
         setCanceledOnTouchOutside(true);
         val validator = InputValidator()
         disposables.add(findViewById<Button>(R.id.btnStoreTransect).clicks().subscribe {
-            if (validator.isEditTextEmpty(etTransectName) ||
-                    validator.isEditTextEmpty(etCountry)) {
+            if (validator.isEditTextEmpty(etTransectName)) {
                 AlertDialog.Builder(context).setTitle(R.string.alertTitleTransect)
                         .setMessage(R.string.alertMessageTransect)
                         .setNeutralButton(R.string.cerrarAlertBoton) { dialogInterface, i -> dialogInterface.dismiss() }
                         .show()
             } else {
-                DatabaseRepository(context).insertNewTransect(Transect(
+
+                transectViewModel.addTransect(Transect(
                         name = etTransect.text.toString(),
                         aniamlList = validator.nullOrEmpty(etAnimales.text.toString()),
-                        country = etCountry.text.toString(),
-                        locality = validator.nullOrEmpty(etLocalidad.text.toString()))
+                        country = validator.nullOrEmpty(etCountry.text.toString()),
+                        locality = validator.nullOrEmpty(etLocalidad.text.toString()) )
                 )
                 this.dismiss()
             }

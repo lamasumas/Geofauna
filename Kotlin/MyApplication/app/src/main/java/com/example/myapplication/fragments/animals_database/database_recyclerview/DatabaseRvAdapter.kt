@@ -17,7 +17,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class DatabaseRvAdapter(val elements: List<SimpleAdvanceRelation>, private val transectId:Long, val disposables: CompositeDisposable) : AbstractRecyclerViewAdapter<AnimalViewHolder>() {
+class DatabaseRvAdapter(val elements: List<SimpleAdvanceRelation>,  val disposables: CompositeDisposable) : AbstractRecyclerViewAdapter<AnimalViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimalViewHolder {
         val theView = LayoutInflater.from(parent.context).inflate(R.layout.animal_card_scheme, parent, false)
@@ -60,7 +60,7 @@ class DatabaseRvAdapter(val elements: List<SimpleAdvanceRelation>, private val t
         })
         disposables.add(
                 holder.btnEdit.clicks().observeOn(AndroidSchedulers.mainThread()).subscribe {
-                    holder.btnEdit.findNavController().navigate(AnimalDatabaseViewFragmentDirections.actionMainFragment2ToEditSightseen(holder.idAdvance, holder.idSimple, transectId))
+                    holder.btnEdit.findNavController().navigate(AnimalDatabaseViewFragmentDirections.actionMainFragment2ToEditSightseen(holder.idAdvance, holder.idSimple))
                 })
 
         disposables.add(holder.btnDelete.clicks().observeOn(AndroidSchedulers.mainThread()).doOnNext {

@@ -46,8 +46,7 @@ class AvistamientoFragment() : AbstractDatabaseFragment() {
         val calendar = GregorianCalendar()
         val checkBluetooth = BluetoothAdapter.getDefaultAdapter()
         val locationManager = view.context.getSystemService(Context.LOCATION_SERVICE) as LocationManager;
-        val idTransect = arguments?.get("transectId") as Long
-        setGeneralButtonActions(view, idTransect = idTransect )
+        setGeneralButtonActions(view )
 
 
 

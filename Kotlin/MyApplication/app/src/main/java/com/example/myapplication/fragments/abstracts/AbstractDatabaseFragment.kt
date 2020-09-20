@@ -1,21 +1,24 @@
 package com.example.myapplication.fragments.abstracts
 
 import android.app.AlertDialog
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.example.myapplication.utils.InputValidator
 import com.example.myapplication.R
 import com.example.myapplication.fragments.AvistamientoFragmentDirections
 import com.example.myapplication.fragments.EditSightseenDirections
+import com.example.myapplication.viewmodels.AnimalDatabaseViewModel
 import com.example.myapplication.room.DatabaseRepository
 import com.example.myapplication.room.data_classes.AnimalAdvanceData
 import com.example.myapplication.room.data_classes.AnimalSimpleData
+import com.example.myapplication.viewmodels.TransectViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.schedulers.Schedulers
@@ -23,16 +26,21 @@ import io.reactivex.schedulers.Schedulers
 abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
 
 
-    protected fun setGeneralButtonActions(view: View, isEdit: Boolean = false, idSimple: Long = 0, idAdvance: Long = 0, idTransect:Long) {
+    val animalDatabaseViewModel: AnimalDatabaseViewModel by activityViewModels()
+    val transectViewModel: TransectViewModel by activityViewModels()
+
+
+    protected fun setGeneralButtonActions(view: View, isEdit: Boolean = false, idSimple: Long = 0, idAdvance: Long = 0) {
 
         val dbRepository = DatabaseRepository(view.context)
         disposables.add(view.findViewById<FloatingActionButton>(R.id.btnAñadirAvistamiento).clicks().subscribe {
             if (checkValidSimpleData(view)) {
 
                 var builder = AlertDialog.Builder(view.context, R.style.alertDialog)
-                val newDatabaseSimpleEntry = createSimpleAnimalObject(view, idTransect)
+                val newDatabaseSimpleEntry = createSimpleAnimalObject(view)
                 val newDatabaseAdvanceEntry = createAdvanceAnimalObject(view)
-                disposables.add(dbRepository.insertNewAnimalToDB(newDatabaseSimpleEntry, newDatabaseAdvanceEntry))
+
+                disposables.add( animalDatabaseViewModel.addNewAnimal(newDatabaseSimpleEntry, newDatabaseAdvanceEntry))
 
                 val alertView = LayoutInflater.from(view.context).inflate(R.layout.animal_added_dialog, null)
                 builder.setView(alertView).create().also { dialog ->
@@ -52,9 +60,9 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
 
         disposables.add(view.findViewById<FloatingActionButton>(R.id.btnBack).clicks().subscribe {
             if (isEdit)
-                view.findNavController().navigate(EditSightseenDirections.actionEditSightseenToMainFragment2(idTransect))
+                view.findNavController().navigate(EditSightseenDirections.actionEditSightseenToMainFragment2())
             else
-                view.findNavController().navigate(AvistamientoFragmentDirections.actionAvistamiento2ToMainFragment2(idTransect))
+                view.findNavController().navigate(AvistamientoFragmentDirections.actionAvistamiento2ToMainFragment2())
         })
 
         disposables.add(view.findViewById<TextView>(R.id.btnExpand).clicks().subscribe {
@@ -71,14 +79,14 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
 
         disposables.add(view.findViewById<Button>(R.id.btnEditDatabaseAnimal).clicks().observeOn(Schedulers.io())
                 .doOnNext {
-                    val tempSimple = createSimpleAnimalObject(view, idTransect)
+                    val tempSimple = createSimpleAnimalObject(view)
                     val tempAdvance = createAdvanceAnimalObject(view)
                     tempSimple.simpleId = idSimple
                     tempAdvance.uid = idAdvance
                     tempAdvance.simpleId = idSimple
-                    disposables.add(dbRepository.updateAnimal(tempSimple, tempAdvance))
+                    disposables.add(animalDatabaseViewModel.editAnimal(tempSimple, tempAdvance))
                 }.subscribe {
-                    view.findNavController().navigate(EditSightseenDirections.actionEditSightseenToMainFragment2(idTransect))
+                    view.findNavController().navigate(EditSightseenDirections.actionEditSightseenToMainFragment2())
                 })
     }
 
@@ -98,7 +106,7 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
         return view.findViewById<EditText>(id).text.isNotEmpty() && view.findViewById<EditText>(id).text.isNotBlank()
     }
 
-    protected fun createSimpleAnimalObject(view: View, transectId: Long): AnimalSimpleData {
+    protected fun createSimpleAnimalObject(view: View): AnimalSimpleData {
         val species = view.findViewById<EditText>(R.id.etEspecie).text.toString()
         val latitude = view.findViewById<EditText>(R.id.etLatitud).text.toString()
         val longitude = view.findViewById<EditText>(R.id.etLongitud).text.toString()
@@ -109,7 +117,7 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
                 "/" + view.findViewById<EditText>(R.id.etYear).text.toString()
 
         return AnimalSimpleData(especie = species, date = date, latitude = latitude.toDouble(),
-                longitude = longitude.toDouble(), time = time, transect_id = transectId )
+                longitude = longitude.toDouble(), time = time, transect_id = transectViewModel.idTransect.value!! )
 
 
     }

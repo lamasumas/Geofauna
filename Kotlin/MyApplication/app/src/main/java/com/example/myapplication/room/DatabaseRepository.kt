@@ -36,10 +36,8 @@ class DatabaseRepository(context: Context) {
 
     }
 
-    fun retrieveAllAnimalDataFromATransect(transectId:Long): Observable<SimpleAdvanceRelation>? {
-        return db.avistamientoDao().getRelationAnimalsTransect(transectId).observeOn(Schedulers.io())
-                .flatMapIterable { it.simpleData }
-                .flatMap { db.avistamientoDao().getAnimalFullData(it.simpleId) }
+    fun retrieveAllAnimalDataFromATransect(transectId:Long): Observable<TransectAnimalRelation> {
+        return db.avistamientoDao().getRelationAnimalsTransect(transectId)
     }
 
 
@@ -56,25 +54,36 @@ class DatabaseRepository(context: Context) {
     }
 
     fun updateAnimal(simple: AnimalSimpleData, advance: AnimalAdvanceData) : Disposable{
-        return db.avistamientoDao().updateAnimal(simple).subscribeOn(Schedulers.io()).subscribe {
-            db.avistamientoDao().updateAnimal(advance).subscribeOn(Schedulers.io()).subscribe {
+        return db.avistamientoDao().updateAnimal(simple).subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).subscribe {
+            db.avistamientoDao().updateAnimal(advance).subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).subscribe {
                 Log.e("Database repository", "Anmimal updated")
             }
         }
     }
 
     fun deleteAnimal(simple: AnimalSimpleData, advance: AnimalAdvanceData): Disposable {
-        return db.avistamientoDao().deleteAnimal(simple).subscribeOn(Schedulers.io()).subscribe {
-            db.avistamientoDao().deleteAnimal(advance).subscribe {
-                Log.e("Database repository", "Animnal deleted")
+        return db.avistamientoDao().deleteAnimal(simple).subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).subscribe {
+            db.avistamientoDao().deleteAnimal(advance).subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).subscribe {
+                Log.d("Database repository", "Animnal deleted")
             }
         }
     }
 
+    fun retrieveFullAnimalDataFromTransectID(transectId: Long): Observable<List<SimpleAdvanceRelation>> {
+        return db.avistamientoDao().getAnimalFullDataOfTransectTransaction(transectId)
+    }
+
     fun cleanTransectAnaimals(transectId: Long) {
-        retrieveAllAnimalDataFromATransect(transectId)?.subscribeOn(Schedulers.io())?.subscribe {
-            deleteAnimal(it.simpleData, it.advanceData)
+        db.avistamientoDao().deleteAnimalsByTransectId(transectId).subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).subscribe {
+            Log.d("Database repository", "Animnal deleted by transect id")
         }
+    }
+
+    fun deleteTransect(idTransect: Long):Disposable {
+       return db.avistamientoDao().deleteTransectById(idTransect).subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).subscribe {
+           Log.d("Database repository", "Deleted transect")
+       }
+
     }
 
 }
