@@ -1,9 +1,9 @@
-package com.example.myapplication.bluetooth
+package com.example.myapplication.viewmodels.controllers
 
-import android.content.Context
+import android.app.Application
 import android.os.ParcelUuid
 import androidx.lifecycle.MutableLiveData
-import com.example.myapplication.utils.Controller
+import com.example.myapplication.bluetooth.BluetoothManager
 import com.polidea.rxandroidble2.NotificationSetupMode
 import com.polidea.rxandroidble2.RxBleClient
 import com.polidea.rxandroidble2.RxBleConnection
@@ -17,7 +17,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 
-class BleController : Controller {
+class BleControllerViewModel(application: Application) : Controller(application) {
 
     private var disposables: CompositeDisposable = CompositeDisposable()
     //Todas las UUIDs necesarias
@@ -38,7 +38,7 @@ class BleController : Controller {
      *
      * Incializacion del hasmap con los valores mutables de los sensores
      */
-    constructor() {
+    init {
         myData[BluetoothManager.LATITUDE_SENSOR] = MutableLiveData("")
         myData[BluetoothManager.LONGITUDE_SENSOR] = MutableLiveData("")
         myData[BluetoothManager.HUMIDITY_SENSOR] = MutableLiveData("")
@@ -51,12 +51,11 @@ class BleController : Controller {
     /**
      * Crea un observable que escanea los alredores buscando un dispositivo bluetooth con una uuid de
      * servicio concreta, es decir, la que hemos creado nosotros.
-     * @param context, contexto necesario para crear el cliente de la libreria RxAndroidBle
      * @return Observable<ScanResult>, Un observable que emite un ScanResul
      */
-    fun scanDevices(context: Context): Observable<ScanResult> {
+    fun scanDevices(): Observable<ScanResult> {
 
-        return RxBleClient.create(context).scanBleDevices(ScanSettings.Builder().build(),
+        return RxBleClient.create(getApplication()).scanBleDevices(ScanSettings.Builder().build(),
                 ScanFilter.Builder()
                         .setServiceUuid(SERVICE_UUID)
                         .build()).take(1)
@@ -65,11 +64,9 @@ class BleController : Controller {
     /**
      * Esta función da comencio a la comunicación entre el dispositivo android y el del ble,
      * aqui se configura todas las caracteristivas del dispositivo ble.
-     * @param context, contexto para crear el cliente de la librearía RxAndroidBle
      */
-    fun startTalking(context: Context) {
-        disposable = RxBleClient.create(context).getBleDevice(BluetoothManager.bleDeviceMac).establishConnection(false).observeOn(Schedulers.io()).subscribe { bleConnection ->
-
+    fun startTalking() {
+        disposable = RxBleClient.create(getApplication()).getBleDevice(BluetoothManager.bleDeviceMac).establishConnection(false).observeOn(Schedulers.io()).subscribe { bleConnection ->
             setupCharacteristic(TEMPERATURE_UUID, BluetoothManager.TEMPERATURE_SENSOR, bleConnection)
             setupCharacteristic(HUMIDITY_UUID, BluetoothManager.HUMIDITY_SENSOR, bleConnection)
             setupCharacteristic(UV_UUID, BluetoothManager.UV_SENSOR, bleConnection)
@@ -77,8 +74,6 @@ class BleController : Controller {
             setupCharacteristic(LONGITUDE_UUID, BluetoothManager.LONGITUDE_SENSOR, bleConnection)
             setupCharacteristic(ALTITUDE_UUID, BluetoothManager.ALTITUDE_SENSOR, bleConnection)
             setupCharacteristic(PRESSURE_UUID, BluetoothManager.PRESSURE_SENSOR, bleConnection)
-
-
         }
 
     }

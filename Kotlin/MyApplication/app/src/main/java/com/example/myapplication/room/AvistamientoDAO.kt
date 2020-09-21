@@ -25,6 +25,9 @@ interface AvistamientoDAO{
     @Query("SELECT * FROM muestreos")
     fun getAllTransect(): Observable<List<Transect>>
 
+    @Query("SELECT * FROM muestreos WHERE transect_id= :transectId")
+    fun getTransectById(transectId: Long):Observable<Transect>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAnimal(avistamiento: AnimalSimpleData): Single<Long>
 

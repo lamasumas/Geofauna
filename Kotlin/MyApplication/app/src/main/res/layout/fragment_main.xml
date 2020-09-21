@@ -19,21 +19,14 @@
             android:orientation="vertical"
             android:gravity="center">
 
-            <TextView
-                android:id="@+id/tvEmptyDatabase"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tvEmptyDatabase"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textStyle="italic"
-                android:visibility="gone"/>
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnDeleteAll"
                 android:layout_margin="10dp"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_marginHorizontal="10dp"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
@@ -43,6 +36,16 @@
                 app:cornerRadius="100dp"
                 app:strokeColor="@color/colorQuintoPaleta"
                 app:strokeWidth="1dp" />
+
+            <TextView
+                android:id="@+id/tvEmptyDatabase"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tvEmptyDatabase"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textStyle="italic"
+                android:visibility="gone" />
             <ProgressBar
                 android:id="@+id/databaseMiddleware"
                 style="?android:attr/progressBarStyle"

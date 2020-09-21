@@ -18,7 +18,7 @@ abstract class AbstractRecyclerViewAdapter <T : RecyclerView.ViewHolder>: Recycl
 
     private fun hideIfNull(textView: TextView, titleId:Int, itemView: View){
         if(textView.text == null || textView.text == "null" || textView.text == ""){
-            itemView.findViewById<LinearLayout>(titleId).visibility = LinearLayout.GONE
+            itemView.findViewById<LinearLayout>(titleId)?.visibility = LinearLayout.GONE
 
         }
     }

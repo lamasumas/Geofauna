@@ -32,14 +32,13 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
 
     protected fun setGeneralButtonActions(view: View, isEdit: Boolean = false, idSimple: Long = 0, idAdvance: Long = 0) {
 
-        val dbRepository = DatabaseRepository(view.context)
         disposables.add(view.findViewById<FloatingActionButton>(R.id.btnAñadirAvistamiento).clicks().subscribe {
             if (checkValidSimpleData(view)) {
 
                 var builder = AlertDialog.Builder(view.context, R.style.alertDialog)
                 val newDatabaseSimpleEntry = createSimpleAnimalObject(view)
                 val newDatabaseAdvanceEntry = createAdvanceAnimalObject(view)
-
+                transectViewModel.transectList.value
                 disposables.add( animalDatabaseViewModel.addNewAnimal(newDatabaseSimpleEntry, newDatabaseAdvanceEntry))
 
                 val alertView = LayoutInflater.from(view.context).inflate(R.layout.animal_added_dialog, null)
@@ -117,23 +116,26 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
                 "/" + view.findViewById<EditText>(R.id.etYear).text.toString()
 
         return AnimalSimpleData(especie = species, date = date, latitude = latitude.toDouble(),
-                longitude = longitude.toDouble(), time = time, transect_id = transectViewModel.idTransect.value!! )
+                longitude = longitude.toDouble(), time = time, transect_id = transectViewModel.selectedId.value!! )
 
 
     }
 
     protected fun createAdvanceAnimalObject(view: View): AnimalAdvanceData {
-        val place = view.findViewById<EditText>(R.id.etLugar).text.toString()
-        val country = view.findViewById<EditText>(R.id.etPais).text.toString()
         val humidity = view.findViewById<EditText>(R.id.etHumidity).text.toString()
         val altitude = view.findViewById<EditText>(R.id.etAltitude).text.toString()
         val uv = view.findViewById<EditText>(R.id.etIndexUV).text.toString()
         val temperature = view.findViewById<EditText>(R.id.etTemperature).text.toString()
         val pressure = view.findViewById<EditText>(R.id.etPressure).text.toString()
         val validator = InputValidator()
-        return AnimalAdvanceData(pais = country, lugar = place, humidity = validator.doubleOrNull(humidity),
-                temperature = validator.doubleOrNull(temperature), pressure = validator.doubleOrNull(pressure),
-                altitude = validator.doubleOrNull(altitude), index_uv = validator.doubleOrNull(uv)?.toInt())
+        return AnimalAdvanceData(
+                pais = validator.nullOrEmpty(transectViewModel.selectedTransect.value?.country),
+                lugar = validator.nullOrEmpty(transectViewModel.selectedTransect.value?.locality),
+                humidity = validator.doubleOrNull(humidity),
+                temperature = validator.doubleOrNull(temperature),
+                pressure = validator.doubleOrNull(pressure),
+                altitude = validator.doubleOrNull(altitude),
+                index_uv = validator.doubleOrNull(uv)?.toInt())
     }
 
 

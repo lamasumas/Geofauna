@@ -93,50 +93,6 @@
 
 
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/lCvPlace">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10px"
-                        android:text="@string/tvLugar"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvCvPlace"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10px"
-                        android:text="Default text" />
-                </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/lCvCountry">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10px"
-                        android:text="@string/tvPais"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvCvCountry"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10px"
-                        android:text="Default text" />
-                </LinearLayout>
-
-                </LinearLayout>
 
 
                 <LinearLayout

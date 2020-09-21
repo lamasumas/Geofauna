@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.*
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,7 +15,7 @@ import com.example.myapplication.bluetooth.dialog.BluetoothScanDialog
 import com.example.myapplication.export.dialog.ExportDialog
 import com.example.myapplication.fragments.abstracts.AbstractDatabaseFragment
 import com.example.myapplication.fragments.animals_database.database_recyclerview.DatabaseRvAdapter
-import com.example.myapplication.room.DatabaseRepository
+import com.example.myapplication.viewmodels.controllers.BleControllerViewModel
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.jakewharton.rxbinding2.view.clicks
@@ -22,12 +23,12 @@ import com.jakewharton.rxbinding2.view.clicks
 
 class AnimalDatabaseViewFragment : AbstractDatabaseFragment() {
 
-
+    val bleControllerViewModel: BleControllerViewModel by activityViewModels()
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        animalDatabaseViewModel.loadData(transectViewModel.idTransect.value!!)
+        animalDatabaseViewModel.loadData(transectViewModel.selectedId.value!!)
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
@@ -56,13 +57,12 @@ class AnimalDatabaseViewFragment : AbstractDatabaseFragment() {
 
             animalDatabaseViewModel.dataList.observe(viewLifecycleOwner, Observer {
                 adapter?.notifyDataSetChanged()
+                view.findViewById<View>(R.id.databaseMiddleware).visibility = View.GONE
                 if (it.isEmpty()) {
                     view.findViewById<RecyclerView>(R.id.rvDatabase).visibility = View.GONE
-                    view.findViewById<Button>(R.id.btnDeleteAll).visibility = View.GONE
                     view.findViewById<TextView>(R.id.tvEmptyDatabase).visibility = View.VISIBLE
                 } else {
                     view.findViewById<RecyclerView>(R.id.rvDatabase).visibility = View.VISIBLE
-                    view.findViewById<Button>(R.id.btnDeleteAll).visibility = View.VISIBLE
                     view.findViewById<TextView>(R.id.tvEmptyDatabase).visibility = View.GONE
                 }
 
@@ -74,14 +74,14 @@ class AnimalDatabaseViewFragment : AbstractDatabaseFragment() {
                     .setTitle(R.string.dangerTitle)
                     .setNegativeButton(R.string.btnCancel) { dialog, id -> dialog.dismiss() }
                     .setPositiveButton(R.string.btnDeleteAll) { dialog, id ->
-                        animalDatabaseViewModel.cleanDatabase(transectViewModel.idTransect.value!!)
+                        animalDatabaseViewModel.cleanDatabase(transectViewModel.selectedId.value!!)
                     }
                     .create().show()
         }
         )
 
         disposables.add(view.findViewById<Button>(R.id.bluetoothMenu).clicks().subscribe {
-            BluetoothScanDialog(view.context).show()
+            BluetoothScanDialog(view.context, bleControllerViewModel.scanDevices()).show()
         })
 
 
@@ -89,7 +89,7 @@ class AnimalDatabaseViewFragment : AbstractDatabaseFragment() {
             when (it.itemId) {
                 R.id.exportarMenu -> {
 
-                    ExportDialog(requireContext(), requireActivity()).show()
+                    ExportDialog(requireContext(), requireActivity(), animalDatabaseViewModel.dataList.value).show()
 
                     true
                 }

@@ -1,12 +1,11 @@
-package com.example.myapplication.location;
+package com.example.myapplication.viewmodels.controllers;
 
 import android.annotation.SuppressLint
-import android.content.Context
+import android.app.Application
 import android.location.Geocoder
 import android.location.Location
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.myapplication.utils.Controller
 import com.google.android.gms.location.*
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -17,7 +16,7 @@ import java.lang.Exception
 
 
 @SuppressLint("MissingPermission")
-class LocationController : Controller {
+class LocationControllerViewModel(application: Application) : Controller(application) {
 
     var locationObservable: Observable<Location>
     val LATITUDE_ID = 0
@@ -25,18 +24,15 @@ class LocationController : Controller {
     val COUNTRY_ID = 2
     val PLACE_ID = 3
 
-    private lateinit var geocoder:Geocoder
+    private  var geocoder:Geocoder = Geocoder(application)
     private val disposables = CompositeDisposable()
     data class  MylocationObject(var longitude:Double, var latitude:Double, var country: String, var place:String)
-
 
     /**
      * Se inicializa el hasmap con los valores mutables de la posición.
      * Aqui tambien se crea el observable infinito con el que se actualiza se pide actualizar la posicion
      */
-    constructor(context: Context){
-
-        geocoder = Geocoder(context)
+   init{
 
         myData[LATITUDE_ID] = MutableLiveData("")
         myData[LONGITUDE_ID] = MutableLiveData("")
@@ -62,7 +58,7 @@ class LocationController : Controller {
                    }
                }
            }
-           val locationClient = LocationServices.getFusedLocationProviderClient(context)
+           val locationClient = LocationServices.getFusedLocationProviderClient(application)
            locationClient.requestLocationUpdates(locationRequest,locationCallback, null)
        }
     }

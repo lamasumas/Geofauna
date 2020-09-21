@@ -9,15 +9,17 @@ import android.widget.Button
 import com.example.myapplication.MainActivity
 import com.example.myapplication.R
 import com.example.myapplication.export.ExportManager
+import com.example.myapplication.room.data_classes.SimpleAdvanceRelation
 import com.jakewharton.rxbinding2.view.clicks
 
-class ExportDialog(context: Context, private val activity: Activity):Dialog(context) {
+class ExportDialog(context: Context, private val activity: Activity, private val listOfAnimals:List<SimpleAdvanceRelation>?):Dialog(context) {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.share_dialog)
         setCanceledOnTouchOutside(true);
         findViewById<Button>(R.id.btnShare).clicks().subscribe {
-            ExportManager().exportToDrive(context.applicationContext)
+            ExportManager().exportToDrive(context.applicationContext, listOfAnimals )
             this.dismiss()
         }
         findViewById<Button>(R.id.btnExportPhone).clicks().subscribe {

@@ -3,9 +3,7 @@ package com.example.myapplication.bluetooth.dialog
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.example.myapplication.bluetooth.BleController
 import com.example.myapplication.bluetooth.BluetoothManager
 import com.example.myapplication.fragments.abstracts.AbstractRecyclerViewAdapter
 import com.jakewharton.rxbinding2.view.clicks

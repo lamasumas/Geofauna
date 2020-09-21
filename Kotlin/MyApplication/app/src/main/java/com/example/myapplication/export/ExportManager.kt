@@ -13,28 +13,24 @@ import java.io.FileOutputStream
 class ExportManager {
     private val disposables: CompositeDisposable = CompositeDisposable()
 
-
-    fun exportToCSV(uri: Uri?, context: Context) {
+    fun exportToCSV(uri: Uri?, context: Context, listOfAnimals: List<SimpleAdvanceRelation>?) {
 
         val dbRepository = DatabaseRepository(context)
-        disposables.add(dbRepository.retrieveSightseeing().subscribe { listOfAnimals ->
             uri.also { uri ->
                 context.contentResolver.openFileDescriptor(uri!!, "rw").use {
                     FileOutputStream(it!!.fileDescriptor).use {
-                        it.write(createFileContent(listOfAnimals).toByteArray())
+                        it.write(listOfAnimals?.let { it1 -> createFileContent(it1).toByteArray() })
                         disposables.clear()
                     }
                 }
             }
-        })
-    }
+        }
 
-    fun exportToDrive(context: Context) {
-        val dbRepository = DatabaseRepository(context)
-        disposables.add(dbRepository.retrieveSightseeing().subscribe {
+
+    fun exportToDrive(context: Context, listOfAnimals: List<SimpleAdvanceRelation>?) {
 
             val outputStream = context.openFileOutput("Avistamientos.csv", Context.MODE_PRIVATE)
-            outputStream.write(createFileContent(it).toByteArray())
+            outputStream.write(listOfAnimals?.let { createFileContent(it).toByteArray() })
             outputStream.close()
 
             val fileLocation = File(context.filesDir, "Avistamientos.csv")
@@ -46,9 +42,9 @@ class ExportManager {
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             context.startActivity(intent)
 
-        })
+        }
 
-    }
+
 
     private fun  createFileContent(animals:List<SimpleAdvanceRelation>):String{
         var content: StringBuilder = StringBuilder("Id simple,Id Advance,Especie,Longitud,Latitud,Fecha,Hora,Humedad,Temperatura,Altitud,Presion,Indicie UV,Lugar,Pais\n")

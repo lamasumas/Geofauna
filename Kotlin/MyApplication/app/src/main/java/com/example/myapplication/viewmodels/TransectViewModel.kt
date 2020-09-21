@@ -10,8 +10,10 @@ import io.reactivex.disposables.Disposable
 
 class TransectViewModel(application: Application) : AndroidViewModel(application) {
     private val dbRepository = DatabaseRepository(application)
-    var idTransect = MutableLiveData<Long>()
     val transectList: MutableLiveData<ArrayList<Transect>> = MutableLiveData()
+    val selectedTransect = MutableLiveData<Transect>()
+    val selectedId = MutableLiveData<Long>()
+
 
     init {
         transectList.value = ArrayList()
@@ -19,6 +21,13 @@ class TransectViewModel(application: Application) : AndroidViewModel(application
             transectList.value?.clear()
             transectList.value?.addAll(it)
             transectList.value = transectList.value
+        }
+    }
+
+    fun choosenTransect(transectId: Long): Disposable? {
+        selectedId.value = transectId
+        return dbRepository.retrieveTransectById(transectId).observeOn(AndroidSchedulers.mainThread()).subscribe {
+            selectedTransect.value = it
         }
     }
 

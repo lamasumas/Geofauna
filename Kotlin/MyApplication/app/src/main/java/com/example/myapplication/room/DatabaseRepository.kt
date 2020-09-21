@@ -10,7 +10,7 @@ import io.reactivex.schedulers.Schedulers
 
 
 class DatabaseRepository(context: Context) {
-    val db = Room.databaseBuilder(context, AppDatabase::class.java, "application_db")
+    private val db = Room.databaseBuilder(context, AppDatabase::class.java, "application_db")
             .fallbackToDestructiveMigration().build();
 
 
@@ -34,6 +34,9 @@ class DatabaseRepository(context: Context) {
             }
         }
 
+    }
+    fun retrieveTransectById(transectId: Long): Observable<Transect> {
+        return db.avistamientoDao().getTransectById(transectId)
     }
 
     fun retrieveAllAnimalDataFromATransect(transectId:Long): Observable<TransectAnimalRelation> {

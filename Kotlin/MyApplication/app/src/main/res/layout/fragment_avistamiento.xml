@@ -196,45 +196,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/myEditLayout"
-                        app:startIconDrawable="@drawable/pais_icon">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etPais"
-                            style="@style/myEditText"
-                            android:hint="@string/etPais" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/myEditLayout"
-                        app:startIconDrawable="@drawable/place_icon">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etLugar"
-                            style="@style/myEditText"
-                            android:hint="@string/etLugar" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-
-                </LinearLayout>
-
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -63,7 +63,7 @@ class TransectFragment : GeneralFragmentRx() {
 
                 disposables.add(view.findViewById<Button>(R.id.btnUse).clicks().subscribeOn(AndroidSchedulers.mainThread()).subscribe {
 
-                    transectViewModel.idTransect.value = adapter.selectedHolder!!.value!!.idDb
+                    transectViewModel.choosenTransect(adapter.selectedHolder!!.value!!.idDb)
                     view.findNavController().navigate(TransectFragmentDirections.actionMenuPrincipalToMainFragment2())
                     adapter.disposables.dispose()
 

@@ -12,12 +12,13 @@ import com.example.myapplication.fragments.abstracts.AbstractRecyclerViewAdapter
 import com.example.myapplication.fragments.animals_database.AnimalDatabaseViewFragmentDirections
 import com.example.myapplication.room.DatabaseRepository
 import com.example.myapplication.room.data_classes.SimpleAdvanceRelation
+import com.example.myapplication.viewmodels.AnimalDatabaseViewModel
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class DatabaseRvAdapter(val elements: List<SimpleAdvanceRelation>,  val disposables: CompositeDisposable) : AbstractRecyclerViewAdapter<AnimalViewHolder>() {
+class DatabaseRvAdapter(val elements: MutableList<SimpleAdvanceRelation>,  val disposables: CompositeDisposable) : AbstractRecyclerViewAdapter<AnimalViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimalViewHolder {
         val theView = LayoutInflater.from(parent.context).inflate(R.layout.animal_card_scheme, parent, false)
@@ -35,8 +36,6 @@ class DatabaseRvAdapter(val elements: List<SimpleAdvanceRelation>,  val disposab
         holder.lat.text = elements[position].simpleData.latitude.toString()
         holder.time.text = elements[position].simpleData.time
         holder.date.text = elements[position].simpleData.date
-        holder.country.text = elements[position].advanceData.pais
-        holder.place.text = elements[position].advanceData.lugar
         holder.humidity.text = elements[position].advanceData.humidity.toString()
         holder.altitude.text = elements[position].advanceData.altitude.toString()
         holder.temperature.text = elements[position].advanceData.temperature.toString()
@@ -49,8 +48,6 @@ class DatabaseRvAdapter(val elements: List<SimpleAdvanceRelation>,  val disposab
                 TempViewsHolders(holder.pressures, R.id.lCvPressure, holder.generalView),
                 TempViewsHolders(holder.uv, R.id.lCvUV, holder.generalView),
                 TempViewsHolders(holder.temperature, R.id.lCvTemperature, holder.generalView),
-                TempViewsHolders(holder.place, R.id.lCvPlace, holder.generalView),
-                TempViewsHolders(holder.country, R.id.lCvCountry, holder.generalView),
                 TempViewsHolders(holder.humidity, R.id.lCvHumedad, holder.generalView)
         )
         hideNullTextViews(temp)
@@ -65,9 +62,11 @@ class DatabaseRvAdapter(val elements: List<SimpleAdvanceRelation>,  val disposab
 
         disposables.add(holder.btnDelete.clicks().observeOn(AndroidSchedulers.mainThread()).doOnNext {
             holder.cv.removeAllViews()
-        }.observeOn(Schedulers.io()).subscribe {
             val dbRepository = DatabaseRepository(holder.cv.context)
             dbRepository.deleteAnimal(elements[position].simpleData, elements[position].advanceData)
+        }.observeOn(AndroidSchedulers.mainThread()).subscribe {
+            elements.removeAt(position)
+            notifyDataSetChanged()
         })
 
 

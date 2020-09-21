@@ -8,10 +8,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.EditText
-import com.example.myapplication.utils.Controller
-import com.example.myapplication.location.LocationController
+import androidx.fragment.app.activityViewModels
+import com.example.myapplication.viewmodels.controllers.Controller
+import com.example.myapplication.viewmodels.controllers.LocationControllerViewModel
 import com.example.myapplication.R
-import com.example.myapplication.bluetooth.BleController
+import com.example.myapplication.viewmodels.controllers.BleControllerViewModel
 import com.example.myapplication.bluetooth.BluetoothManager
 import com.example.myapplication.fragments.abstracts.AbstractDatabaseFragment
 import io.reactivex.exceptions.UndeliverableException
@@ -20,8 +21,8 @@ import java.util.*
 
 class AvistamientoFragment() : AbstractDatabaseFragment() {
 
-    private val bleController: BleController by lazy { BleController() }
-    private val locationController: LocationController by lazy { LocationController(requireContext()) }
+    private val bleController: BleControllerViewModel by activityViewModels()
+    private val locationController: LocationControllerViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +52,7 @@ class AvistamientoFragment() : AbstractDatabaseFragment() {
 
 
         if (BluetoothManager.bleDeviceMac != "" && checkBluetooth.isEnabled && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            bleController.startTalking(view.context)
+            bleController.startTalking()
             setCommonObserver(BluetoothManager.HUMIDITY_SENSOR, R.id.etHumidity, bleController)
             setCommonObserver(BluetoothManager.ALTITUDE_SENSOR, R.id.etAltitude, bleController)
             setCommonObserver(BluetoothManager.TEMPERATURE_SENSOR, R.id.etTemperature, bleController)
@@ -64,8 +65,6 @@ class AvistamientoFragment() : AbstractDatabaseFragment() {
                 locationController.startGettingInfinitePositions()
                 setCommonObserver(locationController.LONGITUDE_ID, R.id.etLongitud, locationController)
                 setCommonObserver(locationController.LATITUDE_ID, R.id.etLatitud, locationController)
-                setCommonObserver(locationController.COUNTRY_ID, R.id.etPais, locationController)
-                setCommonObserver(locationController.PLACE_ID, R.id.etLugar, locationController)
             }
         }
 
@@ -98,14 +97,10 @@ class AvistamientoFragment() : AbstractDatabaseFragment() {
                         bleController.myData[BluetoothManager.LONGITUDE_SENSOR]?.value?.toDouble()!!)
                 view.findViewById<EditText>(R.id.etLatitud).setText(tempLocation.latitude.toString())
                 view.findViewById<EditText>(R.id.etLongitud).setText(tempLocation.longitude.toString())
-                view.findViewById<EditText>(R.id.etLugar).setText(tempLocation.place)
-                view.findViewById<EditText>(R.id.etPais).setText(tempLocation.country)
             } else {
                 locationController.startGettingInfinitePositions()
                 setCommonObserver(locationController.LONGITUDE_ID, R.id.etLongitud, locationController)
                 setCommonObserver(locationController.LATITUDE_ID, R.id.etLatitud, locationController)
-                setCommonObserver(locationController.COUNTRY_ID, R.id.etPais, locationController)
-                setCommonObserver(locationController.PLACE_ID, R.id.etLugar, locationController)
             }
         })
     }

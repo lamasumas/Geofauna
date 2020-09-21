@@ -1,7 +1,6 @@
 package com.example.myapplication
 
 import android.app.Activity
-import android.bluetooth.BluetoothAdapter
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -9,14 +8,16 @@ import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.myapplication.export.ExportManager
-import io.reactivex.schedulers.Schedulers
+import com.example.myapplication.viewmodels.AnimalDatabaseViewModel
 
 class MainActivity : AppCompatActivity() {
+
+    private val animalDatabaseViewModel: AnimalDatabaseViewModel by viewModels()
     companion object {
         const val GPS_PERMISION_CODE = 55
         const val BLUETOOTH_CODE = 56
@@ -47,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
             startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
 
-      /*  val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+        /*val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
         if (!bluetoothAdapter.isEnabled) {
             startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), BLUETOOTH_CODE)
         }*/
@@ -73,10 +74,8 @@ class MainActivity : AppCompatActivity() {
 
             EXPORT_CODE -> {
                 if (resultCode == Activity.RESULT_OK)
-                    ExportManager().exportToCSV(data?.data, this)
+                    ExportManager().exportToCSV(data?.data, this, animalDatabaseViewModel.dataList.value)
             }
-
-
         }
     }
 

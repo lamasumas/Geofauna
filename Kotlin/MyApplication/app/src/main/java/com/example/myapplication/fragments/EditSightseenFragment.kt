@@ -45,8 +45,6 @@ class EditSightseen() : AbstractDatabaseFragment() {
                     view.findViewById<EditText>(R.id.etMonth).setText(date.get(1))
                     view.findViewById<EditText>(R.id.etYear).setText(date.get(2))
                     view.findViewById<EditText>(R.id.etHumidity).setText(validator.nullOrEmpty(it.advanceData.humidity.toString()))
-                    view.findViewById<EditText>(R.id.etPais).setText(validator.nullOrEmpty(it.advanceData.pais))
-                    view.findViewById<EditText>(R.id.etLugar).setText(validator.nullOrEmpty(it.advanceData.lugar))
                     view.findViewById<EditText>(R.id.etTemperature).setText(validator.nullOrEmpty(it.advanceData.temperature.toString()))
                     view.findViewById<EditText>(R.id.etIndexUV).setText(validator.nullOrEmpty(it.advanceData.index_uv.toString()))
                     view.findViewById<EditText>(R.id.etAltitude).setText(validator.nullOrEmpty(it.advanceData.altitude.toString()))
