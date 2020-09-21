@@ -30,7 +30,7 @@
             app:startIconContentDescription="@string/etEspecie"
             app:startIconDrawable="@drawable/conejo_icon">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <AutoCompleteTextView
                 android:id="@+id/etEspecie"
                 style="@style/myEditText"
                 android:hint="@string/etEspecie" />

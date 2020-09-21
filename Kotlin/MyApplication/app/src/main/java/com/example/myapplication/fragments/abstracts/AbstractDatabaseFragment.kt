@@ -1,12 +1,10 @@
 package com.example.myapplication.fragments.abstracts
 
 import android.app.AlertDialog
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -29,6 +27,17 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
     val animalDatabaseViewModel: AnimalDatabaseViewModel by activityViewModels()
     val transectViewModel: TransectViewModel by activityViewModels()
 
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val textField =    view.findViewById<AutoCompleteTextView>(R.id.etEspecie)
+        val animalList = transectViewModel.selectedTransect.value?.aniamlList?.split(",")?.toMutableList()
+        if (animalList != null) {
+            ArrayAdapter<String>(view.context, android.R.layout.simple_list_item_1 , animalList).also {
+             textField.setAdapter(it)
+            }
+        }
+    }
 
     protected fun setGeneralButtonActions(view: View, isEdit: Boolean = false, idSimple: Long = 0, idAdvance: Long = 0) {
 

@@ -15,7 +15,6 @@ class ExportManager {
 
     fun exportToCSV(uri: Uri?, context: Context, listOfAnimals: List<SimpleAdvanceRelation>?) {
 
-        val dbRepository = DatabaseRepository(context)
             uri.also { uri ->
                 context.contentResolver.openFileDescriptor(uri!!, "rw").use {
                     FileOutputStream(it!!.fileDescriptor).use {

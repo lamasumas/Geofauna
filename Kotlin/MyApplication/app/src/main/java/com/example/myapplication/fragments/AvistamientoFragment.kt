@@ -50,7 +50,6 @@ class AvistamientoFragment() : AbstractDatabaseFragment() {
         setGeneralButtonActions(view )
 
 
-
         if (BluetoothManager.bleDeviceMac != "" && checkBluetooth.isEnabled && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             bleController.startTalking()
             setCommonObserver(BluetoothManager.HUMIDITY_SENSOR, R.id.etHumidity, bleController)
