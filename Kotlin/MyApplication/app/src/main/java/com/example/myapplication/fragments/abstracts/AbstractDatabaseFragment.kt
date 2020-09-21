@@ -6,14 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.example.myapplication.utils.InputValidator
 import com.example.myapplication.R
-import com.example.myapplication.fragments.AvistamientoFragmentDirections
 import com.example.myapplication.fragments.EditSightseenDirections
+import com.example.myapplication.fragments.sightseeing.AutoCompleteTextFieldModified
+import com.example.myapplication.fragments.sightseeing.AvistamientoFragmentDirections
 import com.example.myapplication.viewmodels.AnimalDatabaseViewModel
-import com.example.myapplication.room.DatabaseRepository
 import com.example.myapplication.room.data_classes.AnimalAdvanceData
 import com.example.myapplication.room.data_classes.AnimalSimpleData
 import com.example.myapplication.viewmodels.TransectViewModel
@@ -28,16 +27,6 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
     val transectViewModel: TransectViewModel by activityViewModels()
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val textField =    view.findViewById<AutoCompleteTextView>(R.id.etEspecie)
-        val animalList = transectViewModel.selectedTransect.value?.aniamlList?.split(",")?.toMutableList()
-        if (animalList != null) {
-            ArrayAdapter<String>(view.context, android.R.layout.simple_list_item_1 , animalList).also {
-             textField.setAdapter(it)
-            }
-        }
-    }
 
     protected fun setGeneralButtonActions(view: View, isEdit: Boolean = false, idSimple: Long = 0, idAdvance: Long = 0) {
 

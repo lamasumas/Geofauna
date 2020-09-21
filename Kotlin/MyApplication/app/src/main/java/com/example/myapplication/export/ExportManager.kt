@@ -9,6 +9,10 @@ import com.example.myapplication.room.data_classes.SimpleAdvanceRelation
 import io.reactivex.disposables.CompositeDisposable
 import java.io.File
 import java.io.FileOutputStream
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.ZonedDateTime
+import java.util.*
 
 class ExportManager {
     private val disposables: CompositeDisposable = CompositeDisposable()
@@ -26,13 +30,13 @@ class ExportManager {
         }
 
 
-    fun exportToDrive(context: Context, listOfAnimals: List<SimpleAdvanceRelation>?) {
+    fun exportToDrive(context: Context, listOfAnimals: List<SimpleAdvanceRelation>?, name: String?) {
 
-            val outputStream = context.openFileOutput("Avistamientos.csv", Context.MODE_PRIVATE)
+            val outputStream = context.openFileOutput(createFileName(name), Context.MODE_PRIVATE)
             outputStream.write(listOfAnimals?.let { createFileContent(it).toByteArray() })
             outputStream.close()
 
-            val fileLocation = File(context.filesDir, "Avistamientos.csv")
+            val fileLocation = File(context.filesDir, createFileName(name))
             val path = FileProvider.getUriForFile(context, "com.example.myapplication.fileprovider",fileLocation)
             val intent = Intent(Intent.ACTION_SEND)
             intent.type = "text/csv"
@@ -49,6 +53,13 @@ class ExportManager {
         var content: StringBuilder = StringBuilder("Id simple,Id Advance,Especie,Longitud,Latitud,Fecha,Hora,Humedad,Temperatura,Altitud,Presion,Indicie UV,Lugar,Pais\n")
         animals .forEach {content.append(it.toString())}
         return content.toString()
+    }
+
+    fun createFileName(name:String?): String {
+        var tempName = "Avistamientos"
+        if(name != null) tempName = name
+        val theDate = Calendar.getInstance().time
+        return name + "-"+SimpleDateFormat("hh.mm-dd.mm.yyyy").format(theDate).toString() + ".csv"
     }
 
 }

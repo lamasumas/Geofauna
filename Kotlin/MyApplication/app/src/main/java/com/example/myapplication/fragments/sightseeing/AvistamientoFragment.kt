@@ -1,4 +1,4 @@
-package com.example.myapplication.fragments
+package com.example.myapplication.fragments.sightseeing
 
 
 import android.bluetooth.BluetoothAdapter
@@ -7,6 +7,8 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import androidx.fragment.app.activityViewModels
 import com.example.myapplication.viewmodels.controllers.Controller
@@ -14,6 +16,7 @@ import com.example.myapplication.viewmodels.controllers.LocationControllerViewMo
 import com.example.myapplication.R
 import com.example.myapplication.viewmodels.controllers.BleControllerViewModel
 import com.example.myapplication.bluetooth.BluetoothManager
+import com.example.myapplication.export.ExportManager
 import com.example.myapplication.fragments.abstracts.AbstractDatabaseFragment
 import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.plugins.RxJavaPlugins
@@ -39,6 +42,7 @@ class AvistamientoFragment() : AbstractDatabaseFragment() {
             savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_avistamiento, container, false)
     }
 
@@ -47,7 +51,9 @@ class AvistamientoFragment() : AbstractDatabaseFragment() {
         val calendar = GregorianCalendar()
         val checkBluetooth = BluetoothAdapter.getDefaultAdapter()
         val locationManager = view.context.getSystemService(Context.LOCATION_SERVICE) as LocationManager;
-        setGeneralButtonActions(view )
+        setGeneralButtonActions(view)
+
+        setupSuggestions(view)
 
 
         if (BluetoothManager.bleDeviceMac != "" && checkBluetooth.isEnabled && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -74,6 +80,21 @@ class AvistamientoFragment() : AbstractDatabaseFragment() {
         view.findViewById<EditText>(R.id.etYear).setText(calendar.get(Calendar.YEAR).toString())
 
 
+    }
+
+    private fun setupSuggestions(view: View) {
+        transectViewModel.selectedTransect.value?.aniamlList?.split(",")?.toMutableList()?.let {
+            view.findViewById<AutoCompleteTextView>(R.id.etEspecie).also { tv ->
+                if (it.isNotEmpty() && it[0]?.isNotBlank()) {
+                    tv.setOnFocusChangeListener { _, _ -> tv.showDropDown() }
+                    ArrayAdapter<String>(view.context, android.R.layout.simple_list_item_1, it).also {
+                        tv.setAdapter(it)
+                    }
+                } else {
+                    tv.dismissDropDown()
+                }
+            }
+        }
     }
 
     private fun setCommonObserver(index: Int, editTextId: Int, controller: Controller) {

@@ -89,7 +89,10 @@ class AnimalDatabaseViewFragment : AbstractDatabaseFragment() {
             when (it.itemId) {
                 R.id.exportarMenu -> {
 
-                    ExportDialog(requireContext(), requireActivity(), animalDatabaseViewModel.dataList.value).show()
+                    ExportDialog(requireContext(),
+                            requireActivity(),
+                            animalDatabaseViewModel.dataList.value,
+                    transectViewModel.selectedTransect.value?.name).show()
 
                     true
                 }
