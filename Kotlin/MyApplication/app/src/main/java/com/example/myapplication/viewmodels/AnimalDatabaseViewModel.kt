@@ -33,15 +33,16 @@ class AnimalDatabaseViewModel(application: Application) : AndroidViewModel(appli
     }
 
     fun loadData(idTransect: Long) {
-        if (transectId != idTransect) {
             transectId = idTransect
-            dbRepository.retrieveFullAnimalDataFromTransectID(transectId!!)?.observeOn(AndroidSchedulers.mainThread())?.subscribe {
+            dbRepository.retrieveFullAnimalDataFromTransectID(transectId)?.observeOn(Schedulers.io()).doOnNext {
                 dataList.value?.clear()
                 dataList.value?.addAll(it)
+            }.observeOn(AndroidSchedulers.mainThread())?.subscribe {
+
                 dataList.value = dataList.value
 
             }
-        }
+       // }
     }
 
     fun cleanDatabase(transectId: Long) {

@@ -50,7 +50,7 @@ class ExportManager {
 
 
     private fun  createFileContent(animals:List<SimpleAdvanceRelation>):String{
-        var content: StringBuilder = StringBuilder("Id simple,Id Advance,Especie,Longitud,Latitud,Fecha,Hora,Humedad,Temperatura,Altitud,Presion,Indicie UV,Lugar,Pais\n")
+        var content: StringBuilder = StringBuilder("Id simple,Id Advance,Especie,Longitud,Latitud,Fecha,Hora,Humedad,Temperatura,Altitud,Presion,Indicie UV,Lugar,Pais,Notas\n")
         animals .forEach {content.append(it.toString())}
         return content.toString()
     }

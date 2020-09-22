@@ -33,13 +33,13 @@ data class AnimalAdvanceData(@PrimaryKey(autoGenerate = true) @ColumnInfo(name =
                              @ColumnInfo(name = "temperature") val temperature: Double?,
                              @ColumnInfo(name = "altitude") val altitude: Double?,
                              @ColumnInfo(name = "uv_index") val index_uv: Int?,
-                             @ColumnInfo(name = "pressure") val pressure: Double?) {
+                             @ColumnInfo(name = "pressure") val pressure: Double?,
+                             @ColumnInfo(name = "notes") val notes: String? ) {
     override fun toString(): String {
-        val temp = listOf(humidity.toString(), temperature.toString(), altitude.toString(), pressure.toString(), index_uv.toString(), lugar, pais)
+        val temp = listOf(humidity.toString(), temperature.toString(), altitude.toString(), pressure.toString(), index_uv.toString(), lugar, pais, notes)
         return temp.joinToString(separator = ",")
     }
 }
-
 
 data class TransectAnimalRelation(
         @Embedded val transect: Transect,

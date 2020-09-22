@@ -17,6 +17,7 @@ import com.example.myapplication.fragments.abstracts.GeneralFragmentRx
 import com.example.myapplication.fragments.transects.dialog.NewTransectDialog
 import com.example.myapplication.fragments.transects.recyclerview.TransectAdapter
 import com.example.myapplication.viewmodels.TransectViewModel
+import com.example.myapplication.viewmodels.controllers.LocationControllerViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.view.enabled
@@ -27,6 +28,7 @@ class TransectFragment : GeneralFragmentRx() {
 
 
     val transectViewModel: TransectViewModel by activityViewModels()
+    val locationController: LocationControllerViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -42,7 +44,7 @@ class TransectFragment : GeneralFragmentRx() {
             visibility = View.VISIBLE
             disposables.add(view.findViewById<FloatingActionButton>(R.id.btnAddNewTransect).clicks()
                     .subscribe {
-                        NewTransectDialog(view.context, transectViewModel).show()
+                        NewTransectDialog(view.context, transectViewModel, locationController.getOneGPSPosition()).show()
                     })
 
             transectViewModel.transectList.observe(viewLifecycleOwner, Observer {

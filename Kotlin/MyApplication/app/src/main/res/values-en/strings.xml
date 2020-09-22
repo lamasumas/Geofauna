@@ -80,4 +80,5 @@
     <string name="btnCreateTransect">Store Transect</string>
     <string name="alertTitleTransect">Missing data</string>
     <string name="alertMessageTransect">The transect name and the country are mandatory</string>
+    <string name="etNotes">Notes</string>
 </resources>

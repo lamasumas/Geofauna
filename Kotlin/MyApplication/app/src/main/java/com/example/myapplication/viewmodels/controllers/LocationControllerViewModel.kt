@@ -100,15 +100,11 @@ class LocationControllerViewModel(application: Application) : Controller(applica
         return mylocationObject
     }
 
-    fun getOneGPSPosition(){
-        disposables.add(locationObservable.singleOrError().observeOn(Schedulers.io())
-                .flatMap { Single.just(translateGPS2Place(it.longitude, it.latitude))}
-                .observeOn(AndroidSchedulers.mainThread()).subscribe {
-                    singleLocation ->
-                    myData[LATITUDE_ID]?.value =  singleLocation.latitude.toString()
-                    myData[LONGITUDE_ID]?.value = singleLocation.longitude.toString()
-                    myData[PLACE_ID]?.value = singleLocation.place
-                    myData[COUNTRY_ID]?.value = singleLocation.country })
+    fun getOneGPSPosition(): Observable<MylocationObject> {
+
+        return locationObservable.take(1).observeOn(Schedulers.io())
+                .flatMap { Observable.just(translateGPS2Place(it.longitude, it.latitude))}
+                .observeOn(AndroidSchedulers.mainThread())
     }
 
     /**

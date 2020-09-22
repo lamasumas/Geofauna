@@ -43,12 +43,14 @@ class DatabaseRvAdapter(val elements: MutableList<SimpleAdvanceRelation>,  val d
         holder.pressures.text = elements[position].advanceData.pressure.toString()
         holder.idSimple = elements[position].simpleData.simpleId
         holder.idAdvance = elements[position].advanceData.uid
+        holder.notes.text = elements[position].advanceData.notes
         val temp = listOf<TempViewsHolders>(
                 TempViewsHolders(holder.altitude, R.id.lCvAltitud, holder.generalView),
                 TempViewsHolders(holder.pressures, R.id.lCvPressure, holder.generalView),
                 TempViewsHolders(holder.uv, R.id.lCvUV, holder.generalView),
                 TempViewsHolders(holder.temperature, R.id.lCvTemperature, holder.generalView),
-                TempViewsHolders(holder.humidity, R.id.lCvHumedad, holder.generalView)
+                TempViewsHolders(holder.humidity, R.id.lCvHumedad, holder.generalView),
+                TempViewsHolders(holder.notes, R.id.lCvNotes, holder.generalView)
         )
         hideNullTextViews(temp)
 

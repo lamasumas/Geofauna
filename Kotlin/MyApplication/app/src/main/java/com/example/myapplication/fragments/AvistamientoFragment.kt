@@ -1,4 +1,4 @@
-package com.example.myapplication.fragments.sightseeing
+package com.example.myapplication.fragments
 
 
 import android.bluetooth.BluetoothAdapter
@@ -16,7 +16,6 @@ import com.example.myapplication.viewmodels.controllers.LocationControllerViewMo
 import com.example.myapplication.R
 import com.example.myapplication.viewmodels.controllers.BleControllerViewModel
 import com.example.myapplication.bluetooth.BluetoothManager
-import com.example.myapplication.export.ExportManager
 import com.example.myapplication.fragments.abstracts.AbstractDatabaseFragment
 import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.plugins.RxJavaPlugins
@@ -86,7 +85,8 @@ class AvistamientoFragment() : AbstractDatabaseFragment() {
         transectViewModel.selectedTransect.value?.aniamlList?.split(",")?.toMutableList()?.let {
             view.findViewById<AutoCompleteTextView>(R.id.etEspecie).also { tv ->
                 if (it.isNotEmpty() && it[0]?.isNotBlank()) {
-                    tv.setOnFocusChangeListener { _, _ -> tv.showDropDown() }
+                    tv.threshold = 0
+                    tv.setOnFocusChangeListener { _,_-> tv.showDropDown()  }
                     ArrayAdapter<String>(view.context, android.R.layout.simple_list_item_1, it).also {
                         tv.setAdapter(it)
                     }

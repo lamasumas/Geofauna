@@ -5,7 +5,7 @@
     style="@style/backgroundLight"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.sightseeing.AvistamientoFragment">
+    tools:context=".fragments.AvistamientoFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -30,7 +30,7 @@
             app:startIconContentDescription="@string/etEspecie"
             app:startIconDrawable="@drawable/conejo_icon">
 
-            <AutoCompleteTextView
+            <com.google.android.material.textview.MaterialAutoCompleteTextView
                 android:id="@+id/etEspecie"
                 style="@style/myEditText"
                 android:hint="@string/etEspecie" />
@@ -173,6 +173,13 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btnBack"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginHorizontal="13pt"
+                    android:src="@drawable/back_icon"
+                    style="@style/myFab"/>
+
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnExpand"
@@ -188,6 +195,18 @@
                     app:cornerRadius="100dp"
                     app:strokeColor="@color/colorQuintoPaleta"
                     app:strokeWidth="1dp" />
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btnAñadirAvistamiento"
+                    style="@style/myFab"
+                    android:layout_marginHorizontal="13pt"
+                    android:src="@drawable/add_icon" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btnEditDatabaseAnimal"
+                    android:layout_marginHorizontal="13pt"
+                    android:src="@drawable/edit_icon"
+                    android:visibility="gone"
+                    style="@style/myFab"/>
 
             </LinearLayout>
 
@@ -196,7 +215,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -288,42 +307,25 @@
 
 
                 </LinearLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/myEditLayout"
+
+                    app:startIconDrawable="@drawable/notes_icon">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etNotes"
+                        android:minHeight="100dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_height="wrap_content"
+                        android:inputType="textMultiLine"
+                        style="@style/myEditText"
+                        android:hint="@string/etNotes" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
 
             </LinearLayout>
 
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/lButton"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1"
-            android:gravity="bottom|center"
-            android:orientation="horizontal">
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnBack"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginHorizontal="13pt"
-                android:src="@drawable/back_icon"
-                style="@style/myFab"/>
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnAñadirAvistamiento"
-                style="@style/myFab"
-                android:layout_marginHorizontal="13pt"
-                android:src="@drawable/add_icon"
-                app:layout_anchor="@id/lButton" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnEditDatabaseAnimal"
-                android:layout_marginHorizontal="13pt"
-                android:src="@drawable/edit_icon"
-                android:visibility="gone"
-                app:layout_anchor="@id/lButton"
-                style="@style/myFab"/>
 
         </LinearLayout>
 

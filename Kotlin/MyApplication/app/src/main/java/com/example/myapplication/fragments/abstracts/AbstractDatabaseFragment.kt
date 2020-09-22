@@ -1,7 +1,6 @@
 package com.example.myapplication.fragments.abstracts
 
 import android.app.AlertDialog
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
@@ -9,9 +8,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.example.myapplication.utils.InputValidator
 import com.example.myapplication.R
+import com.example.myapplication.fragments.AvistamientoFragmentDirections
 import com.example.myapplication.fragments.EditSightseenDirections
-import com.example.myapplication.fragments.sightseeing.AutoCompleteTextFieldModified
-import com.example.myapplication.fragments.sightseeing.AvistamientoFragmentDirections
 import com.example.myapplication.viewmodels.AnimalDatabaseViewModel
 import com.example.myapplication.room.data_classes.AnimalAdvanceData
 import com.example.myapplication.room.data_classes.AnimalSimpleData
@@ -125,6 +123,7 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
         val uv = view.findViewById<EditText>(R.id.etIndexUV).text.toString()
         val temperature = view.findViewById<EditText>(R.id.etTemperature).text.toString()
         val pressure = view.findViewById<EditText>(R.id.etPressure).text.toString()
+        val notes = view.findViewById<EditText>(R.id.etNotes).text.toString()
         val validator = InputValidator()
         return AnimalAdvanceData(
                 pais = validator.nullOrEmpty(transectViewModel.selectedTransect.value?.country),
@@ -133,7 +132,8 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
                 temperature = validator.doubleOrNull(temperature),
                 pressure = validator.doubleOrNull(pressure),
                 altitude = validator.doubleOrNull(altitude),
-                index_uv = validator.doubleOrNull(uv)?.toInt())
+                index_uv = validator.doubleOrNull(uv)?.toInt(),
+                notes =  validator.nullOrEmpty(notes))
     }
 
 
