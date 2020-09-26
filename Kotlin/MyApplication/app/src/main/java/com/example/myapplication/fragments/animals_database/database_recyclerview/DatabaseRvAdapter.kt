@@ -74,7 +74,7 @@ class DatabaseRvAdapter(val elements: MutableList<SimpleAdvanceRelation>,  val d
             val dbRepository = DatabaseRepository(holder.cv.context)
             dbRepository.deleteAnimal(elements[position].simpleData, elements[position].advanceData)
         }.observeOn(AndroidSchedulers.mainThread()).subscribe {
-            elements.removeAt(position)
+           // elements.removeAt(position)
             notifyDataSetChanged()
         })
 

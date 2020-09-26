@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  
     <item
         android:id="@+id/bluetoothMenu"
         android:icon="@drawable/bluetooth_icon"
@@ -11,6 +13,9 @@
         android:id="@+id/exportarMenu"
         android:title="@string/exportarMenu"
         />
+    <item
+        android:id="@+id/exitMenu"
+        android:title="@string/menuExit"/>
 
 
 </menu>

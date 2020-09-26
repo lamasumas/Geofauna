@@ -83,4 +83,5 @@
     <string name="etNotes">Notes</string>
     <string name="btnCamera">Camera</string>
     <string name="tvTitlePhoto">Photo stored in:</string>
+    <string name="menuExit">Exit transect</string>
 </resources>

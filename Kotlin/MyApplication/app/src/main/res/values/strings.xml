@@ -81,6 +81,7 @@
     <string name="etNotes">Notas</string>
     <string name="btnCamera">Camara</string>
     <string name="tvTitlePhoto">Foto guardada en:</string>
+    <string name="menuExit">Salir del transecto</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

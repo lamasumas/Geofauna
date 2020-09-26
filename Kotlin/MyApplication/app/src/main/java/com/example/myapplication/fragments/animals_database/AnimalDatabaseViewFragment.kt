@@ -96,6 +96,10 @@ class AnimalDatabaseViewFragment : AbstractDatabaseFragment() {
 
                     true
                 }
+                R.id.exitMenu ->{
+                    view.findNavController().navigate(AnimalDatabaseViewFragmentDirections.actionMainFragment2ToMenuPrincipal())
+                    true
+                }
                 else -> false
             }
         }
