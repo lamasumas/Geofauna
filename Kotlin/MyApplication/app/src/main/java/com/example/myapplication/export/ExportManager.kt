@@ -3,6 +3,7 @@ package com.example.myapplication.export
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Environment
 import androidx.core.content.FileProvider
 import com.example.myapplication.room.DatabaseRepository
 import com.example.myapplication.room.data_classes.SimpleAdvanceRelation
@@ -50,7 +51,7 @@ class ExportManager {
 
 
     private fun  createFileContent(animals:List<SimpleAdvanceRelation>):String{
-        var content: StringBuilder = StringBuilder("Id simple,Id Advance,Especie,Longitud,Latitud,Fecha,Hora,Humedad,Temperatura,Altitud,Presion,Indicie UV,Lugar,Pais,Notas\n")
+        var content: StringBuilder = StringBuilder("Id simple,Id Advance,Especie,Longitud,Latitud,Fecha,Hora,Humedad,Temperatura,Altitud,Presion,Indicie UV,Lugar,Pais,Notas, Ubicación de la foto\n")
         animals .forEach {content.append(it.toString())}
         return content.toString()
     }
@@ -59,7 +60,14 @@ class ExportManager {
         var tempName = "Avistamientos"
         if(name != null) tempName = name
         val theDate = Calendar.getInstance().time
-        return name + "-"+SimpleDateFormat("hh.mm-dd.mm.yyyy").format(theDate).toString() + ".csv"
+        return name + "-"+SimpleDateFormat("hh.mm.ss-dd.mm.yyyy").format(theDate).toString() + ".csv"
+    }
+
+    fun createImageFile(context: Context): File? {
+
+        val fileName = createFileName("Animal.")
+        val storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(fileName, ".jpg", storageDir)//.apply { currentPhotoPath = absolutePath }
     }
 
 }

@@ -1,13 +1,26 @@
 package com.example.myapplication.fragments.abstracts
 
+import android.app.Activity
 import android.app.AlertDialog
+import android.content.ContentValues
+import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.media.MediaScannerConnection
+import android.net.Uri
+import android.opengl.Visibility
+import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
+import androidx.core.content.FileProvider
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.example.myapplication.utils.InputValidator
 import com.example.myapplication.R
+import com.example.myapplication.export.ExportManager
 import com.example.myapplication.fragments.AvistamientoFragmentDirections
 import com.example.myapplication.fragments.EditSightseenDirections
 import com.example.myapplication.viewmodels.AnimalDatabaseViewModel
@@ -17,13 +30,17 @@ import com.example.myapplication.viewmodels.TransectViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.schedulers.Schedulers
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.IOException
 
 abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
 
 
+    private val CAMERA_CODE: Int = 666
     val animalDatabaseViewModel: AnimalDatabaseViewModel by activityViewModels()
     val transectViewModel: TransectViewModel by activityViewModels()
-
+    private var currentPhotoPath = ""
 
 
     protected fun setGeneralButtonActions(view: View, isEdit: Boolean = false, idSimple: Long = 0, idAdvance: Long = 0) {
@@ -83,6 +100,30 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
                 }.subscribe {
                     view.findNavController().navigate(EditSightseenDirections.actionEditSightseenToMainFragment2())
                 })
+
+        disposables.add(view.findViewById<Button>(R.id.btnPicture).clicks().subscribe {
+            Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+                // Ensure that there's a camera activity to handle the intent
+                takePictureIntent.resolveActivity(view.context.packageManager)?.also {
+                    // Create the File where the photo should go
+                    val photoFile: File? = try {
+                        takePhoto(view)
+                    } catch (ex: IOException) {
+                        null
+                    }
+                    // Continue only if the File was successfully created
+                    photoFile?.also {
+                        val photoURI: Uri = FileProvider.getUriForFile(
+                                view.context,
+                                "com.example.myapplication.fileprovider",
+                                it
+                        )
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                        startActivityForResult(takePictureIntent, CAMERA_CODE)
+                    }
+                }
+            }
+        })
     }
 
     private fun checkValidSimpleData(view: View): Boolean {
@@ -124,6 +165,7 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
         val temperature = view.findViewById<EditText>(R.id.etTemperature).text.toString()
         val pressure = view.findViewById<EditText>(R.id.etPressure).text.toString()
         val notes = view.findViewById<EditText>(R.id.etNotes).text.toString()
+        val photoPath = view.findViewById<TextView>(R.id.tvPhotoPath).text.toString()
         val validator = InputValidator()
         return AnimalAdvanceData(
                 pais = validator.nullOrEmpty(transectViewModel.selectedTransect.value?.country),
@@ -133,12 +175,33 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
                 pressure = validator.doubleOrNull(pressure),
                 altitude = validator.doubleOrNull(altitude),
                 index_uv = validator.doubleOrNull(uv)?.toInt(),
-                notes =  validator.nullOrEmpty(notes))
+                notes =  validator.nullOrEmpty(notes),
+                photoPlace = validator.nullOrEmpty(photoPath))
     }
 
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode){
+            CAMERA_CODE -> {
+                if(resultCode == Activity.RESULT_OK){
+                    requireView().findViewById<LinearLayout>(R.id.lPhoto).visibility = View.VISIBLE
+                    requireView().findViewById<TextView>(R.id.tvPhotoPath).setText(currentPhotoPath)
+                }
+            }
+        }
+    }
 
-
-
+    private fun takePhoto(view: View): File?{
+        val storageDir: File? = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+                "test", /* prefix */
+                ".jpg", /* suffix */
+                storageDir /* directory */
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            currentPhotoPath = this.absolutePath
+        }
+    }
 
 }

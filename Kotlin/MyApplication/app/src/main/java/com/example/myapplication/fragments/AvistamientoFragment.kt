@@ -3,6 +3,7 @@ package com.example.myapplication.fragments
 
 import android.bluetooth.BluetoothAdapter
 import android.content.Context
+import android.content.Intent
 import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
@@ -130,6 +131,5 @@ class AvistamientoFragment() : AbstractDatabaseFragment() {
         if (BluetoothManager.bleDeviceMac != "")
             bleController.stopTalking()
         locationController.stopGettingPositions()
-
     }
 }

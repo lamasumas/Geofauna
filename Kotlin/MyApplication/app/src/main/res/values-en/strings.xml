@@ -24,7 +24,7 @@
     <string name="etMes">Month</string>
     <string name="etAño">Year</string>
     <string name="etHumidity">Humidity (%)</string>
-    <string name="etAltitude">Altitude (m)</string>
+    <string name="etAltitude">Longitude:</string>
     <string name="etTemperature">Temperature (ºC)</string>
     <string name="etUv">UV Index</string>
     <string name="etPressure">Pressure (hPa)</string>
@@ -81,4 +81,6 @@
     <string name="alertTitleTransect">Missing data</string>
     <string name="alertMessageTransect">The transect name and the country are mandatory</string>
     <string name="etNotes">Notes</string>
+    <string name="btnCamera">Camera</string>
+    <string name="tvTitlePhoto">Photo stored in:</string>
 </resources>

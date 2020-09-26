@@ -34,9 +34,10 @@ data class AnimalAdvanceData(@PrimaryKey(autoGenerate = true) @ColumnInfo(name =
                              @ColumnInfo(name = "altitude") val altitude: Double?,
                              @ColumnInfo(name = "uv_index") val index_uv: Int?,
                              @ColumnInfo(name = "pressure") val pressure: Double?,
-                             @ColumnInfo(name = "notes") val notes: String? ) {
+                             @ColumnInfo(name = "notes") val notes: String?,
+                             @ColumnInfo(name = "picture") val photoPlace: String?  ) {
     override fun toString(): String {
-        val temp = listOf(humidity.toString(), temperature.toString(), altitude.toString(), pressure.toString(), index_uv.toString(), lugar, pais, notes)
+        val temp = listOf(humidity.toString(), temperature.toString(), altitude.toString(), pressure.toString(), index_uv.toString(), lugar, pais, notes, photoPlace)
         return temp.joinToString(separator = ",")
     }
 }

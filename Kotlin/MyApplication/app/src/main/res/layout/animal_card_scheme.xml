@@ -56,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
 
                 <LinearLayout
@@ -247,6 +247,14 @@
                         android:text="@string/btnBorrar" />
 
                 </LinearLayout>
+                <ImageView
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/ivPhoto"
+                    android:adjustViewBounds="true"
+                    android:maxHeight="300dp"
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
 
 

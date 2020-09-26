@@ -1,5 +1,6 @@
 package com.example.myapplication.fragments.animals_database.database_recyclerview
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import java.io.File
 
 class DatabaseRvAdapter(val elements: MutableList<SimpleAdvanceRelation>,  val disposables: CompositeDisposable) : AbstractRecyclerViewAdapter<AnimalViewHolder>() {
 
@@ -44,6 +46,11 @@ class DatabaseRvAdapter(val elements: MutableList<SimpleAdvanceRelation>,  val d
         holder.idSimple = elements[position].simpleData.simpleId
         holder.idAdvance = elements[position].advanceData.uid
         holder.notes.text = elements[position].advanceData.notes
+
+        if (!elements[position].advanceData.photoPlace.isNullOrEmpty())
+            holder.ivPhoto.setImageURI(Uri.fromFile(File(elements[position].advanceData.photoPlace!!)))
+
+
         val temp = listOf<TempViewsHolders>(
                 TempViewsHolders(holder.altitude, R.id.lCvAltitud, holder.generalView),
                 TempViewsHolders(holder.pressures, R.id.lCvPressure, holder.generalView),

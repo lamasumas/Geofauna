@@ -2,6 +2,7 @@ package com.example.myapplication.fragments.animals_database.database_recyclervi
 
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
@@ -25,6 +26,7 @@ class AnimalViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     var uv: TextView
     var hiddenViews: LinearLayout
     var btnEdit: Button
+    var ivPhoto:ImageView
     var btnDelete : Button
     var generalView:View
     init {
@@ -46,6 +48,7 @@ class AnimalViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         temperature = itemView.findViewById(R.id.tvCvTemperature)
         humidity = itemView.findViewById(R.id.tvCvHumidity)
         generalView = itemView
+        ivPhoto = itemView.findViewById(R.id.ivPhoto)
     }
 
 

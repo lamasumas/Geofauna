@@ -9,7 +9,7 @@
     <string name="tvHora">Hora:</string>
     <string name="tvFecha">Fecha:</string>
     <string name="tvLatitud">Latitud:</string>
-    <string name="tvLongitud">Altitud (m)</string>
+    <string name="tvLongitud">Longitud: </string>
     <string name="tvHumidity">Humedad (%):</string>
     <string name="tvAltitude">Altitud (m):</string>
     <string name="tvTemperature">Temperatura (ºC):</string>
@@ -79,6 +79,8 @@
     <string name="alertTitleTransect">Faltan datos</string>
     <string name="alertMessageTransect">El nombre del transecto y el país es obligatorio</string>
     <string name="etNotes">Notas</string>
+    <string name="btnCamera">Camara</string>
+    <string name="tvTitlePhoto">Foto guardada en:</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

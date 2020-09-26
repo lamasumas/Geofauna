@@ -9,326 +9,364 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:isScrollContainer="true"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/avistamientoTitulo"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/myEditLayout"
-            app:startIconContentDescription="@string/etEspecie"
-            app:startIconDrawable="@drawable/conejo_icon">
-
-            <com.google.android.material.textview.MaterialAutoCompleteTextView
-                android:id="@+id/etEspecie"
-                style="@style/myEditText"
-                android:hint="@string/etEspecie" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/myEditLayout"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                app:startIconContentDescription="@string/etEspecie"
-                app:startIconDrawable="@drawable/time_icon">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etHour"
-                    style="@style/myEditText"
-                    android:hint="@string/etHora"
-                    android:inputType="number" />
-
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/myEditLayout"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                app:startIconDrawable="@drawable/time_icon">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etMinute"
-                    style="@style/myEditText"
-                    android:hint="@string/etMinuto"
-                    android:inputType="number" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/myEditLayout"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                app:startIconDrawable="@drawable/calendar_icon">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etDay"
-                    style="@style/myEditText"
-                    android:hint="@string/etDia"
-                    android:inputType="number" />
-
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/myEditLayout"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                app:startIconDrawable="@drawable/calendar_icon">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etMonth"
-                    style="@style/myEditText"
-                    android:hint="@string/etMes" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/myEditLayout"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                app:startIconDrawable="@drawable/calendar_icon">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etYear"
-                    style="@style/myEditText"
-                    android:hint="@string/etAño" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/myEditLayout"
-                app:startIconDrawable="@drawable/location_icon">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etLatitud"
-                    style="@style/myEditText"
-                    android:hint="@string/etLatitud"
-                    android:inputType="numberDecimal" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/myEditLayout"
-                app:startIconDrawable="@drawable/location_icon">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etLongitud"
-                    style="@style/myEditText"
-                    android:hint="@string/etLongitud"
-                    android:inputType="numberDecimal" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/lHiddenParent"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:animateLayoutChanges="true"
             android:gravity="center"
+            android:isScrollContainer="true"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/avistamientoTitulo"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/myEditLayout"
+                app:startIconContentDescription="@string/etEspecie"
+                app:startIconDrawable="@drawable/conejo_icon">
+
+                <com.google.android.material.textview.MaterialAutoCompleteTextView
+                    android:id="@+id/etEspecie"
+                    style="@style/myEditText"
+                    android:hint="@string/etEspecie" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
             <LinearLayout
-                android:id="@+id/lOpcional"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:orientation="horizontal">
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/btnBack"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginHorizontal="13pt"
-                    android:src="@drawable/back_icon"
-                    style="@style/myFab"/>
 
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnExpand"
-                    style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    android:insetTop="0dp"
-                    android:insetBottom="0dp"
-                    android:text="@string/btnOptional"
-                    android:textColor="@color/colorQuintoPaleta"
-                    app:backgroundTint="@android:color/transparent"
-                    app:cornerRadius="100dp"
-                    app:strokeColor="@color/colorQuintoPaleta"
-                    app:strokeWidth="1dp" />
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/btnAñadirAvistamiento"
-                    style="@style/myFab"
-                    android:layout_marginHorizontal="13pt"
-                    android:src="@drawable/add_icon" />
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/btnEditDatabaseAnimal"
-                    android:layout_marginHorizontal="13pt"
-                    android:src="@drawable/edit_icon"
-                    android:visibility="gone"
-                    style="@style/myFab"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/lhidden"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/myEditLayout"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        app:startIconDrawable="@drawable/humidity_icon">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etHumidity"
-                            style="@style/myEditText"
-                            android:hint="@string/etHumidity"
-                            android:inputType="numberDecimal" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/myEditLayout"
-
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        app:startIconDrawable="@drawable/altitude_icon">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etAltitude"
-                            style="@style/myEditText"
-                            android:hint="@string/etAltitude"
-                            android:inputType="numberSigned|number|numberDecimal" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/myEditLayout"
-
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        app:startIconDrawable="@drawable/temperature_icon">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etTemperature"
-                            style="@style/myEditText"
-                            android:hint="@string/etTemperature"
-                            android:inputType="numberSigned|numberDecimal" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/myEditLayout"
-
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        app:startIconDrawable="@drawable/uv_icon">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etIndexUV"
-                            style="@style/myEditText"
-                            android:hint="@string/etUv"
-                            android:inputType="number" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-
-                </LinearLayout>
-
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/myEditLayout"
-                        app:startIconDrawable="@drawable/pressure_icon">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etPressure"
-                            style="@style/myEditText"
-                            android:hint="@string/etPressure" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-
-                </LinearLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/myEditLayout"
-
-                    app:startIconDrawable="@drawable/notes_icon">
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    app:startIconContentDescription="@string/etEspecie"
+                    app:startIconDrawable="@drawable/time_icon">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etNotes"
-                        android:minHeight="100dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_height="wrap_content"
-                        android:inputType="textMultiLine"
+                        android:id="@+id/etHour"
                         style="@style/myEditText"
-                        android:hint="@string/etNotes" />
+                        android:hint="@string/etHora"
+                        android:inputType="number" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/myEditLayout"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    app:startIconDrawable="@drawable/time_icon">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etMinute"
+                        style="@style/myEditText"
+                        android:hint="@string/etMinuto"
+                        android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
 
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/myEditLayout"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    app:startIconDrawable="@drawable/calendar_icon">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etDay"
+                        style="@style/myEditText"
+                        android:hint="@string/etDia"
+                        android:inputType="number" />
+
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/myEditLayout"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    app:startIconDrawable="@drawable/calendar_icon">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etMonth"
+                        style="@style/myEditText"
+                        android:hint="@string/etMes" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/myEditLayout"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    app:startIconDrawable="@drawable/calendar_icon">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etYear"
+                        style="@style/myEditText"
+                        android:hint="@string/etAño" />
+                </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/myEditLayout"
+                    app:startIconDrawable="@drawable/location_icon">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etLatitud"
+                        style="@style/myEditText"
+                        android:hint="@string/etLatitud"
+                        android:inputType="numberDecimal" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/myEditLayout"
+                    app:startIconDrawable="@drawable/location_icon">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etLongitud"
+                        style="@style/myEditText"
+                        android:hint="@string/etLongitud"
+                        android:inputType="numberDecimal" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lHiddenParent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/lOpcional"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/btnBack"
+                        style="@style/myFab"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginHorizontal="13pt"
+                        android:src="@drawable/back_icon" />
+
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnExpand"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:text="@string/btnOptional"
+                        android:textColor="@color/colorQuintoPaleta"
+                        app:backgroundTint="@android:color/transparent"
+                        app:cornerRadius="100dp"
+                        app:strokeColor="@color/colorQuintoPaleta"
+                        app:strokeWidth="1dp" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/btnAñadirAvistamiento"
+                        style="@style/myFab"
+                        android:layout_marginHorizontal="13pt"
+                        android:src="@drawable/add_icon" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/btnEditDatabaseAnimal"
+                        style="@style/myFab"
+                        android:layout_marginHorizontal="13pt"
+                        android:src="@drawable/edit_icon"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lhidden"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/myEditLayout"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            app:startIconDrawable="@drawable/humidity_icon">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etHumidity"
+                                style="@style/myEditText"
+                                android:hint="@string/etHumidity"
+                                android:inputType="numberDecimal" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/myEditLayout"
+
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            app:startIconDrawable="@drawable/altitude_icon">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etAltitude"
+                                style="@style/myEditText"
+                                android:hint="@string/etAltitude"
+                                android:inputType="numberSigned|number|numberDecimal" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/myEditLayout"
+
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            app:startIconDrawable="@drawable/temperature_icon">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etTemperature"
+                                style="@style/myEditText"
+                                android:hint="@string/etTemperature"
+                                android:inputType="numberSigned|numberDecimal" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/myEditLayout"
+
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            app:startIconDrawable="@drawable/uv_icon">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etIndexUV"
+                                style="@style/myEditText"
+                                android:hint="@string/etUv"
+                                android:inputType="number" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/myEditLayout"
+                            app:startIconDrawable="@drawable/pressure_icon">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etPressure"
+                                style="@style/myEditText"
+                                android:hint="@string/etPressure" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                    </LinearLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/myEditLayout"
+
+                        app:startIconDrawable="@drawable/notes_icon">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etNotes"
+                            style="@style/myEditText"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:hint="@string/etNotes"
+                            android:inputType="textMultiLine"
+                            android:minHeight="100dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnPicture"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:text="@string/btnCamera"
+                        android:textColor="@color/colorQuintoPaleta"
+                        app:backgroundTint="@android:color/transparent"
+                        app:cornerRadius="100dp"
+                        app:strokeColor="@color/colorQuintoPaleta"
+                        app:strokeWidth="1dp" />
+
+                    <LinearLayout
+                        android:id="@+id/lPhoto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:visibility="gone"
+                        android:layout_marginBottom="20dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/tvTitlePhoto"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:id="@+id/tvPhotoPath"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
 
         </LinearLayout>
-
-    </LinearLayout>
     </ScrollView>
 </FrameLayout>
