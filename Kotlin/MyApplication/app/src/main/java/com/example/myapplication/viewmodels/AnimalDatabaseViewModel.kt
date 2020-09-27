@@ -18,7 +18,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 
-class AnimalDatabaseViewModel(application: Application) : AndroidViewModel(application) {
+class AnimalDatabaseViewModel(application: Application) : AndroidViewModel(application), GeneralViewModel {
 
     private val dbRepository = DatabaseRepository(application)
     val dataList : MutableLiveData<ArrayList<SimpleAdvanceRelation>> = MutableLiveData()
@@ -32,9 +32,9 @@ class AnimalDatabaseViewModel(application: Application) : AndroidViewModel(appli
         return dbRepository.insertNewAnimalToDB(newDatabaseSimpleEntry, newDatabaseAdvanceEntry)
     }
 
-    fun loadData(idTransect: Long) {
+    fun loadData(idTransect: Long): Disposable? {
             transectId = idTransect
-            dbRepository.retrieveFullAnimalDataFromTransectID(transectId)?.observeOn(Schedulers.io()).doOnNext {
+            return dbRepository.retrieveFullAnimalDataFromTransectID(transectId)?.observeOn(Schedulers.io()).doOnNext {
                 dataList.value?.clear()
                 dataList.value?.addAll(it)
             }.observeOn(AndroidSchedulers.mainThread())?.subscribe {
@@ -42,7 +42,6 @@ class AnimalDatabaseViewModel(application: Application) : AndroidViewModel(appli
                 dataList.value = dataList.value
 
             }
-       // }
     }
 
     fun cleanDatabase(transectId: Long) {
@@ -56,7 +55,10 @@ class AnimalDatabaseViewModel(application: Application) : AndroidViewModel(appli
     fun editAnimal(tempSimple: AnimalSimpleData, tempAdvance: AnimalAdvanceData): Disposable {
 
         return dbRepository.updateAnimal(tempSimple, tempAdvance)
+    }
 
+    override fun preStart(){
+        Log.d("Initialization", "AnimalDatabaseViewModel startted")
     }
 
 }

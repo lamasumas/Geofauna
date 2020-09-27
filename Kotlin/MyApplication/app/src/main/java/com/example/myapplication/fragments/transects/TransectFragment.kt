@@ -39,27 +39,25 @@ class TransectFragment : GeneralFragmentRx() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<RecyclerView>(R.id.rvTransects).apply {
-            layoutManager = LinearLayoutManager(view.context)
-            adapter = TransectAdapter(transectViewModel.transectList.value!!)
+
             visibility = View.VISIBLE
-            disposables.add(view.findViewById<FloatingActionButton>(R.id.btnAddNewTransect).clicks()
-                    .subscribe {
-                        NewTransectDialog(view.context, transectViewModel, locationController.getOneGPSPosition()).show()
-                    })
-
-            transectViewModel.transectList.observe(viewLifecycleOwner, Observer {
-                view.findViewById<RecyclerView>(R.id.rvTransects)?.adapter?.notifyDataSetChanged()
-            })
-
-
-            (this.adapter as TransectAdapter).also {adapter ->
-                adapter.selectedHolder.observe(viewLifecycleOwner) {
-                        view.findViewById<Button>(R.id.btnUse).isEnabled = transectViewModel.transectList.value!!.size >0
-                        view.findViewById<Button>(R.id.btnDeleteTransect).isEnabled = transectViewModel.transectList.value!!.size >0
+            layoutManager = LinearLayoutManager(view.context)
+            adapter = TransectAdapter(transectViewModel.transectList.value!!).also {adapter ->
+                adapter.isSelected.observe(viewLifecycleOwner) {
+                    view.findViewById<Button>(R.id.btnUse).isEnabled = it
+                    view.findViewById<Button>(R.id.btnDeleteTransect).isEnabled = it
                 }
+                disposables.add(view.findViewById<Button>(R.id.btnAddNewTransect).clicks()
+                        .subscribe {
+                            NewTransectDialog(view.context, transectViewModel, locationController.getOneGPSPosition()).show()
+                            adapter.isSelected.value = false
+                        })
+
 
                 disposables.add(view.findViewById<Button>(R.id.btnDeleteTransect).clicks().subscribe {
                     disposables.add(transectViewModel.deleteTransect(adapter.selectedHolder.value!!.idDb))
+                    adapter.isSelected.value = false
+
 
                 })
 
@@ -72,6 +70,11 @@ class TransectFragment : GeneralFragmentRx() {
 
                 })
             }
+
+            transectViewModel.transectList.observe(viewLifecycleOwner, Observer {
+                view.findViewById<RecyclerView>(R.id.rvTransects)?.adapter?.notifyDataSetChanged()
+            })
+
 
         }
     }

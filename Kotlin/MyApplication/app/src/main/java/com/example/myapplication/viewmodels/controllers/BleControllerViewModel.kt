@@ -2,8 +2,10 @@ package com.example.myapplication.viewmodels.controllers
 
 import android.app.Application
 import android.os.ParcelUuid
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.myapplication.bluetooth.BluetoothManager
+import com.example.myapplication.viewmodels.GeneralViewModel
 import com.polidea.rxandroidble2.NotificationSetupMode
 import com.polidea.rxandroidble2.RxBleClient
 import com.polidea.rxandroidble2.RxBleConnection
@@ -17,7 +19,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 
-class BleControllerViewModel(application: Application) : Controller(application) {
+class BleControllerViewModel(application: Application) : Controller(application), GeneralViewModel {
 
     private var disposables: CompositeDisposable = CompositeDisposable()
     //Todas las UUIDs necesarias
@@ -100,6 +102,9 @@ class BleControllerViewModel(application: Application) : Controller(application)
     fun stopTalking() {
         disposables.dispose()
         disposable?.dispose()
+    }
+    override fun preStart(){
+        Log.d("Initialization", "BleController startted")
     }
 
 

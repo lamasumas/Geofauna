@@ -15,10 +15,16 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.myapplication.export.ExportManager
 import com.example.myapplication.viewmodels.AnimalDatabaseViewModel
+import com.example.myapplication.viewmodels.TransectViewModel
+import com.example.myapplication.viewmodels.controllers.BleControllerViewModel
+import com.example.myapplication.viewmodels.controllers.LocationControllerViewModel
 
 class MainActivity : AppCompatActivity() {
 
     private val animalDatabaseViewModel: AnimalDatabaseViewModel by viewModels()
+    private val locationControllerViewModel: LocationControllerViewModel by viewModels()
+    private val bleControllerViewModel: BleControllerViewModel by viewModels()
+    private val transectViewModel: TransectViewModel by viewModels()
     companion object {
         const val GPS_PERMISION_CODE = 55
         const val BLUETOOTH_CODE = 56
@@ -27,6 +33,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        animalDatabaseViewModel.preStart()
+        transectViewModel.preStart()
+        bleControllerViewModel.preStart()
+        locationControllerViewModel.preStart()
+
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         getPermissions()

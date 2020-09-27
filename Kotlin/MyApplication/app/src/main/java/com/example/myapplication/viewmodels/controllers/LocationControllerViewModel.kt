@@ -6,6 +6,7 @@ import android.location.Geocoder
 import android.location.Location
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.example.myapplication.viewmodels.GeneralViewModel
 import com.google.android.gms.location.*
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -16,7 +17,7 @@ import java.lang.Exception
 
 
 @SuppressLint("MissingPermission")
-class LocationControllerViewModel(application: Application) : Controller(application) {
+class LocationControllerViewModel(application: Application) : Controller(application), GeneralViewModel {
 
     var locationObservable: Observable<Location>
     val LATITUDE_ID = 0
@@ -113,5 +114,9 @@ class LocationControllerViewModel(application: Application) : Controller(applica
     fun stopGettingPositions(){
         disposables.dispose()
     }
+    override fun preStart(){
+        Log.d("Initialization", "LocationViewModel startted")
+    }
+
 
 }

@@ -28,7 +28,7 @@ class AnimalDatabaseViewFragment : AbstractDatabaseFragment() {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        animalDatabaseViewModel.loadData(transectViewModel.selectedId.value!!)
+        animalDatabaseViewModel.loadData(transectViewModel.selectedId.value!!)?.let { disposables.add(it) }
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_main, container, false)
     }

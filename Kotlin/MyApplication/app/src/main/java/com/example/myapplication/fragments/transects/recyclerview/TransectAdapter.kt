@@ -13,7 +13,12 @@ import io.reactivex.disposables.CompositeDisposable
 class TransectAdapter(private val storedTransects: List<Transect>) : AbstractRecyclerViewAdapter<TransectViewHolder>() {
     private var secondColor = false
     var selectedHolder = MutableLiveData<TransectViewHolder>()
+    var isSelected = MutableLiveData<Boolean>()
     val disposables = CompositeDisposable()
+    init {
+        isSelected.value = false
+    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransectViewHolder {
         val theView = LayoutInflater.from(parent.context).inflate(R.layout.transect_card_scheme, parent, false)
@@ -29,11 +34,12 @@ class TransectAdapter(private val storedTransects: List<Transect>) : AbstractRec
 
         if (secondColor) {
             holder.carView.setCardBackgroundColor(holder.carView.resources.getColor(R.color.colorTerciarioPaletaVariante, null))
-            holder.originalColor = holder.carView.cardBackgroundColor
             secondColor = false
         } else {
             secondColor = true
+            holder.carView.setCardBackgroundColor(holder.carView.resources.getColor(R.color.colorTerciarioPaleta, null))
         }
+        holder.originalColor = holder.carView.cardBackgroundColor
 
         val temp = listOf<TempViewsHolders>(
                 TempViewsHolders(holder.county, R.id.lTvCounty, holder.carView),
@@ -44,6 +50,7 @@ class TransectAdapter(private val storedTransects: List<Transect>) : AbstractRec
                     selectedHolder?.value?.carView?.setCardBackgroundColor(selectedHolder?.value?.originalColor)
                     holder.carView.setCardBackgroundColor(holder.carView.resources.getColor(R.color.colorSecundarioPaleta, null))
                     selectedHolder.value = holder
+                    isSelected.value = true
                 })
         hideNullTextViews(temp)
 

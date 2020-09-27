@@ -65,4 +65,9 @@
         <item name="android:minWidth" type="dimen">600dp</item>
     </style>
 
+    <style name="AppTheme.Launcher">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="android:screenOrientation">portrait</item>
+    </style>
+
 </resources>

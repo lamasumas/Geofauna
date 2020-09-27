@@ -4,69 +4,90 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimaryPaleta"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".fragments.transects.TransectFragment">
 
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="10dp"
+        android:layout_weight="0.2"
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|bottom"
             android:layout_marginHorizontal="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="15dp"
+            android:layout_weight="0.8"
+            android:gravity="bottom|left"
             android:text="@string/tvTransectListTitle"
-            android:textSize="20dp" />
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
 
         <androidx.recyclerview.widget.RecyclerView
+            android:paddingTop="5dp"
             android:id="@+id/rvTransects"
+            android:layout_weight="0.2"
+            android:background="@color/colorQuintoPaleta"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:scrollbars="vertical" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.8"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnUse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:layout_weight="0.25"
             android:enabled="false"
             android:text="Usar" />
 
-        <Button
 
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAddNewTransect"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:cornerRadius="100dp"
+            app:strokeColor="@color/colorQuintoPaleta"
+            app:strokeWidth="1dp"
             android:layout_margin="5dp"
+            android:layout_gravity="end"
             android:layout_weight="0.05"
-            android:text="+"
-            android:layout_gravity="end"/>
-
-        <Button
+            android:text="+" />
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnDeleteTransect"
+            android:layout_gravity="end"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
+            app:cornerRadius="100dp"
+            app:strokeColor="@color/colorQuintoPaleta"
+            app:strokeWidth="1dp"
             android:layout_margin="5dp"
             android:layout_weight="0.05"
             android:enabled="false"
             android:text="-" />
+
+
+
 
     </LinearLayout>
 </LinearLayout>
