@@ -52,7 +52,7 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
                 val newDatabaseSimpleEntry = createSimpleAnimalObject(view)
                 val newDatabaseAdvanceEntry = createAdvanceAnimalObject(view)
                 transectViewModel.transectList.value
-                disposables.add( animalDatabaseViewModel.addNewAnimal(newDatabaseSimpleEntry, newDatabaseAdvanceEntry))
+                disposables.add(animalDatabaseViewModel.addNewAnimal(newDatabaseSimpleEntry, newDatabaseAdvanceEntry))
 
                 val alertView = LayoutInflater.from(view.context).inflate(R.layout.animal_added_dialog, null)
                 builder.setView(alertView).create().also { dialog ->
@@ -67,14 +67,6 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
                         .setTitle(R.string.wrongInputTitulo)
                         .setNeutralButton(R.string.cerrarAlertBoton) { dialog, id -> dialog.dismiss() }
                         .create().show()
-
-        })
-
-        disposables.add(view.findViewById<FloatingActionButton>(R.id.btnBack).clicks().subscribe {
-            if (isEdit)
-                view.findNavController().navigate(EditSightseenDirections.actionEditSightseenToMainFragment2())
-            else
-                view.findNavController().navigate(AvistamientoFragmentDirections.actionAvistamiento2ToMainFragment2())
         })
 
         disposables.add(view.findViewById<TextView>(R.id.btnExpand).clicks().subscribe {
@@ -153,7 +145,7 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
                 "/" + view.findViewById<EditText>(R.id.etYear).text.toString()
 
         return AnimalSimpleData(especie = species, date = date, latitude = latitude.toDouble(),
-                longitude = longitude.toDouble(), time = time, transect_id = transectViewModel.selectedId.value!! )
+                longitude = longitude.toDouble(), time = time, transect_id = transectViewModel.selectedId.value!!)
 
 
     }
@@ -175,16 +167,16 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
                 pressure = validator.doubleOrNull(pressure),
                 altitude = validator.doubleOrNull(altitude),
                 index_uv = validator.doubleOrNull(uv)?.toInt(),
-                notes =  validator.nullOrEmpty(notes),
+                notes = validator.nullOrEmpty(notes),
                 photoPlace = validator.nullOrEmpty(photoPath))
     }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        when(requestCode){
+        when (requestCode) {
             CAMERA_CODE -> {
-                if(resultCode == Activity.RESULT_OK){
+                if (resultCode == Activity.RESULT_OK) {
                     requireView().findViewById<LinearLayout>(R.id.lPhoto).visibility = View.VISIBLE
                     requireView().findViewById<TextView>(R.id.tvPhotoPath).setText(currentPhotoPath)
                 }
@@ -192,7 +184,7 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
         }
     }
 
-    private fun takePhoto(view: View): File?{
+    private fun takePhoto(view: View): File? {
         val storageDir: File? = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(
                 "test", /* prefix */

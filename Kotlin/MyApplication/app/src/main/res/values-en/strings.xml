@@ -64,7 +64,7 @@
     <string name="btnOtro">Other</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tituloAplicacion">Wild Fauna Sampling</string>
-    <string name="btnOptional">Optional</string>
+    <string name="btnOptional">More data</string>
     <string name="wrongInputMessage">You left unfull filled an obligatory field</string>
     <string name="wrongInputTitulo">Missing Data</string>
     <string name="btnDeleteAll">Clean database</string>
@@ -84,4 +84,8 @@
     <string name="btnCamera">Camera</string>
     <string name="tvTitlePhoto">Photo stored in:</string>
     <string name="menuExit">Exit transect</string>
+    <string name="tvAnimalsSearched">Animals:</string>
+    <string name="tvCountry">Country:</string>
+    <string name="tvProvincia">County:</string>
+    <string name="tvTransectName">Name:</string>
 </resources>

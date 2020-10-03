@@ -4,6 +4,12 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
 
+
+    <color name="red">#DC143C</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+
     <!--Paleta de colores -->
     <color name="colorTerciarioPaletaVariante">#bfb0a1</color>
     <color name="colorPrimaryPaleta">#F0DECC </color>

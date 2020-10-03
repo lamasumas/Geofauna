@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.provider.Settings
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     private val locationControllerViewModel: LocationControllerViewModel by viewModels()
     private val bleControllerViewModel: BleControllerViewModel by viewModels()
     private val transectViewModel: TransectViewModel by viewModels()
+    private val isAlreadyPreStarted = false
     companion object {
         const val GPS_PERMISION_CODE = 55
         const val BLUETOOTH_CODE = 56
@@ -33,13 +35,31 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+     /*    val x = object: CountDownTimer(5500, 1000){
+            fun onStart():CountDownTimer{
+                animalDatabaseViewModel.preStart()
+                transectViewModel.preStart()
+                bleControllerViewModel.preStart()
+                locationControllerViewModel.preStart()
+                getPermissions()
+                return this
+            }
+            override fun onFinish() {
+                setTheme(R.style.AppTheme)
+                setContentView(R.layout.activity_main)
+            }
+            override fun onTick(p0: Long) { }
+        }.onStart().start()
+
+*/
+
+        super.onCreate(savedInstanceState)
         animalDatabaseViewModel.preStart()
         transectViewModel.preStart()
         bleControllerViewModel.preStart()
         locationControllerViewModel.preStart()
-
         setTheme(R.style.AppTheme)
-        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         getPermissions()
 
@@ -61,11 +81,11 @@ class MainActivity : AppCompatActivity() {
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
             startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
 
-        val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+      /*  val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
         if (!bluetoothAdapter.isEnabled) {
             startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), BLUETOOTH_CODE)
         }
-
+*/
 
     }
 

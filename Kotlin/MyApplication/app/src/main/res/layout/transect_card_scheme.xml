@@ -23,7 +23,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nombre:" />
+                android:text="@string/tvTransectName" />
 
             <TextView
                 android:id="@+id/tvTransectName"
@@ -39,7 +39,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Animals searched:" />
+                android:text="@string/tvAnimalsSearched" />
             <TextView
                 android:id="@+id/tvAnimals"
                 android:layout_width="wrap_content"
@@ -54,7 +54,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Country:" />
+                android:text="@string/tvCountry" />
 
             <TextView
                 android:id="@+id/tvCountry"
@@ -70,7 +70,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="County:" />
+                    android:text="@string/tvProvincia" />
 
                 <TextView
                     android:id="@+id/tvCounty"

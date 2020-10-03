@@ -25,14 +25,16 @@
                 android:text="@string/avistamientoTitulo"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
+
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/myEditLayout"
                 app:startIconContentDescription="@string/etEspecie"
-                app:startIconDrawable="@drawable/conejo_icon">
+                app:startIconDrawable="@drawable/mariposa_icon">
 
                 <com.google.android.material.textview.MaterialAutoCompleteTextView
                     android:id="@+id/etEspecie"
                     style="@style/myEditText"
+                    android:minHeight="65dp"
                     android:hint="@string/etEspecie" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -173,12 +175,6 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/btnBack"
-                        style="@style/myFab"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginHorizontal="13pt"
-                        android:src="@drawable/back_icon" />
 
 
                     <com.google.android.material.button.MaterialButton
@@ -200,13 +196,13 @@
                         android:id="@+id/btnAñadirAvistamiento"
                         style="@style/myFab"
                         android:layout_marginHorizontal="13pt"
-                        android:src="@drawable/add_icon" />
+                        android:src="@drawable/save_icon" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/btnEditDatabaseAnimal"
                         style="@style/myFab"
                         android:layout_marginHorizontal="13pt"
-                        android:src="@drawable/edit_icon"
+                        android:src="@drawable/save_icon"
                         android:visibility="gone" />
 
                 </LinearLayout>
