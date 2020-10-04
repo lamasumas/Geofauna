@@ -49,10 +49,7 @@ class TransectFragment : GeneralFragmentRx() {
             visibility = View.VISIBLE
             layoutManager = LinearLayoutManager(view.context)
             adapter = TransectAdapter(transectViewModel.transectList.value!!).also { adapter ->
-                adapter.isSelected.observe(viewLifecycleOwner) {
-                    view.findViewById<Button>(R.id.btnUse).isEnabled = it
-                    view.findViewById<Button>(R.id.btnDeleteTransect).isEnabled = it
-                }
+
                 disposables.add(view.findViewById<Button>(R.id.btnAddNewTransect).clicks()
                         .subscribe {
                             NewTransectDialog(view.context, transectViewModel, locationController.getOneGPSPosition()).show()
@@ -60,23 +57,15 @@ class TransectFragment : GeneralFragmentRx() {
                         })
 
 
-                disposables.add(view.findViewById<Button>(R.id.btnDeleteTransect).clicks().subscribe {
-                    disposables.add(transectViewModel.deleteTransect(adapter.selectedHolder.value!!.idDb))
-                    adapter.isSelected.value = false
-
-
-                })
-
-                disposables.add(view.findViewById<Button>(R.id.btnUse).clicks().subscribeOn(AndroidSchedulers.mainThread()).subscribe {
-
+                adapter.selectedHolder.observe(viewLifecycleOwner) {
                     transectViewModel.choosenTransect(adapter.selectedHolder!!.value!!.idDb)
                     view.findNavController().navigate(TransectFragmentDirections.actionMenuPrincipalToMainFragment2())
                     adapter.disposables.dispose()
+                }
 
-
-                })
                 ItemTouchHelper(getSwipLeftCallback()).attachToRecyclerView(this)
             }
+
 
             transectViewModel.transectList.observe(viewLifecycleOwner, Observer {
                 view.findViewById<RecyclerView>(R.id.rvTransects)?.adapter?.notifyDataSetChanged()
