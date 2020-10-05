@@ -52,7 +52,7 @@ class TransectFragment : GeneralFragmentRx() {
 
                 disposables.add(view.findViewById<Button>(R.id.btnAddNewTransect).clicks()
                         .subscribe {
-                            NewTransectDialog(view.context, transectViewModel, locationController.getOneGPSPosition()).show()
+                            NewTransectDialog().show(requireActivity().supportFragmentManager.beginTransaction(), "New transect dialog")
                             adapter.isSelected.value = false
                         })
 

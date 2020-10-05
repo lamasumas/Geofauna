@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/colorSecundarioPaleta"
         android:layout_gravity="bottom|right"
-        android:layout_margin="10dp"
+        android:layout_margin="15dp"
         android:src="@drawable/add_icon"
 
         app:fabCustomSize="72dp"

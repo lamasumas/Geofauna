@@ -22,7 +22,7 @@ import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.plugins.RxJavaPlugins
 import java.util.*
 
-class AvistamientoFragment() : AbstractDatabaseFragment() {
+class AvistamientoFragment : AbstractDatabaseFragment() {
 
     private val bleController: BleControllerViewModel by activityViewModels()
     private val locationController: LocationControllerViewModel by activityViewModels()
@@ -109,8 +109,8 @@ class AvistamientoFragment() : AbstractDatabaseFragment() {
 
     private fun setArduinoLocationObserver(sensorID: Int, view: View) {
         bleController.myData[sensorID]?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            if (bleController.myData[BluetoothManager.LATITUDE_SENSOR]?.value != "e\r\n" &&
-                    bleController.myData[BluetoothManager.LONGITUDE_SENSOR]?.value != "e\r\n" &&
+            if (bleController.myData[BluetoothManager.LATITUDE_SENSOR]?.value != "e" &&
+                    bleController.myData[BluetoothManager.LONGITUDE_SENSOR]?.value != "e" &&
                     bleController.myData[BluetoothManager.LATITUDE_SENSOR]?.value != "" &&
                     bleController.myData[BluetoothManager.LONGITUDE_SENSOR]?.value != "") {
                 locationController.stopGettingPositions()

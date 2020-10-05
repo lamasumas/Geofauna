@@ -83,10 +83,12 @@ class DatabaseRepository(context: Context) {
     }
 
     fun deleteTransect(idTransect: Long):Disposable {
-       return db.avistamientoDao().deleteTransectById(idTransect).subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).subscribe {
-           Log.d("Database repository", "Deleted transect")
-       }
-
+        return retrieveFullAnimalDataFromTransectID(idTransect).subscribeOn(Schedulers.io()).subscribe {
+            it.forEach { deleteAnimal(it.simpleData, it.advanceData) }
+            db.avistamientoDao().deleteTransectById(idTransect).subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).subscribe {
+                Log.d("Database repository", "Deleted transect")
+            }
+        }
     }
 
 }

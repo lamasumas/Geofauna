@@ -89,4 +89,7 @@
     <string name="tvCountry">País:</string>
     <string name="tvProvincia">Provincia:</string>
     <string name="tvTransectName">Nombre:</string>
+    <string name="goBackNotSaving">¿Esta seguro de salir sin guardar?</string>
+    <string name="stayEdit">Quedarse</string>
+    <string name="exitEdit">Salir</string>
 </resources>

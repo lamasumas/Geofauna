@@ -1,10 +1,15 @@
 package com.example.myapplication.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
+import androidx.activity.addCallback
+import androidx.navigation.fragment.findNavController
 import com.example.myapplication.utils.InputValidator
 import com.example.myapplication.R
 import com.example.myapplication.fragments.abstracts.AbstractDatabaseFragment
@@ -12,7 +17,7 @@ import com.example.myapplication.room.DatabaseRepository
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.reactivex.android.schedulers.AndroidSchedulers
 
-class EditSightseen() : AbstractDatabaseFragment() {
+class EditSightseen : AbstractDatabaseFragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -49,10 +54,22 @@ class EditSightseen() : AbstractDatabaseFragment() {
                     view.findViewById<EditText>(R.id.etIndexUV).setText(validator.nullOrEmpty(it.advanceData.index_uv.toString()))
                     view.findViewById<EditText>(R.id.etAltitude).setText(validator.nullOrEmpty(it.advanceData.altitude.toString()))
                     view.findViewById<EditText>(R.id.etPressure).setText(validator.nullOrEmpty(it.advanceData.pressure.toString()))
-                })
+                }
+        )
+
+        requireActivity().onBackPressedDispatcher.addCallback(this){
+            AlertDialog.Builder(view.context).setMessage(R.string.goBackNotSaving)
+                    .setTitle(R.string.dangerTitle)
+                    .setNeutralButton(R.string.stayEdit) { dialog, id -> dialog.dismiss() }
+                    .setPositiveButton(R.string.exitEdit) { dialog, id ->
+                        findNavController().navigate(EditSightseenDirections.actionEditSightseenToMainFragment2())
+                    }.show()
+        }
+
 
 
     }
+
 
 
 }

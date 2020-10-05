@@ -72,7 +72,7 @@ class AnimalDatabaseViewFragment : AbstractDatabaseFragment() {
         disposables.add(view.findViewById<Button>(R.id.btnDeleteAll).clicks().subscribe {
             AlertDialog.Builder(view.context).setMessage(R.string.dangerMessage)
                     .setTitle(R.string.dangerTitle)
-                    .setNegativeButton(R.string.btnCancel) { dialog, id -> dialog.dismiss() }
+                    .setNeutralButton(R.string.btnCancel) { dialog, id -> dialog.dismiss() }
                     .setPositiveButton(R.string.btnDeleteAll) { dialog, id ->
                         animalDatabaseViewModel.cleanDatabase(transectViewModel.selectedId.value!!)
                     }
