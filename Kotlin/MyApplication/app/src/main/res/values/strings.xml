@@ -92,4 +92,7 @@
     <string name="goBackNotSaving">¿Esta seguro de salir sin guardar?</string>
     <string name="stayEdit">Quedarse</string>
     <string name="exitEdit">Salir</string>
+    <string name="btnAñadido">Añadido</string>
+    <string name="btnConected">Conectado</string>
+    <string name="btnNotConected">No conectado</string>
 </resources>

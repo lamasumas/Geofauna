@@ -11,7 +11,6 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.example.myapplication.bluetooth.dialog.BluetoothScanDialog
 import com.example.myapplication.export.dialog.ExportDialog
 import com.example.myapplication.fragments.abstracts.AbstractDatabaseFragment
 import com.example.myapplication.fragments.animals_database.database_recyclerview.DatabaseRvAdapter
@@ -19,6 +18,7 @@ import com.example.myapplication.viewmodels.controllers.BleControllerViewModel
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.jakewharton.rxbinding2.view.clicks
+import io.reactivex.android.schedulers.AndroidSchedulers
 
 
 class AnimalDatabaseViewFragment : AbstractDatabaseFragment() {
@@ -81,7 +81,13 @@ class AnimalDatabaseViewFragment : AbstractDatabaseFragment() {
         )
 
         disposables.add(view.findViewById<Button>(R.id.bluetoothMenu).clicks().subscribe {
-            BluetoothScanDialog(view.context, bleControllerViewModel.scanDevices()).show()
+
+            bleControllerViewModel.scanDevicesAndConnect()?.observeOn(AndroidSchedulers.mainThread())?.subscribe {
+                if(it != "")
+                    generateConfirmationDialog(R.string.btnConected)
+                else
+                    generateConfirmationDialog(R.string.btnNotConected, false)
+            }
         })
 
 
@@ -89,10 +95,8 @@ class AnimalDatabaseViewFragment : AbstractDatabaseFragment() {
             when (it.itemId) {
                 R.id.exportarMenu -> {
 
-                    ExportDialog(requireContext(),
-                            requireActivity(),
-                            animalDatabaseViewModel.dataList.value,
-                    transectViewModel.selectedTransect.value?.name).show()
+                    ExportDialog(animalDatabaseViewModel.dataList.value,
+                            transectViewModel.selectedTransect.value?.name).show(requireActivity().supportFragmentManager.beginTransaction(), "New export dialog")
 
                     true
                 }

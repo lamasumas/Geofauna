@@ -9,5 +9,5 @@
     android:backgroundTint="@color/colorSecundarioPaleta"
     android:drawableTop="@drawable/check_icon"
     android:drawableTint="@color/colorPrimaryPaleta"
-    android:text="Añadido"/>
+    />
 

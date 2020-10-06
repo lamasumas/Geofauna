@@ -3,7 +3,6 @@ package com.example.myapplication.fragments
 
 import android.bluetooth.BluetoothAdapter
 import android.content.Context
-import android.content.Intent
 import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
@@ -16,7 +15,7 @@ import com.example.myapplication.viewmodels.controllers.Controller
 import com.example.myapplication.viewmodels.controllers.LocationControllerViewModel
 import com.example.myapplication.R
 import com.example.myapplication.viewmodels.controllers.BleControllerViewModel
-import com.example.myapplication.bluetooth.BluetoothManager
+import com.example.myapplication.utils.BluetoothManager
 import com.example.myapplication.fragments.abstracts.AbstractDatabaseFragment
 import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.plugins.RxJavaPlugins
@@ -56,7 +55,7 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
         setupSuggestions(view)
 
 
-        if (BluetoothManager.bleDeviceMac != "" && checkBluetooth.isEnabled && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+        if (bleController.macAddress != "" && checkBluetooth.isEnabled && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             bleController.startTalking()
             setCommonObserver(BluetoothManager.HUMIDITY_SENSOR, R.id.etHumidity, bleController)
             setCommonObserver(BluetoothManager.ALTITUDE_SENSOR, R.id.etAltitude, bleController)
@@ -128,7 +127,7 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        if (BluetoothManager.bleDeviceMac != "")
+        if (bleController.macAddress != "")
             bleController.stopTalking()
         locationController.stopGettingPositions()
     }

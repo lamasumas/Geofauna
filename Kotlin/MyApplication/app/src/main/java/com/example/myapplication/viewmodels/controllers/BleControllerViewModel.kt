@@ -4,13 +4,12 @@ import android.app.Application
 import android.os.ParcelUuid
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.myapplication.bluetooth.BluetoothManager
+import com.example.myapplication.utils.BluetoothManager
 import com.example.myapplication.viewmodels.GeneralViewModel
 import com.polidea.rxandroidble2.NotificationSetupMode
 import com.polidea.rxandroidble2.RxBleClient
 import com.polidea.rxandroidble2.RxBleConnection
 import com.polidea.rxandroidble2.scan.ScanFilter
-import com.polidea.rxandroidble2.scan.ScanResult
 import com.polidea.rxandroidble2.scan.ScanSettings
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -22,6 +21,7 @@ import java.util.*
 class BleControllerViewModel(application: Application) : Controller(application), GeneralViewModel {
 
     private var disposables: CompositeDisposable = CompositeDisposable()
+
     //Todas las UUIDs necesarias
     private val SERVICE_UUID = ParcelUuid.fromString("c953d4c6-5270-4bd9-83f4-b4d1b6a5b0da")
     private val HUMIDITY_UUID = UUID.fromString("be478561-30c0-46db-85fc-cde641b51553")
@@ -31,6 +31,7 @@ class BleControllerViewModel(application: Application) : Controller(application)
     private val LONGITUDE_UUID = UUID.fromString("be478565-30c0-46db-85fc-cde641b51553")
     private val LATITUDE_UUID = UUID.fromString("be478566-30c0-46db-85fc-cde641b51553")
     private val UV_UUID = UUID.fromString("be478560-30c7-46db-85fc-cde641b51553")
+    var macAddress: String = ""
 
 
     var stopConnection = false
@@ -55,12 +56,15 @@ class BleControllerViewModel(application: Application) : Controller(application)
      * servicio concreta, es decir, la que hemos creado nosotros.
      * @return Observable<ScanResult>, Un observable que emite un ScanResul
      */
-    fun scanDevices(): Observable<ScanResult> {
+    fun scanDevicesAndConnect(): Observable<String>? {
 
         return RxBleClient.create(getApplication()).scanBleDevices(ScanSettings.Builder().build(),
                 ScanFilter.Builder()
                         .setServiceUuid(SERVICE_UUID)
-                        .build()).take(1)
+                        .build()).take(1).observeOn(Schedulers.io()
+        ).flatMap {
+            macAddress = it.bleDevice.bluetoothDevice.toString()
+            return@flatMap Observable.just(macAddress)}
     }
 
     /**
@@ -68,7 +72,7 @@ class BleControllerViewModel(application: Application) : Controller(application)
      * aqui se configura todas las caracteristivas del dispositivo ble.
      */
     fun startTalking() {
-        disposable = RxBleClient.create(getApplication()).getBleDevice(BluetoothManager.bleDeviceMac).establishConnection(false).observeOn(Schedulers.io()).subscribe { bleConnection ->
+        disposable = RxBleClient.create(getApplication()).getBleDevice(macAddress).establishConnection(false).observeOn(Schedulers.io()).subscribe { bleConnection ->
             setupCharacteristic(TEMPERATURE_UUID, BluetoothManager.TEMPERATURE_SENSOR, bleConnection)
             setupCharacteristic(HUMIDITY_UUID, BluetoothManager.HUMIDITY_SENSOR, bleConnection)
             setupCharacteristic(UV_UUID, BluetoothManager.UV_SENSOR, bleConnection)
@@ -96,6 +100,7 @@ class BleControllerViewModel(application: Application) : Controller(application)
         )
     }
 
+
     /**
      * Funcion que termina la conexión
      */
@@ -103,7 +108,8 @@ class BleControllerViewModel(application: Application) : Controller(application)
         disposables.dispose()
         disposable?.dispose()
     }
-    override fun preStart(){
+
+    override fun preStart() {
         Log.d("Initialization", "BleController startted")
     }
 

@@ -91,4 +91,7 @@
     <string name="goBackNotSaving">Are you sure of returning without saving?</string>
     <string name="stayEdit">Stay</string>
     <string name="exitEdit">Exit</string>
+    <string name="btnAñadido">Added</string>
+    <string name="btnConected">Connected</string>
+    <string name="btnNotConected">Not connected</string>
 </resources>

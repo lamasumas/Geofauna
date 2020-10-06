@@ -1,4 +1,4 @@
-package com.example.myapplication.bluetooth
+package com.example.myapplication.utils
 
 
 import android.content.Context
@@ -28,9 +28,4 @@ object BluetoothManager{
     val UV_SENSOR = 4
     val PRESSURE_SENSOR = 5
     val TEMPERATURE_SENSOR = 6
-    val FINISH_ID = 7
-    var bleDeviceMac:String= ""
-
-
-
 }

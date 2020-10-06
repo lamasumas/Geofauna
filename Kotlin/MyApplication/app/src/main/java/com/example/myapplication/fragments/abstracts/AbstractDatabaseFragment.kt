@@ -2,14 +2,8 @@ package com.example.myapplication.fragments.abstracts
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.media.MediaScannerConnection
 import android.net.Uri
-import android.opengl.Visibility
-import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -20,8 +14,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.example.myapplication.utils.InputValidator
 import com.example.myapplication.R
-import com.example.myapplication.export.ExportManager
-import com.example.myapplication.fragments.AvistamientoFragmentDirections
 import com.example.myapplication.fragments.EditSightseenDirections
 import com.example.myapplication.viewmodels.AnimalDatabaseViewModel
 import com.example.myapplication.room.data_classes.AnimalAdvanceData
@@ -48,20 +40,12 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
         disposables.add(view.findViewById<FloatingActionButton>(R.id.btnAñadirAvistamiento).clicks().subscribe {
             if (checkValidSimpleData(view)) {
 
-                var builder = AlertDialog.Builder(view.context, R.style.alertDialog)
                 val newDatabaseSimpleEntry = createSimpleAnimalObject(view)
                 val newDatabaseAdvanceEntry = createAdvanceAnimalObject(view)
                 transectViewModel.transectList.value
                 disposables.add(animalDatabaseViewModel.addNewAnimal(newDatabaseSimpleEntry, newDatabaseAdvanceEntry))
+                generateConfirmationDialog(R.string.btnAñadido)
 
-                val alertView = LayoutInflater.from(view.context).inflate(R.layout.animal_added_dialog, null)
-                builder.setView(alertView).create().also { dialog ->
-                    dialog.setCanceledOnTouchOutside(true)
-                    disposables.add(alertView.findViewById<Button>(R.id.btnAdded).clicks().subscribe {
-                        dialog.dismiss()
-                    })
-                    dialog.show()
-                }
             } else
                 AlertDialog.Builder(view.context).setMessage(R.string.wrongInputMessage)
                         .setTitle(R.string.wrongInputTitulo)
@@ -194,6 +178,26 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
             // Save a file: path for use with ACTION_VIEW intents
             currentPhotoPath = this.absolutePath
         }
+    }
+
+    protected fun generateConfirmationDialog(textStringId: Int, isGood: Boolean = true) {
+        var builder = AlertDialog.Builder(requireContext(), R.style.alertDialog)
+        lateinit var alertView: View
+        if (isGood)
+            alertView = LayoutInflater.from(requireContext()).inflate(R.layout.good_alert, null)
+        else
+            alertView = LayoutInflater.from(requireContext()).inflate(R.layout.bad_alert, null)
+
+        alertView.findViewById<Button>(R.id.btnAdded).setText(textStringId)
+        builder.setView(alertView).create().also { dialog ->
+            dialog.setCanceledOnTouchOutside(true)
+            disposables.add(alertView.findViewById<Button>(R.id.btnAdded).clicks().subscribe {
+                dialog.dismiss()
+            })
+            dialog.show()
+        }
+
+
     }
 
 }
