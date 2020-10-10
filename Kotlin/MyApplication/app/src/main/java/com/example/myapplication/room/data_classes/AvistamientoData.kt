@@ -21,7 +21,8 @@ data class Transect(@PrimaryKey(autoGenerate = true) @ColumnInfo(name="transect_
                      @ColumnInfo(name = "nome") val name:String,
                      @ColumnInfo(name="country") val country:String,
                      @ColumnInfo(name="locality") val locality:String,
-                     @ColumnInfo(name="animal_list") val aniamlList:String?
+                     @ColumnInfo(name="animal_list") val aniamlList:String?,
+                     @ColumnInfo(name="Pressure_Sea_level") var pressureSeaLevel:Double
                      )
 
 @Entity(tableName = "advance_data")

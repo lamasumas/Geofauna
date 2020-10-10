@@ -46,6 +46,9 @@ interface AvistamientoDAO{
     @Update
     fun updateAnimal( avistamientoData: AnimalAdvanceData):Completable
 
+    @Update
+    fun updateTransect( transect: Transect):Completable
+
     @Delete
     fun deleteAnimal( avistamientoData: AnimalSimpleData):Completable
     @Delete

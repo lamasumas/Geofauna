@@ -17,5 +17,9 @@
         android:id="@+id/exitMenu"
         android:title="@string/menuExit"/>
 
+    <item
+        android:id="@+id/altitudeMenu"
+        android:title="@string/menuAltitude"/>
+
 
 </menu>

@@ -44,5 +44,10 @@ class TransectViewModel(application: Application) : AndroidViewModel(application
         Log.d("Initialization", "TransectViewModel startted")
     }
 
+    fun changePressure(pressure: String) {
+        selectedTransect.value?.pressureSeaLevel = pressure.toDouble()
+        dbRepository.updateTransect(selectedTransect.value)
+    }
+
 
 }

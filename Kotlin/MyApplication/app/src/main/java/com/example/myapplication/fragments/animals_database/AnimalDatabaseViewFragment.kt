@@ -4,7 +4,9 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
+import androidx.core.view.marginBottom
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.*
 import androidx.navigation.findNavController
@@ -14,9 +16,12 @@ import com.example.myapplication.R
 import com.example.myapplication.export.dialog.ExportDialog
 import com.example.myapplication.fragments.abstracts.AbstractDatabaseFragment
 import com.example.myapplication.fragments.animals_database.database_recyclerview.DatabaseRvAdapter
+import com.example.myapplication.fragments.transects.dialog.NewTransectDialog
 import com.example.myapplication.viewmodels.controllers.BleControllerViewModel
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.android.schedulers.AndroidSchedulers
 
@@ -102,6 +107,10 @@ class AnimalDatabaseViewFragment : AbstractDatabaseFragment() {
                 }
                 R.id.exitMenu ->{
                     view.findNavController().navigate(AnimalDatabaseViewFragmentDirections.actionMainFragment2ToMenuPrincipal())
+                    true
+                }
+                R.id.altitudeMenu ->{
+                    ChangeSeaPressureDialog().show(requireActivity().supportFragmentManager.beginTransaction(), "Change sea pressure dialog")
                     true
                 }
                 else -> false

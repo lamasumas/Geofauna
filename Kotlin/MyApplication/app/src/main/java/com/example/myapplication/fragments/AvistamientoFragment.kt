@@ -17,9 +17,12 @@ import com.example.myapplication.R
 import com.example.myapplication.viewmodels.controllers.BleControllerViewModel
 import com.example.myapplication.utils.BluetoothManager
 import com.example.myapplication.fragments.abstracts.AbstractDatabaseFragment
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.plugins.RxJavaPlugins
 import java.util.*
+import kotlin.math.ln
 
 class AvistamientoFragment : AbstractDatabaseFragment() {
 
@@ -41,6 +44,7 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
             savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        super.onCreateView(inflater, container, savedInstanceState)
 
         return inflater.inflate(R.layout.fragment_avistamiento, container, false)
     }
@@ -58,10 +62,10 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
         if (bleController.macAddress != "" && checkBluetooth.isEnabled && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             bleController.startTalking()
             setCommonObserver(BluetoothManager.HUMIDITY_SENSOR, R.id.etHumidity, bleController)
-            setCommonObserver(BluetoothManager.ALTITUDE_SENSOR, R.id.etAltitude, bleController)
             setCommonObserver(BluetoothManager.TEMPERATURE_SENSOR, R.id.etTemperature, bleController)
             setCommonObserver(BluetoothManager.UV_SENSOR, R.id.etIndexUV, bleController)
             setCommonObserver(BluetoothManager.PRESSURE_SENSOR, R.id.etPressure, bleController)
+            setAltitudeObserver()
             setArduinoLocationObserver(BluetoothManager.LATITUDE_SENSOR, view)
             setArduinoLocationObserver(BluetoothManager.LONGITUDE_SENSOR, view)
         } else {
@@ -79,6 +83,34 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
         view.findViewById<EditText>(R.id.etYear).setText(calendar.get(Calendar.YEAR).toString())
 
 
+        val etAltitude = view.findViewById<TextInputLayout>(R.id.etLAltitude)
+        val pressureSeaLevel = transectViewModel.selectedTransect.value?.pressureSeaLevel
+        etAltitude.hint = resources.getString(R.string.etAltitude) + " (m) (" + resources.getString(R.string.seaLevelPressureAcronym)+": "+ pressureSeaLevel + " hPa)"
+    }
+
+    private fun setAltitudeObserver() {
+        val hypsometricEq: (pressure: Double, temperature: Double) -> Double = { pressure, temperature ->
+            ((287.06 * (temperature + 273.15) / 9.8) * transectViewModel.selectedTransect.value?.pressureSeaLevel?.div(pressure)?.let { ln(it) }!!)
+        }
+        bleController.myData[BluetoothManager.PRESSURE_SENSOR]?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            if (it != "e\r\n" && !bleController.myData[BluetoothManager.TEMPERATURE_SENSOR]?.value.isNullOrEmpty() && bleController.myData[BluetoothManager.TEMPERATURE_SENSOR]?.value != "e\r\n") {
+                //Ecuación hipsométrica
+                val altitude = hypsometricEq(
+                        it.toDouble()!!,
+                        bleController.myData[BluetoothManager.TEMPERATURE_SENSOR]!!.value!!.toDouble())
+                requireView().findViewById<EditText>(R.id.etAltitude).setText(altitude.toString())
+            }
+        })
+
+        bleController.myData[BluetoothManager.TEMPERATURE_SENSOR]?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            if (it != "e\r\n" && !bleController.myData[BluetoothManager.PRESSURE_SENSOR]?.value.isNullOrEmpty() && bleController.myData[BluetoothManager.PRESSURE_SENSOR]?.value != "e\r\n") {
+                //Ecuación hipsométrica
+                val altitude = hypsometricEq(
+                        bleController.myData[BluetoothManager.PRESSURE_SENSOR]!!.value!!.toDouble(),
+                        it.toDouble()!!)
+                requireView().findViewById<EditText>(R.id.etAltitude).setText(altitude.toString())
+            }
+        })
     }
 
     private fun setupSuggestions(view: View) {
@@ -86,7 +118,7 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
             view.findViewById<AutoCompleteTextView>(R.id.etEspecie).also { tv ->
                 if (it.isNotEmpty() && it[0]?.isNotBlank()) {
                     tv.threshold = 0
-                    tv.setOnFocusChangeListener { _,_-> tv.showDropDown()  }
+                    tv.setOnFocusChangeListener { _, _ -> tv.showDropDown() }
                     ArrayAdapter<String>(view.context, android.R.layout.simple_list_item_1, it).also {
                         tv.setAdapter(it)
                     }

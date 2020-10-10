@@ -212,7 +212,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -232,18 +232,18 @@
                                 android:inputType="numberDecimal" />
                         </com.google.android.material.textfield.TextInputLayout>
 
+
+
                         <com.google.android.material.textfield.TextInputLayout
                             style="@style/myEditLayout"
-
                             android:layout_width="0dp"
                             android:layout_weight="1"
-                            app:startIconDrawable="@drawable/altitude_icon">
+                            app:startIconDrawable="@drawable/pressure_icon">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/etAltitude"
+                                android:id="@+id/etPressure"
                                 style="@style/myEditText"
-                                android:hint="@string/etAltitude"
-                                android:inputType="numberSigned|number|numberDecimal" />
+                                android:hint="@string/etPressure" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                     </LinearLayout>
@@ -294,12 +294,16 @@
 
                         <com.google.android.material.textfield.TextInputLayout
                             style="@style/myEditLayout"
-                            app:startIconDrawable="@drawable/pressure_icon">
+                            android:id="@+id/etLAltitude"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            app:startIconDrawable="@drawable/altitude_icon">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/etPressure"
+                                android:id="@+id/etAltitude"
                                 style="@style/myEditText"
-                                android:hint="@string/etPressure" />
+                                android:hint="@string/etAltitude"
+                                android:inputType="numberSigned|number|numberDecimal" />
                         </com.google.android.material.textfield.TextInputLayout>
 
 

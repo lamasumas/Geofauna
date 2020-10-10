@@ -14,19 +14,18 @@ class DatabaseRepository(context: Context) {
             .fallbackToDestructiveMigration().build();
 
 
-
-    fun insertNewTransect(transect: Transect):Disposable{
-        return db.avistamientoDao().insertAnimal(transect).subscribeOn(Schedulers.io()).subscribe{ x ->
+    fun insertNewTransect(transect: Transect): Disposable {
+        return db.avistamientoDao().insertAnimal(transect).subscribeOn(Schedulers.io()).subscribe { x ->
             Log.d("Database Repository", "Transect added")
         }
     }
 
-    fun retrieveTransects():Observable<List<Transect>>{
+    fun retrieveTransects(): Observable<List<Transect>> {
         return db.avistamientoDao().getAllTransect()
 
     }
 
-    fun insertNewAnimalToDB(animalSimpleData: AnimalSimpleData, animalAdvanceData: AnimalAdvanceData) : Disposable{
+    fun insertNewAnimalToDB(animalSimpleData: AnimalSimpleData, animalAdvanceData: AnimalAdvanceData): Disposable {
         return db.avistamientoDao().insertAnimal(animalSimpleData).subscribeOn(Schedulers.io()).subscribe { returnedRowId ->
             animalAdvanceData.simpleId = returnedRowId
             db.avistamientoDao().insertAnimal(animalAdvanceData).subscribeOn(Schedulers.io()).subscribe {
@@ -35,11 +34,12 @@ class DatabaseRepository(context: Context) {
         }
 
     }
+
     fun retrieveTransectById(transectId: Long): Observable<Transect> {
         return db.avistamientoDao().getTransectById(transectId)
     }
 
-    fun retrieveAllAnimalDataFromATransect(transectId:Long): Observable<TransectAnimalRelation> {
+    fun retrieveAllAnimalDataFromATransect(transectId: Long): Observable<TransectAnimalRelation> {
         return db.avistamientoDao().getRelationAnimalsTransect(transectId)
     }
 
@@ -56,7 +56,7 @@ class DatabaseRepository(context: Context) {
         return db.avistamientoDao().getAnimalFullData(simpleId)
     }
 
-    fun updateAnimal(simple: AnimalSimpleData, advance: AnimalAdvanceData) : Disposable{
+    fun updateAnimal(simple: AnimalSimpleData, advance: AnimalAdvanceData): Disposable {
         return db.avistamientoDao().updateAnimal(simple).subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).subscribe {
             db.avistamientoDao().updateAnimal(advance).subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).subscribe {
                 Log.e("Database repository", "Anmimal updated")
@@ -82,13 +82,22 @@ class DatabaseRepository(context: Context) {
         }
     }
 
-    fun deleteTransect(idTransect: Long):Disposable {
+    fun deleteTransect(idTransect: Long): Disposable {
         return retrieveFullAnimalDataFromTransectID(idTransect).subscribeOn(Schedulers.io()).subscribe {
             it.forEach { deleteAnimal(it.simpleData, it.advanceData) }
             db.avistamientoDao().deleteTransectById(idTransect).subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).subscribe {
                 Log.d("Database repository", "Deleted transect")
             }
         }
+    }
+
+    fun updateTransect(transect: Transect?) {
+        transect?.let {
+            db.avistamientoDao().updateTransect(it).subscribeOn(Schedulers.io()).subscribe {
+                Log.d("Database repository", "Updated transect with id " +  it.uid.toString())
+            }
+        }
+
     }
 
 }

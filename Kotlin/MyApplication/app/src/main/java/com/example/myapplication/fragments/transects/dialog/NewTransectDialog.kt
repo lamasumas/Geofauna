@@ -42,6 +42,7 @@ class NewTransectDialog() : DialogFragment() {
         val etCountry =  mainView.findViewById<EditText>(R.id.etCountry)
         val etAnimales = mainView.findViewById<EditText>(R.id.etAnimales)
         val etLocalidad = mainView.findViewById<EditText>(R.id.etLocalidad)
+        val etPressureSea = mainView.findViewById<EditText>(R.id.etPressureSeaLevel)
 
         val validator = InputValidator()
 
@@ -58,16 +59,35 @@ class NewTransectDialog() : DialogFragment() {
             if (validator.isEditTextEmpty(etTransectName)) {
                 AlertDialog.Builder(context).setTitle(R.string.alertTitleTransect)
                         .setMessage(R.string.alertMessageTransect)
-                        .setNeutralButton(R.string.cerrarAlertBoton) { dialogInterface, i -> dialogInterface.dismiss() }
+                        .setNeutralButton(R.string.cerrarAlertBoton) { dialogInterface, _ -> dialogInterface.dismiss() }
                         .show()
             } else {
-                transectViewModel.addTransect(Transect(
-                        name = etTransect.text.toString(),
-                        aniamlList = validator.nullOrEmpty(etAnimales.text.toString()),
-                        country = validator.nullOrEmpty(etCountry.text.toString()),
-                        locality = validator.nullOrEmpty(etLocalidad.text.toString()) )
-                )
-                this.dismiss()
+                if(validator.isEditTextEmpty(etPressureSea)){
+                    AlertDialog.Builder(context).setTitle(R.string.titlePressure)
+                            .setMessage(R.string.messagePressure)
+                            .setNeutralButton(R.string.btnReturn){dialogInterface, _ -> dialogInterface.dismiss()  }
+                            .setPositiveButton(R.string.btnContinue){dialogInterface, _ ->
+                                transectViewModel.addTransect(Transect(
+                                        name = etTransect.text.toString(),
+                                        aniamlList = validator.nullOrEmpty(etAnimales.text.toString()),
+                                        locality = validator.nullOrEmpty(etLocalidad.text.toString()),
+                                        country = validator.nullOrEmpty(etCountry.text.toString()),
+                                        pressureSeaLevel = 1013.25
+                                ))
+                                dialogInterface.dismiss()
+                                this.dismiss()
+                            }.show()
+
+                }else {
+                    transectViewModel.addTransect(Transect(
+                            name = etTransect.text.toString(),
+                            aniamlList = validator.nullOrEmpty(etAnimales.text.toString()),
+                            country = validator.nullOrEmpty(etCountry.text.toString()),
+                            locality = validator.nullOrEmpty(etLocalidad.text.toString()),
+                            pressureSeaLevel = etPressureSea.text.toString().toDouble()
+                    ))
+                    this.dismiss()
+                }
             }
         })
         return mainView

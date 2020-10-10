@@ -24,7 +24,7 @@
     <string name="etMes">Month</string>
     <string name="etAño">Year</string>
     <string name="etHumidity">Humidity (%)</string>
-    <string name="etAltitude">Longitude:</string>
+    <string name="etAltitude">Altitude</string>
     <string name="etTemperature">Temperature (ºC)</string>
     <string name="etUv">UV Index</string>
     <string name="etPressure">Pressure (hPa)</string>
@@ -94,4 +94,12 @@
     <string name="btnAñadido">Added</string>
     <string name="btnConected">Connected</string>
     <string name="btnNotConected">Not connected</string>
+    <string name="etPressureSeaLevel">Pressure at sea level (hPa)</string>
+    <string name="titlePressure">Sea level pressure empty</string>
+    <string name="messagePressure">Beware that if the pressure at sea level is empty, it will be use to calculate the altitude of a sightseeing the default one (1013.25 hpa)</string>
+    <string name="btnContinue">Continue</string>
+    <string name="btnReturn">Return</string>
+    <string name="menuAltitude">Change sea level pressure</string>
+    <string name="btnChangePressure">Change pressure</string>
+    <string name="seaLevelPressureAcronym">SLP</string>
 </resources>
