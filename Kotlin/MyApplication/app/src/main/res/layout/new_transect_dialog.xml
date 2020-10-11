@@ -2,8 +2,8 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     style="@style/full_screen_dialog"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryPaleta"
     android:orientation="vertical">
@@ -13,6 +13,7 @@
         style="@style/myEditLayout"
         app:startIconContentDescription="@string/etTransectName"
         app:startIconDrawable="@drawable/name_icon">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etTransectName"
             style="@style/myEditText"
@@ -23,9 +24,12 @@
         style="@style/myEditLayout"
         app:startIconContentDescription="@string/etAnimalsList"
         app:startIconDrawable="@drawable/mariposa_icon">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etAnimales"
             style="@style/myEditText"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
             android:hint="@string/etAnimalsList" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -33,6 +37,7 @@
         style="@style/myEditLayout"
         app:startIconContentDescription="@string/etPais"
         app:startIconDrawable="@drawable/pais_icon">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etCountry"
             style="@style/myEditText"
@@ -52,29 +57,41 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/myEditLayout"
-        app:startIconContentDescription="@string/etPressureSeaLevel"
-        app:startIconDrawable="@drawable/pressure_icon">
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:layout_width="wrap_content"
+            android:id="@+id/chPressure"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:theme="@style/myCheckbox"
+            android:checked="true"
+            android:layout_marginStart="10dp"/>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etPressureSeaLevel"
-            style="@style/myEditText"
-            android:hint="@string/etPressureSeaLevel"
-            android:inputType="numberDecimal" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/myEditLayout"
+            app:startIconContentDescription="@string/etPressureSeaLevel"
+            app:startIconDrawable="@drawable/pressure_icon">
 
-    </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPressureSeaLevel"
+                style="@style/myEditText"
+                android:hint="@string/etPressureSeaLevel"
+                android:inputType="numberDecimal" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
 
 
     <Button
         android:id="@+id/btnStoreTransect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btnCreateTransect"
         android:layout_gravity="center"
-        />
-
+        android:text="@string/btnCreateTransect" />
 
 
 </LinearLayout>

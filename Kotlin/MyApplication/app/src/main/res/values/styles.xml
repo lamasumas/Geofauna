@@ -69,5 +69,8 @@
         <item name="android:windowBackground">@drawable/splash_screen</item>
         <item name="android:screenOrientation">portrait</item>
     </style>
+    <style name="myCheckbox">
+        <item name="buttonTint">@color/colorSecundarioPaleta</item>
+    </style>
 
 </resources>

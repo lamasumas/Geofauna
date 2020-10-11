@@ -3,13 +3,17 @@ package com.example.myapplication.fragments.transects.dialog
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.drawable.Drawable
 import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
@@ -39,15 +43,27 @@ class NewTransectDialog() : DialogFragment() {
 
         val mainView = inflater.inflate(R.layout.new_transect_dialog, container)
         val etTransect = mainView.findViewById<EditText>(R.id.etTransectName)
-        val etCountry =  mainView.findViewById<EditText>(R.id.etCountry)
+        val etCountry = mainView.findViewById<EditText>(R.id.etCountry)
         val etAnimales = mainView.findViewById<EditText>(R.id.etAnimales)
         val etLocalidad = mainView.findViewById<EditText>(R.id.etLocalidad)
         val etPressureSea = mainView.findViewById<EditText>(R.id.etPressureSeaLevel)
-
+        val chPressure = mainView.findViewById<CheckBox>(R.id.chPressure)
         val validator = InputValidator()
 
+        val wrappedDrawable = DrawableCompat.wrap(etPressureSea.background)
+        chPressure.setOnCheckedChangeListener { buttonView, isChecked ->
+            etPressureSea.isEnabled = isChecked
+            if (isChecked)
+                DrawableCompat.setTint(wrappedDrawable, resources.getColor(R.color.colorSecundarioPaleta))
+            else
+                DrawableCompat.setTint(wrappedDrawable, resources.getColor(R.color.colorPrimaryPaleta))
+            etPressureSea.background = wrappedDrawable
+
+        }
+
+
         (mainView.context.getSystemService(Context.LOCATION_SERVICE) as LocationManager).also {
-            if(it.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            if (it.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 locationController.getOneGPSPosition().subscribe { location ->
                     mainView.findViewById<EditText>(R.id.etCountry).setText(location.country)
                     mainView.findViewById<EditText>(R.id.etLocalidad).setText(location.place)
@@ -62,30 +78,44 @@ class NewTransectDialog() : DialogFragment() {
                         .setNeutralButton(R.string.cerrarAlertBoton) { dialogInterface, _ -> dialogInterface.dismiss() }
                         .show()
             } else {
-                if(validator.isEditTextEmpty(etPressureSea)){
-                    AlertDialog.Builder(context).setTitle(R.string.titlePressure)
-                            .setMessage(R.string.messagePressure)
-                            .setNeutralButton(R.string.btnReturn){dialogInterface, _ -> dialogInterface.dismiss()  }
-                            .setPositiveButton(R.string.btnContinue){dialogInterface, _ ->
-                                transectViewModel.addTransect(Transect(
-                                        name = etTransect.text.toString(),
-                                        aniamlList = validator.nullOrEmpty(etAnimales.text.toString()),
-                                        locality = validator.nullOrEmpty(etLocalidad.text.toString()),
-                                        country = validator.nullOrEmpty(etCountry.text.toString()),
-                                        pressureSeaLevel = 1013.25
-                                ))
-                                dialogInterface.dismiss()
-                                this.dismiss()
-                            }.show()
+                if (chPressure.isChecked) {
+                    if (validator.isEditTextEmpty(etPressureSea)) {
+                        AlertDialog.Builder(context).setTitle(R.string.titlePressure)
+                                .setMessage(R.string.messagePressure)
+                                .setNeutralButton(R.string.btnReturn) { dialogInterface, _ -> dialogInterface.dismiss() }
+                                .setPositiveButton(R.string.btnContinue) { dialogInterface, _ ->
+                                    transectViewModel.addTransect(Transect(
+                                            name = etTransect.text.toString(),
+                                            aniamlList = validator.nullOrEmpty(etAnimales.text.toString()),
+                                            locality = validator.nullOrEmpty(etLocalidad.text.toString()),
+                                            country = validator.nullOrEmpty(etCountry.text.toString()),
+                                            pressureSeaLevel = 1013.25
+                                    ))
+                                    dialogInterface.dismiss()
+                                    this.dismiss()
+                                }.show()
 
-                }else {
-                    transectViewModel.addTransect(Transect(
+                    } else {
+                        transectViewModel.addTransect(Transect(
+                                name = etTransect.text.toString(),
+                                aniamlList = validator.nullOrEmpty(etAnimales.text.toString()),
+                                country = validator.nullOrEmpty(etCountry.text.toString()),
+                                locality = validator.nullOrEmpty(etLocalidad.text.toString()),
+                                pressureSeaLevel = etPressureSea.text.toString().toDouble()
+                        ))
+                        this.dismiss()
+                    }
+                } else {
+                    val transect = Transect(
                             name = etTransect.text.toString(),
                             aniamlList = validator.nullOrEmpty(etAnimales.text.toString()),
-                            country = validator.nullOrEmpty(etCountry.text.toString()),
                             locality = validator.nullOrEmpty(etLocalidad.text.toString()),
-                            pressureSeaLevel = etPressureSea.text.toString().toDouble()
-                    ))
+                            country = validator.nullOrEmpty(etCountry.text.toString()),
+                            pressureSeaLevel = 1013.25
+                    )
+
+                    transect.isPressureSeaLevelSelected = false
+                    transectViewModel.addTransect(transect)
                     this.dismiss()
                 }
             }

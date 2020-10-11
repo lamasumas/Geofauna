@@ -6,7 +6,9 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
@@ -17,7 +19,7 @@ import com.example.myapplication.room.DatabaseRepository
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.reactivex.android.schedulers.AndroidSchedulers
 
-class EditSightseen : AbstractDatabaseFragment() {
+class EditSightseenFragment : AbstractDatabaseFragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -28,6 +30,8 @@ class EditSightseen : AbstractDatabaseFragment() {
         val view = inflater.inflate(R.layout.fragment_avistamiento, container, false)
         view.findViewById<FloatingActionButton>(R.id.btnAñadirAvistamiento).hide()
         view.findViewById<FloatingActionButton>(R.id.btnEditDatabaseAnimal).show()
+        view.findViewById<Button>(R.id.btnExpand).visibility = View.GONE
+        view.findViewById<LinearLayout>(R.id.lhidden).visibility = View.VISIBLE
         return view;
     }
 
@@ -62,7 +66,7 @@ class EditSightseen : AbstractDatabaseFragment() {
                     .setTitle(R.string.dangerTitle)
                     .setNeutralButton(R.string.stayEdit) { dialog, id -> dialog.dismiss() }
                     .setPositiveButton(R.string.exitEdit) { dialog, id ->
-                        findNavController().navigate(EditSightseenDirections.actionEditSightseenToMainFragment2())
+                        findNavController().navigate(EditSightseenFragmentDirections.actionEditSightseenToMainFragment2())
                     }.show()
         }
 

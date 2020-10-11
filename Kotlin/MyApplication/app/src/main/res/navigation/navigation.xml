@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/editSightseen"
-        android:name="com.example.myapplication.fragments.EditSightseen"
+        android:name="com.example.myapplication.fragments.EditSightseenFragment"
         android:label="EditSightseen" >
         <action
             android:id="@+id/action_editSightseen_to_mainFragment2"

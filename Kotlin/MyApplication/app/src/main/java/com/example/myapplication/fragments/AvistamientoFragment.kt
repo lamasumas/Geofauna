@@ -85,32 +85,42 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
 
         val etAltitude = view.findViewById<TextInputLayout>(R.id.etLAltitude)
         val pressureSeaLevel = transectViewModel.selectedTransect.value?.pressureSeaLevel
-        etAltitude.hint = resources.getString(R.string.etAltitude) + " (m) (" + resources.getString(R.string.seaLevelPressureAcronym)+": "+ pressureSeaLevel + " hPa)"
+        transectViewModel.selectedTransect.value?.isPressureSeaLevelSelected?.let {
+            if(it)
+                etAltitude.hint = resources.getString(R.string.etAltitude) + " (m) (" + resources.getString(R.string.seaLevelPressureAcronym)+": "+ pressureSeaLevel + " hPa)"
+            else
+                etAltitude.hint = resources.getString(R.string.etAltitude) + " (m)"
+        }
     }
 
     private fun setAltitudeObserver() {
         val hypsometricEq: (pressure: Double, temperature: Double) -> Double = { pressure, temperature ->
             ((287.06 * (temperature + 273.15) / 9.8) * transectViewModel.selectedTransect.value?.pressureSeaLevel?.div(pressure)?.let { ln(it) }!!)
         }
-        bleController.myData[BluetoothManager.PRESSURE_SENSOR]?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            if (it != "e\r\n" && !bleController.myData[BluetoothManager.TEMPERATURE_SENSOR]?.value.isNullOrEmpty() && bleController.myData[BluetoothManager.TEMPERATURE_SENSOR]?.value != "e\r\n") {
-                //Ecuación hipsométrica
-                val altitude = hypsometricEq(
-                        it.toDouble()!!,
-                        bleController.myData[BluetoothManager.TEMPERATURE_SENSOR]!!.value!!.toDouble())
-                requireView().findViewById<EditText>(R.id.etAltitude).setText(altitude.toString())
-            }
-        })
+        transectViewModel.selectedTransect.value?.isPressureSeaLevelSelected?.let {needsToBeEstimated ->
 
-        bleController.myData[BluetoothManager.TEMPERATURE_SENSOR]?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            if (it != "e\r\n" && !bleController.myData[BluetoothManager.PRESSURE_SENSOR]?.value.isNullOrEmpty() && bleController.myData[BluetoothManager.PRESSURE_SENSOR]?.value != "e\r\n") {
-                //Ecuación hipsométrica
-                val altitude = hypsometricEq(
-                        bleController.myData[BluetoothManager.PRESSURE_SENSOR]!!.value!!.toDouble(),
-                        it.toDouble()!!)
-                requireView().findViewById<EditText>(R.id.etAltitude).setText(altitude.toString())
+            if (needsToBeEstimated) {
+                bleController.myData[BluetoothManager.PRESSURE_SENSOR]?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+                    if (it != "e\r\n" && !bleController.myData[BluetoothManager.TEMPERATURE_SENSOR]?.value.isNullOrEmpty() && bleController.myData[BluetoothManager.TEMPERATURE_SENSOR]?.value != "e\r\n") {
+                        //Ecuación hipsométrica
+                        val altitude = hypsometricEq(
+                                it.toDouble()!!,
+                                bleController.myData[BluetoothManager.TEMPERATURE_SENSOR]!!.value!!.toDouble())
+                        requireView().findViewById<EditText>(R.id.etAltitude).setText(altitude.toString())
+                    }
+                })
+
+                bleController.myData[BluetoothManager.TEMPERATURE_SENSOR]?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+                    if (it != "e\r\n" && !bleController.myData[BluetoothManager.PRESSURE_SENSOR]?.value.isNullOrEmpty() && bleController.myData[BluetoothManager.PRESSURE_SENSOR]?.value != "e\r\n") {
+                        //Ecuación hipsométrica
+                        val altitude = hypsometricEq(
+                                bleController.myData[BluetoothManager.PRESSURE_SENSOR]!!.value!!.toDouble(),
+                                it.toDouble()!!)
+                        requireView().findViewById<EditText>(R.id.etAltitude).setText(altitude.toString())
+                    }
+                })
             }
-        })
+        }
     }
 
     private fun setupSuggestions(view: View) {

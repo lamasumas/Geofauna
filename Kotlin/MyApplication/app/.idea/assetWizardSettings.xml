@@ -302,7 +302,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/opt/android-studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/error/baseline_error_24.xml" />
+                                      <entry key="url" value="jar:file:/opt/android-studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/close/baseline_close_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -312,7 +312,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="error_icon" />
+                            <entry key="outputName" value="cross_icon" />
                             <entry key="sourceFile" value="$USER_HOME$/Imágenes/mariposa.svg" />
                           </map>
                         </option>

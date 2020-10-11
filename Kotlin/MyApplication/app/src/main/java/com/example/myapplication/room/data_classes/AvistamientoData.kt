@@ -23,7 +23,9 @@ data class Transect(@PrimaryKey(autoGenerate = true) @ColumnInfo(name="transect_
                      @ColumnInfo(name="locality") val locality:String,
                      @ColumnInfo(name="animal_list") val aniamlList:String?,
                      @ColumnInfo(name="Pressure_Sea_level") var pressureSeaLevel:Double
-                     )
+                     ){
+    var isPressureSeaLevelSelected = true
+}
 
 @Entity(tableName = "advance_data")
 data class AnimalAdvanceData(@PrimaryKey(autoGenerate = true) @ColumnInfo(name = "advance_id") var uid: Long = 0,
@@ -36,9 +38,10 @@ data class AnimalAdvanceData(@PrimaryKey(autoGenerate = true) @ColumnInfo(name =
                              @ColumnInfo(name = "uv_index") val index_uv: Int?,
                              @ColumnInfo(name = "pressure") val pressure: Double?,
                              @ColumnInfo(name = "notes") val notes: String?,
-                             @ColumnInfo(name = "picture") val photoPlace: String?  ) {
+                             @ColumnInfo(name = "picture") val photoPlace: String?,
+                             @ColumnInfo(name = "isAltitudeEstimated")val estimatedWithPressure:Boolean? ) {
     override fun toString(): String {
-        val temp = listOf(humidity.toString(), temperature.toString(), altitude.toString(), pressure.toString(), index_uv.toString(), lugar, pais, notes, photoPlace)
+        val temp = listOf(humidity.toString(), temperature.toString(), estimatedWithPressure.toString(), altitude.toString(), pressure.toString(), index_uv.toString(), lugar, pais, notes, photoPlace)
         return temp.joinToString(separator = ",")
     }
 }

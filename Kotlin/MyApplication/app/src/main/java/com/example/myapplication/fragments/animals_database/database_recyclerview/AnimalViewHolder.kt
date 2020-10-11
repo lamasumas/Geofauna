@@ -25,9 +25,7 @@ class AnimalViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     var notes:TextView
     var uv: TextView
     var hiddenViews: LinearLayout
-    var btnEdit: Button
     var ivPhoto:ImageView
-    var btnDelete : Button
     var generalView:View
     init {
         cv = itemView.findViewById(R.id.cvAnimalScheme)
@@ -37,8 +35,6 @@ class AnimalViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         lon = itemView.findViewById(R.id.tvCvLongitude)
         lat = itemView.findViewById(R.id.tvCvLatitude)
         hiddenViews = itemView.findViewById(R.id.hidenCardText)
-        btnEdit = itemView.findViewById(R.id.btnEditSightseen)
-        btnDelete = itemView.findViewById(R.id.btnDeleteSightseen)
         notes = itemView.findViewById(R.id.tvCvNotes)
         idSimple = 0
         idAdvance = 0

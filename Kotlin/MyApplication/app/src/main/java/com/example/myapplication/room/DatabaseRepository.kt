@@ -64,7 +64,7 @@ class DatabaseRepository(context: Context) {
         }
     }
 
-    fun deleteAnimal(simple: AnimalSimpleData, advance: AnimalAdvanceData): Disposable {
+    private fun deleteAnimal(simple: AnimalSimpleData, advance: AnimalAdvanceData): Disposable {
         return db.avistamientoDao().deleteAnimal(simple).subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).subscribe {
             db.avistamientoDao().deleteAnimal(advance).subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).subscribe {
                 Log.d("Database repository", "Animnal deleted")
@@ -98,6 +98,12 @@ class DatabaseRepository(context: Context) {
             }
         }
 
+    }
+
+    fun deleteAnimal(simpleData: Long):Disposable {
+        return db.avistamientoDao().getAnimalFullData(simpleData).observeOn(Schedulers.io()).subscribeOn(Schedulers.io()).subscribe {
+            deleteAnimal(it.simpleData, it.advanceData)
+        }
     }
 
 }

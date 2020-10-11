@@ -186,22 +186,24 @@
                         android:insetTop="0dp"
                         android:insetBottom="0dp"
                         android:text="@string/btnOptional"
-                        android:textColor="@color/colorQuintoPaleta"
-                        app:backgroundTint="@android:color/transparent"
+                        android:textColor="@color/black"
+                        app:backgroundTint="@color/colorCuartoPaleta"
                         app:cornerRadius="100dp"
-                        app:strokeColor="@color/colorQuintoPaleta"
+                        app:strokeColor="@android:color/transparent"
                         app:strokeWidth="1dp" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/btnAñadirAvistamiento"
                         style="@style/myFab"
                         android:layout_marginHorizontal="13pt"
+                        android:backgroundTint="@color/colorCuartoPaleta"
                         android:src="@drawable/save_icon" />
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/btnEditDatabaseAnimal"
                         style="@style/myFab"
                         android:layout_marginHorizontal="13pt"
+                        android:backgroundTint="@color/colorCuartoPaleta"
                         android:src="@drawable/save_icon"
                         android:visibility="gone" />
 
@@ -212,7 +214,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="match_parent"

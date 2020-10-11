@@ -1,22 +1,28 @@
 package com.example.myapplication.fragments.animals_database
 
 import android.app.AlertDialog
+import android.graphics.Canvas
 import android.os.Bundle
 import android.view.*
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.view.marginBottom
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.*
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.export.dialog.ExportDialog
 import com.example.myapplication.fragments.abstracts.AbstractDatabaseFragment
+import com.example.myapplication.fragments.animals_database.database_recyclerview.AnimalViewHolder
 import com.example.myapplication.fragments.animals_database.database_recyclerview.DatabaseRvAdapter
 import com.example.myapplication.fragments.transects.dialog.NewTransectDialog
+import com.example.myapplication.fragments.transects.recyclerview.TransectViewHolder
+import com.example.myapplication.room.DatabaseRepository
 import com.example.myapplication.viewmodels.controllers.BleControllerViewModel
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -24,6 +30,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.android.schedulers.AndroidSchedulers
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 
 class AnimalDatabaseViewFragment : AbstractDatabaseFragment() {
@@ -72,6 +79,8 @@ class AnimalDatabaseViewFragment : AbstractDatabaseFragment() {
                 }
 
             })
+            ItemTouchHelper(getSwipeLeftCallback()).attachToRecyclerView(this)
+            ItemTouchHelper(getSwipeRightCallback()).attachToRecyclerView(this)
         }
 
         disposables.add(view.findViewById<Button>(R.id.btnDeleteAll).clicks().subscribe {
@@ -88,7 +97,7 @@ class AnimalDatabaseViewFragment : AbstractDatabaseFragment() {
         disposables.add(view.findViewById<Button>(R.id.bluetoothMenu).clicks().subscribe {
 
             bleControllerViewModel.scanDevicesAndConnect()?.observeOn(AndroidSchedulers.mainThread())?.subscribe {
-                if(it != "")
+                if (it != "")
                     generateConfirmationDialog(R.string.btnConected)
                 else
                     generateConfirmationDialog(R.string.btnNotConected, false)
@@ -105,22 +114,75 @@ class AnimalDatabaseViewFragment : AbstractDatabaseFragment() {
 
                     true
                 }
-                R.id.exitMenu ->{
+                R.id.exitMenu -> {
                     view.findNavController().navigate(AnimalDatabaseViewFragmentDirections.actionMainFragment2ToMenuPrincipal())
                     true
                 }
-                R.id.altitudeMenu ->{
+                R.id.altitudeMenu -> {
                     ChangeSeaPressureDialog().show(requireActivity().supportFragmentManager.beginTransaction(), "Change sea pressure dialog")
                     true
                 }
                 else -> false
             }
         }
-
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    private fun getSwipeLeftCallback(): ItemTouchHelper.SimpleCallback {
+        return object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                (viewHolder as AnimalViewHolder).also {
+                            disposables.add(animalDatabaseViewModel.deleteAnimal(it.idSimple))
+
+                }
+            }
+
+            override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
+
+                RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                        .addSwipeRightActionIcon(R.drawable.delete_icon)
+                        .addSwipeRightBackgroundColor(ContextCompat.getColor(requireContext(), R.color.red))
+                        .setActionIconTint(ContextCompat.getColor(requireContext(), R.color.colorQuintoPaleta))
+                        .create()
+                        .decorate()
+
+
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+            }
+
+        }
+    }
+
+    private fun getSwipeRightCallback(): ItemTouchHelper.SimpleCallback {
+        return object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                (viewHolder as AnimalViewHolder).also {
+                   it.cv.findNavController().navigate(AnimalDatabaseViewFragmentDirections.actionMainFragment2ToEditSightseen(it.idAdvance, it.idSimple))
+
+                }
+            }
+
+            override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
+
+                RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                        .addSwipeLeftActionIcon(R.drawable.edit_icon)
+                        .addSwipeLeftBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorCuartoPaleta))
+                        .setActionIconTint(ContextCompat.getColor(requireContext(), R.color.colorQuintoPaleta))
+                        .create()
+                        .decorate()
+
+
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+            }
+
+        }
     }
 
 }

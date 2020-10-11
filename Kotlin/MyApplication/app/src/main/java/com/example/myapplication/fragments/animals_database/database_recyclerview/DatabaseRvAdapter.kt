@@ -64,19 +64,8 @@ class DatabaseRvAdapter(val elements: MutableList<SimpleAdvanceRelation>,  val d
         disposables.add(holder.cv.clicks().subscribe {
             holder.hiddenViews.visibility = if (holder.hiddenViews.isShown()) View.GONE else View.VISIBLE
         })
-        disposables.add(
-                holder.btnEdit.clicks().observeOn(AndroidSchedulers.mainThread()).subscribe {
-                    holder.btnEdit.findNavController().navigate(AnimalDatabaseViewFragmentDirections.actionMainFragment2ToEditSightseen(holder.idAdvance, holder.idSimple))
-                })
 
-        disposables.add(holder.btnDelete.clicks().observeOn(AndroidSchedulers.mainThread()).doOnNext {
-            holder.cv.removeAllViews()
-            val dbRepository = DatabaseRepository(holder.cv.context)
-            dbRepository.deleteAnimal(elements[position].simpleData, elements[position].advanceData)
-        }.observeOn(AndroidSchedulers.mainThread()).subscribe {
-           // elements.removeAt(position)
-            notifyDataSetChanged()
-        })
+
 
 
     }

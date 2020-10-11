@@ -16,7 +16,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.example.myapplication.utils.InputValidator
 import com.example.myapplication.R
-import com.example.myapplication.fragments.EditSightseenDirections
+import com.example.myapplication.fragments.EditSightseenFragmentDirections
 import com.example.myapplication.viewmodels.AnimalDatabaseViewModel
 import com.example.myapplication.room.data_classes.AnimalAdvanceData
 import com.example.myapplication.room.data_classes.AnimalSimpleData
@@ -76,7 +76,7 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
                     tempAdvance.simpleId = idSimple
                     disposables.add(animalDatabaseViewModel.editAnimal(tempSimple, tempAdvance))
                 }.subscribe {
-                    view.findNavController().navigate(EditSightseenDirections.actionEditSightseenToMainFragment2())
+                    view.findNavController().navigate(EditSightseenFragmentDirections.actionEditSightseenToMainFragment2())
                 })
 
         disposables.add(view.findViewById<Button>(R.id.btnPicture).clicks().subscribe {
@@ -152,9 +152,11 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
                 temperature = validator.doubleOrNull(temperature),
                 pressure = validator.doubleOrNull(pressure),
                 altitude = validator.doubleOrNull(altitude),
+                estimatedWithPressure = transectViewModel.selectedTransect.value?.isPressureSeaLevelSelected,
                 index_uv = validator.doubleOrNull(uv)?.toInt(),
                 notes = validator.nullOrEmpty(notes),
-                photoPlace = validator.nullOrEmpty(photoPath))
+                photoPlace = validator.nullOrEmpty(photoPath)
+        )
     }
 
 
@@ -198,8 +200,6 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
             })
             dialog.show()
         }
-
-
     }
 
 

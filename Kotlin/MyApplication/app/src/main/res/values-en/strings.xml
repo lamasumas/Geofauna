@@ -101,5 +101,6 @@
     <string name="btnReturn">Return</string>
     <string name="menuAltitude">Change sea level pressure</string>
     <string name="btnChangePressure">Change pressure</string>
+    <string name="btnDeactivatePressureEstimation">Deactivate pressure estimation</string>
     <string name="seaLevelPressureAcronym">SLP</string>
 </resources>

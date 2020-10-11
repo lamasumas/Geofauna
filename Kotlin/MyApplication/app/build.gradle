@@ -117,4 +117,6 @@ dependencies {
     //recyclerview symnbol for swipes
     implementation 'it.xabaras.android:recyclerview-swipedecorator:1.2.3'
 
+    //REST library
+    implementation 'com.squareup.okhttp3:okhttp:3.8.1'
 }

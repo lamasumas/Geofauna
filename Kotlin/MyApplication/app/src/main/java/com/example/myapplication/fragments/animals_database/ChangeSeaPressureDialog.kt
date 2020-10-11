@@ -25,16 +25,21 @@ class ChangeSeaPressureDialog : DialogFragment() {
         val etSeaPressure = theView.findViewById<EditText>(R.id.etPressureSeaLevel)
         etSeaPressure.setText(transectViewModel.selectedTransect.value?.pressureSeaLevel.toString())
         val validator = InputValidator()
-        disposables.add(theView.findViewById<Button>(R.id.btnChangePressure).clicks().subscribe {
-            if (validator.isEditTextEmpty(etSeaPressure)) {
-                dismiss()
-            } else {
-                transectViewModel.changePressure(etSeaPressure.text.toString())
-                dismiss()
-            }
-        })
-
-
+        disposables.addAll(
+                theView.findViewById<Button>(R.id.btnChangePressure).clicks().subscribe {
+                    if (validator.isEditTextEmpty(etSeaPressure)) {
+                        dismiss()
+                    } else {
+                        transectViewModel.changePressure(etSeaPressure.text.toString())
+                        transectViewModel.selectedTransect.value?.isPressureSeaLevelSelected = true
+                        dismiss()
+                    }
+                },
+                theView.findViewById<Button>(R.id.btnDeactivateEstimation).clicks().subscribe {
+                    transectViewModel.selectedTransect.value?.isPressureSeaLevelSelected = false
+                    dismiss()
+                }
+        )
         return theView
     }
 

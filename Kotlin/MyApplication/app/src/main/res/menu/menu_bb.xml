@@ -9,17 +9,17 @@
         android:title="@string/bluetoothMenu"
         app:showAsAction="ifRoom"
         />
-    <item
-        android:id="@+id/exportarMenu"
-        android:title="@string/exportarMenu"
-        />
-    <item
-        android:id="@+id/exitMenu"
-        android:title="@string/menuExit"/>
 
     <item
         android:id="@+id/altitudeMenu"
         android:title="@string/menuAltitude"/>
+    <item
+        android:id="@+id/exportarMenu"
+        android:title="@string/exportarMenu"
+        />
 
 
+    <item
+        android:id="@+id/exitMenu"
+        android:title="@string/menuExit"/>
 </menu>

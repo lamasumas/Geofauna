@@ -21,7 +21,7 @@ import io.reactivex.schedulers.Schedulers
 class AnimalDatabaseViewModel(application: Application) : AndroidViewModel(application), GeneralViewModel {
 
     private val dbRepository = DatabaseRepository(application)
-    val dataList : MutableLiveData<ArrayList<SimpleAdvanceRelation>> = MutableLiveData()
+    val dataList: MutableLiveData<ArrayList<SimpleAdvanceRelation>> = MutableLiveData()
     var transectId: Long = -1
 
     init {
@@ -33,15 +33,15 @@ class AnimalDatabaseViewModel(application: Application) : AndroidViewModel(appli
     }
 
     fun loadData(idTransect: Long): Disposable? {
-            transectId = idTransect
-            return dbRepository.retrieveFullAnimalDataFromTransectID(transectId)?.observeOn(Schedulers.io()).doOnNext {
-                dataList.value?.clear()
-                dataList.value?.addAll(it)
-            }.observeOn(AndroidSchedulers.mainThread())?.subscribe {
+        transectId = idTransect
+        return dbRepository.retrieveFullAnimalDataFromTransectID(transectId)?.observeOn(Schedulers.io()).doOnNext {
+            dataList.value?.clear()
+            dataList.value?.addAll(it)
+        }.observeOn(AndroidSchedulers.mainThread())?.subscribe {
 
-                dataList.value = dataList.value
+            dataList.value = dataList.value
 
-            }
+        }
     }
 
     fun cleanDatabase(transectId: Long) {
@@ -57,7 +57,11 @@ class AnimalDatabaseViewModel(application: Application) : AndroidViewModel(appli
         return dbRepository.updateAnimal(tempSimple, tempAdvance)
     }
 
-    override fun preStart(){
+    fun deleteAnimal(simpleData: Long): Disposable {
+        return dbRepository.deleteAnimal(simpleData)
+    }
+
+    override fun preStart() {
         Log.d("Initialization", "AnimalDatabaseViewModel startted")
     }
 
