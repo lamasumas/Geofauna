@@ -18,6 +18,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
 import com.example.myapplication.R
+import com.example.myapplication.rest.RestManager
 import com.example.myapplication.room.DatabaseRepository
 import com.example.myapplication.room.data_classes.Transect
 import com.example.myapplication.utils.InputValidator
@@ -40,15 +41,21 @@ class NewTransectDialog() : DialogFragment() {
     private val locationController: LocationControllerViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.new_transect_dialog, container)
+    }
 
-        val mainView = inflater.inflate(R.layout.new_transect_dialog, container)
-        val etTransect = mainView.findViewById<EditText>(R.id.etTransectName)
-        val etCountry = mainView.findViewById<EditText>(R.id.etCountry)
-        val etAnimales = mainView.findViewById<EditText>(R.id.etAnimales)
-        val etLocalidad = mainView.findViewById<EditText>(R.id.etLocalidad)
-        val etPressureSea = mainView.findViewById<EditText>(R.id.etPressureSeaLevel)
-        val chPressure = mainView.findViewById<CheckBox>(R.id.chPressure)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val etNearestPlace = view.findViewById<EditText>(R.id.etNearestPlace)
+        val etTransect = view.findViewById<EditText>(R.id.etTransectName)
+        val etCountry = view.findViewById<EditText>(R.id.etCountry)
+        val etAnimales = view.findViewById<EditText>(R.id.etAnimales)
+        val etLocalidad = view.findViewById<EditText>(R.id.etLocalidad)
+        val etPressureSea = view.findViewById<EditText>(R.id.etPressureSeaLevel)
+        val chPressure = view.findViewById<CheckBox>(R.id.chPressure)
         val validator = InputValidator()
+
 
         val wrappedDrawable = DrawableCompat.wrap(etPressureSea.background)
         chPressure.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -62,16 +69,21 @@ class NewTransectDialog() : DialogFragment() {
         }
 
 
-        (mainView.context.getSystemService(Context.LOCATION_SERVICE) as LocationManager).also {
+        (view.context.getSystemService(Context.LOCATION_SERVICE) as LocationManager).also {
             if (it.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 locationController.getOneGPSPosition().subscribe { location ->
-                    mainView.findViewById<EditText>(R.id.etCountry).setText(location.country)
-                    mainView.findViewById<EditText>(R.id.etLocalidad).setText(location.place)
+                    view.findViewById<EditText>(R.id.etCountry).setText(location.country)
+                    view.findViewById<EditText>(R.id.etLocalidad).setText(location.place)
+
+                    RestManager().getGeoNameLocation(location.latitude.toString(), location.longitude.toString())
+                            ?.subscribeOn(AndroidSchedulers.mainThread())?.subscribe {
+                                etNearestPlace.setText(it?.first()?.name.toString())
+                            }
                 }
             }
         }
 
-        disposables.add(mainView.findViewById<Button>(R.id.btnStoreTransect).clicks().subscribe {
+        disposables.add(view.findViewById<Button>(R.id.btnStoreTransect).clicks().subscribe {
             if (validator.isEditTextEmpty(etTransectName)) {
                 AlertDialog.Builder(context).setTitle(R.string.alertTitleTransect)
                         .setMessage(R.string.alertMessageTransect)
@@ -120,7 +132,7 @@ class NewTransectDialog() : DialogFragment() {
                 }
             }
         })
-        return mainView
+
     }
 
     override fun onDestroyView() {

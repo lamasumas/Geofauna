@@ -102,5 +102,6 @@
     <string name="menuAltitude">Change sea level pressure</string>
     <string name="btnChangePressure">Change pressure</string>
     <string name="btnDeactivatePressureEstimation">Deactivate pressure estimation</string>
+    <string name="etNearestPlace">Closest place</string>
     <string name="seaLevelPressureAcronym">SLP</string>
 </resources>

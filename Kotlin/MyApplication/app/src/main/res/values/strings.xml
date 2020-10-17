@@ -103,5 +103,6 @@
     <string name="menuAltitude">Cambiar presión a nivel del mar</string>
     <string name="btnChangePressure">Cambiar presión</string>
     <string name="btnDeactivatePressureEstimation">Desactivar estimación por presión</string>
+    <string name="etNearestPlace">Lugar más cercano</string>
     <string name="seaLevelPressureAcronym">PNM</string>
 </resources>

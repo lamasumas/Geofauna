@@ -56,7 +56,17 @@
             android:inputType="numberSigned|number|numberDecimal" />
 
     </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/myEditLayout"
+        app:startIconContentDescription="@string/etLocalidad"
+        app:startIconDrawable="@drawable/pais_icon">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etNearestPlace"
+            style="@style/myEditText"
+            android:hint="@string/etNearestPlace" />
+
+    </com.google.android.material.textfield.TextInputLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

@@ -20,11 +20,17 @@ import com.example.myapplication.fragments.abstracts.GeneralFragmentRx
 import com.example.myapplication.fragments.transects.dialog.NewTransectDialog
 import com.example.myapplication.fragments.transects.recyclerview.TransectAdapter
 import com.example.myapplication.fragments.transects.recyclerview.TransectViewHolder
+import com.example.myapplication.rest.GeoNameInterface
 import com.example.myapplication.viewmodels.TransectViewModel
 import com.example.myapplication.viewmodels.controllers.LocationControllerViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.jakewharton.rxbinding2.view.clicks
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 class TransectFragment : GeneralFragmentRx() {
@@ -36,7 +42,6 @@ class TransectFragment : GeneralFragmentRx() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-      
         return inflater.inflate(R.layout.fragment_menu_principal, container, false)
     }
 
@@ -47,7 +52,11 @@ class TransectFragment : GeneralFragmentRx() {
             layoutManager = LinearLayoutManager(view.context)
             adapter = TransectAdapter(transectViewModel.transectList.value!!).also { adapter ->
 
-                disposables.add(view.findViewById<Button>(R.id.btnAddNewTransect).clicks()
+                view.findViewById<FloatingActionButton>(R.id.btnAddNewTransect).setOnClickListener {
+
+                    NewTransectDialog().show(requireActivity().supportFragmentManager.beginTransaction(), "New transect dialog")
+                }
+                disposables.add(view.findViewById<FloatingActionButton>(R.id.btnAddNewTransect).clicks()
                         .observeOn(Schedulers.io()).subscribeOn(Schedulers.io()).subscribe {
                             NewTransectDialog().show(requireActivity().supportFragmentManager.beginTransaction(), "New transect dialog")
                             adapter.isSelected.value = false

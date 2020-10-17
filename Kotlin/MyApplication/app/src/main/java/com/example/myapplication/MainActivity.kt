@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.provider.Settings
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -19,6 +20,7 @@ import com.example.myapplication.viewmodels.AnimalDatabaseViewModel
 import com.example.myapplication.viewmodels.TransectViewModel
 import com.example.myapplication.viewmodels.controllers.BleControllerViewModel
 import com.example.myapplication.viewmodels.controllers.LocationControllerViewModel
+import io.reactivex.plugins.RxJavaPlugins
 
 class MainActivity : AppCompatActivity() {
 
@@ -62,6 +64,9 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         setContentView(R.layout.activity_main)
         getPermissions()
+        RxJavaPlugins.setErrorHandler {t ->
+            Log.d("error in outer thread",null, t);
+        };
 
     }
 
