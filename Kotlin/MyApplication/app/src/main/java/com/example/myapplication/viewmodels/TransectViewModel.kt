@@ -14,6 +14,7 @@ class TransectViewModel(application: Application) : AndroidViewModel(application
     val transectList: MutableLiveData<ArrayList<Transect>> = MutableLiveData()
     val selectedTransect = MutableLiveData<Transect>()
     val selectedId = MutableLiveData<Long>()
+    var prestarted = false
 
 
     init {

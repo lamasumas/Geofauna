@@ -21,6 +21,9 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.plugins.RxJavaPlugins
+import java.math.RoundingMode
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
 import java.util.*
 import kotlin.math.ln
 
@@ -94,8 +97,11 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
     }
 
     private fun setAltitudeObserver() {
-        val hypsometricEq: (pressure: Double, temperature: Double) -> Double = { pressure, temperature ->
-            ((287.06 * (temperature + 273.15) / 9.8) * transectViewModel.selectedTransect.value?.pressureSeaLevel?.div(pressure)?.let { ln(it) }!!)
+        val hypsometricEq: (Double, Double) -> String = { pressure, temperature ->
+            val df = DecimalFormat("#.##")
+            df.roundingMode = RoundingMode.CEILING
+            val altitude =((287.06 * (temperature + 273.15) / 9.8) * transectViewModel.selectedTransect.value?.pressureSeaLevel?.div(pressure)?.let { ln(it) }!!)
+            df.format(altitude).replace(',','.')
         }
         transectViewModel.selectedTransect.value?.isPressureSeaLevelSelected?.let {needsToBeEstimated ->
 
