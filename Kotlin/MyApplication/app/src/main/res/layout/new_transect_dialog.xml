@@ -77,19 +77,20 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:theme="@style/myCheckbox"
-            android:checked="true"
+            android:checked="false"
             android:layout_marginStart="10dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/myEditLayout"
-            app:startIconContentDescription="@string/etPressureSeaLevel"
-            app:startIconDrawable="@drawable/pressure_icon">
+            app:startIconContentDescription="@string/etAltitudeSample"
+            app:startIconDrawable="@drawable/altitude_icon">
 
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etPressureSeaLevel"
+                android:id="@+id/etAltitudeFirst"
                 style="@style/myEditText"
-                android:hint="@string/etPressureSeaLevel"
+                android:enabled="false"
+                android:hint="@string/etAltitudeSample"
                 android:inputType="numberDecimal" />
 
         </com.google.android.material.textfield.TextInputLayout>

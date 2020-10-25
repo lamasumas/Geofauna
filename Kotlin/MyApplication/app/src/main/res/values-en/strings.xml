@@ -94,14 +94,18 @@
     <string name="btnAñadido">Added</string>
     <string name="btnConected">Connected</string>
     <string name="btnNotConected">Not connected</string>
-    <string name="etPressureSeaLevel">Pressure at sea level (hPa)</string>
-    <string name="titlePressure">Sea level pressure empty</string>
-    <string name="messagePressure">Beware that if the pressure at sea level is empty, it will be use to calculate the altitude of a sightseeing the default one (1013.25 hpa)</string>
+    <string name="etAltitudeSample">Altitude of first sample</string>
+    <string name="etAltitudeNow"> Your altitude (m)</string>
+    <string name="titleAltitude">Altitude is empty</string>
+    <string name="messageAltitude">Beware that if the pressure at sea level is empty, it will not be used for the estimation with the first animal</string>
     <string name="btnContinue">Continue</string>
     <string name="btnReturn">Return</string>
-    <string name="menuAltitude">Change sea level pressure</string>
-    <string name="btnChangePressure">Change pressure</string>
+    <string name="menuAltitude">Establish altitude sampling</string>
+    <string name="btnChangePressure">Measure pressure and save</string>
     <string name="btnDeactivatePressureEstimation">Deactivate pressure estimation</string>
     <string name="etNearestPlace">Closest place</string>
     <string name="seaLevelPressureAcronym">SLP</string>
+    <string name="tvBluetoothLocalizacionTitule">Location problems</string>
+    <string name="alertDialogMissingMicrocontollerTitle">Microcontroller problems</string>
+    <string name="alertDialogMissingMicrocontollerMessage">The microcontroller is disconnected, it must be connected for this functionality</string>
 </resources>

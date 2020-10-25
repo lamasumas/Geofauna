@@ -14,6 +14,6 @@ abstract class GeneralFragmentRx : Fragment(){
 
     override fun onDestroy() {
         super.onDestroy()
-        disposables.dispose()
+        disposables.clear()
     }
 }

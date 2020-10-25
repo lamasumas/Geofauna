@@ -22,9 +22,11 @@ data class Transect(@PrimaryKey(autoGenerate = true) @ColumnInfo(name="transect_
                      @ColumnInfo(name="country") val country:String,
                      @ColumnInfo(name="locality") val locality:String,
                      @ColumnInfo(name="animal_list") val aniamlList:String?,
-                     @ColumnInfo(name="Pressure_Sea_level") var pressureSeaLevel:Double
+                     @ColumnInfo(name="Pressure_Sampling") var pressureSampling:Double?,
+                    @ColumnInfo(name = "Altitude_Sampling") var altitudeSampling: Double?
                      ){
-    var isPressureSeaLevelSelected = true
+    var isAltitudeSamplingSet = false
+    var areSampligDataSet = false
 }
 
 @Entity(tableName = "advance_data")

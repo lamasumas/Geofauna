@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.activityViewModels
 import com.example.myapplication.viewmodels.controllers.Controller
@@ -19,6 +20,7 @@ import com.example.myapplication.utils.BluetoothManager
 import com.example.myapplication.fragments.abstracts.AbstractDatabaseFragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.plugins.RxJavaPlugins
 import java.math.RoundingMode
@@ -85,34 +87,26 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
         view.findViewById<EditText>(R.id.etMonth).setText(calendar.get(Calendar.MONTH).toString())
         view.findViewById<EditText>(R.id.etYear).setText(calendar.get(Calendar.YEAR).toString())
 
-
-        val etAltitude = view.findViewById<TextInputLayout>(R.id.etLAltitude)
-        val pressureSeaLevel = transectViewModel.selectedTransect.value?.pressureSeaLevel
-        transectViewModel.selectedTransect.value?.isPressureSeaLevelSelected?.let {
-            if(it)
-                etAltitude.hint = resources.getString(R.string.etAltitude) + " (m) (" + resources.getString(R.string.seaLevelPressureAcronym)+": "+ pressureSeaLevel + " hPa)"
-            else
-                etAltitude.hint = resources.getString(R.string.etAltitude) + " (m)"
-        }
     }
 
     private fun setAltitudeObserver() {
         val hypsometricEq: (Double, Double) -> String = { pressure, temperature ->
             val df = DecimalFormat("#.##")
             df.roundingMode = RoundingMode.CEILING
-            val altitude =((287.06 * (temperature + 273.15) / 9.8) * transectViewModel.selectedTransect.value?.pressureSeaLevel?.div(pressure)?.let { ln(it) }!!)
-            df.format(altitude).replace(',','.')
+            val altitude = transectViewModel.selectedTransect.value?.altitudeSampling?.let {
+                ((287.06 * (temperature + 273.15) / 9.8) * transectViewModel.selectedTransect.value?.pressureSampling?.div(pressure)?.let { x -> ln(x) }!!) + it
+            }
+            df.format(altitude).replace(',', '.')
         }
-        transectViewModel.selectedTransect.value?.isPressureSeaLevelSelected?.let {needsToBeEstimated ->
-
-            if (needsToBeEstimated) {
+        if(bleController.macAddress != "") {
+            if (transectViewModel.selectedTransect.value?.areSampligDataSet == true) {
                 bleController.myData[BluetoothManager.PRESSURE_SENSOR]?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                     if (it != "e\r\n" && !bleController.myData[BluetoothManager.TEMPERATURE_SENSOR]?.value.isNullOrEmpty() && bleController.myData[BluetoothManager.TEMPERATURE_SENSOR]?.value != "e\r\n") {
                         //Ecuación hipsométrica
                         val altitude = hypsometricEq(
                                 it.toDouble()!!,
                                 bleController.myData[BluetoothManager.TEMPERATURE_SENSOR]!!.value!!.toDouble())
-                        requireView().findViewById<EditText>(R.id.etAltitude).setText(altitude.toString())
+                        requireView().findViewById<EditText>(R.id.etAltitude).setText(altitude)
                     }
                 })
 
@@ -122,9 +116,18 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
                         val altitude = hypsometricEq(
                                 bleController.myData[BluetoothManager.PRESSURE_SENSOR]!!.value!!.toDouble(),
                                 it.toDouble()!!)
-                        requireView().findViewById<EditText>(R.id.etAltitude).setText(altitude.toString())
+                        requireView().findViewById<EditText>(R.id.etAltitude).setText(altitude)
                     }
                 })
+            } else {
+                if (transectViewModel.selectedTransect.value?.isAltitudeSamplingSet == true) {
+                    requireView().findViewById<EditText>(R.id.etAltitude).setText(transectViewModel.selectedTransect.value?.altitudeSampling.toString())
+                    disposables.add(requireView().findViewById<Button>(R.id.btnAñadirAvistamiento).clicks().subscribe {
+                        transectViewModel.selectedTransect.value?.pressureSampling = requireView().findViewById<EditText>(R.id.etPressure).text.toString().toDouble()
+                        transectViewModel.selectedTransect.value?.isAltitudeSamplingSet = false
+                        transectViewModel.selectedTransect.value?.areSampligDataSet = true
+                    })
+                }
             }
         }
     }

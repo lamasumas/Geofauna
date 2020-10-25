@@ -152,7 +152,7 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
                 temperature = validator.doubleOrNull(temperature),
                 pressure = validator.doubleOrNull(pressure),
                 altitude = validator.doubleOrNull(altitude),
-                estimatedWithPressure = transectViewModel.selectedTransect.value?.isPressureSeaLevelSelected,
+                estimatedWithPressure = transectViewModel.selectedTransect.value?.isAltitudeSamplingSet,
                 index_uv = validator.doubleOrNull(uv)?.toInt(),
                 notes = validator.nullOrEmpty(notes),
                 photoPlace = validator.nullOrEmpty(photoPath)

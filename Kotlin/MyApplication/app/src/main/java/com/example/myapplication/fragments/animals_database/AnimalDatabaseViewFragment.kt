@@ -1,7 +1,10 @@
 package com.example.myapplication.fragments.animals_database
 
 import android.app.AlertDialog
+import android.bluetooth.BluetoothAdapter
+import android.content.Context
 import android.graphics.Canvas
+import android.location.LocationManager
 import android.os.Bundle
 import android.view.*
 import android.widget.Button
@@ -23,6 +26,7 @@ import com.example.myapplication.fragments.animals_database.database_recyclervie
 import com.example.myapplication.fragments.transects.dialog.NewTransectDialog
 import com.example.myapplication.fragments.transects.recyclerview.TransectViewHolder
 import com.example.myapplication.room.DatabaseRepository
+import com.example.myapplication.utils.BluetoothManager
 import com.example.myapplication.viewmodels.controllers.BleControllerViewModel
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -109,6 +113,7 @@ class AnimalDatabaseViewFragment : AbstractDatabaseFragment() {
             when (it.itemId) {
                 R.id.exportarMenu -> {
 
+
                     ExportDialog(animalDatabaseViewModel.dataList.value,
                             transectViewModel.selectedTransect.value?.name).show(requireActivity().supportFragmentManager.beginTransaction(), "New export dialog")
 
@@ -119,7 +124,26 @@ class AnimalDatabaseViewFragment : AbstractDatabaseFragment() {
                     true
                 }
                 R.id.altitudeMenu -> {
-                    ChangeSeaPressureDialog().show(requireActivity().supportFragmentManager.beginTransaction(), "Change sea pressure dialog")
+                    if (!(view.context.getSystemService(Context.LOCATION_SERVICE) as LocationManager).isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                        AlertDialog.Builder(view.context).setTitle(R.string.tvBluetoothLocalizacionTitule)
+                                .setMessage(R.string.tvBluetoothLocalizacionApagado)
+                                .setPositiveButton(R.string.cerrarAlertBoton) { button, _ -> button.dismiss() }
+                                .show()
+                    } else if (!BluetoothAdapter.getDefaultAdapter().isEnabled) {
+                        AlertDialog.Builder(view.context).setTitle(R.string.tvBluetoothScanTituloAlternativo)
+                                .setMessage(R.string.tvBluetoothDesactivado)
+                                .setPositiveButton(R.string.cerrarAlertBoton) { button, _ -> button.dismiss() }
+                                .show()
+                    } else if (bleControllerViewModel.macAddress == "") {
+                        AlertDialog.Builder(view.context).setTitle(R.string.alertDialogMissingMicrocontollerTitle)
+                                .setMessage(R.string.alertDialogMissingMicrocontollerMessage)
+                                .setPositiveButton(R.string.cerrarAlertBoton) { button, _ -> button.dismiss() }
+                                .show()
+                    } else {
+                        ChangeSeaPressureDialog().show(requireActivity().supportFragmentManager.beginTransaction(), "Change sea pressure dialog")
+
+                    }
+
                     true
                 }
                 else -> false
@@ -135,7 +159,7 @@ class AnimalDatabaseViewFragment : AbstractDatabaseFragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 (viewHolder as AnimalViewHolder).also {
-                            disposables.add(animalDatabaseViewModel.deleteAnimal(it.idSimple))
+                    disposables.add(animalDatabaseViewModel.deleteAnimal(it.idSimple))
 
                 }
             }
@@ -164,7 +188,7 @@ class AnimalDatabaseViewFragment : AbstractDatabaseFragment() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 (viewHolder as AnimalViewHolder).also {
-                   it.cv.findNavController().navigate(AnimalDatabaseViewFragmentDirections.actionMainFragment2ToEditSightseen(it.idAdvance, it.idSimple))
+                    it.cv.findNavController().navigate(AnimalDatabaseViewFragmentDirections.actionMainFragment2ToEditSightseen(it.idAdvance, it.idSimple))
 
                 }
             }

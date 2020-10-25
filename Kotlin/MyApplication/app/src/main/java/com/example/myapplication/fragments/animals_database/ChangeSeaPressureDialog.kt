@@ -9,34 +9,44 @@ import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.example.myapplication.R
-import com.example.myapplication.fragments.transects.recyclerview.TransectViewHolder
+import com.example.myapplication.utils.BluetoothManager
 import com.example.myapplication.utils.InputValidator
 import com.example.myapplication.viewmodels.TransectViewModel
+import com.example.myapplication.viewmodels.controllers.BleControllerViewModel
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.disposables.CompositeDisposable
+import kotlinx.android.synthetic.main.change_pressure_dialog.*
 
 class ChangeSeaPressureDialog : DialogFragment() {
 
     val transectViewModel: TransectViewModel by activityViewModels()
+    val bleControllerViewModel: BleControllerViewModel by activityViewModels()
     val disposables = CompositeDisposable()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val theView = inflater.inflate(R.layout.change_pressure_dialog, container)
-        val etSeaPressure = theView.findViewById<EditText>(R.id.etPressureSeaLevel)
-        etSeaPressure.setText(transectViewModel.selectedTransect.value?.pressureSeaLevel.toString())
+        val etAltitude = theView.findViewById<EditText>(R.id.etAltitudeNow)
+        val etPressure = theView.findViewById<EditText>(R.id.etPRessureNow)
         val validator = InputValidator()
+        bleControllerViewModel.startTalking()
+        bleControllerViewModel.myData[BluetoothManager.PRESSURE_SENSOR]?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            etPressure.setText(it)
+        })
         disposables.addAll(
                 theView.findViewById<Button>(R.id.btnChangePressure).clicks().subscribe {
-                    if (validator.isEditTextEmpty(etSeaPressure)) {
+                    if (validator.isEditTextEmpty(etAltitude)) {
                         dismiss()
                     } else {
-                        transectViewModel.changePressure(etSeaPressure.text.toString())
-                        transectViewModel.selectedTransect.value?.isPressureSeaLevelSelected = true
+
+                        transectViewModel.samplingValues(etPressure.text.toString(), etAltitude.text.toString())
+                        transectViewModel.selectedTransect.value?.isAltitudeSamplingSet = false
+                        transectViewModel.selectedTransect.value?.areSampligDataSet = true
                         dismiss()
                     }
                 },
                 theView.findViewById<Button>(R.id.btnDeactivateEstimation).clicks().subscribe {
-                    transectViewModel.selectedTransect.value?.isPressureSeaLevelSelected = false
+                    transectViewModel.selectedTransect.value?.isAltitudeSamplingSet = false
+                    transectViewModel.selectedTransect.value?.areSampligDataSet = false
                     dismiss()
                 }
         )
@@ -46,5 +56,6 @@ class ChangeSeaPressureDialog : DialogFragment() {
     override fun onDestroy() {
         super.onDestroy()
         disposables.dispose()
+        bleControllerViewModel.stopTalking()
     }
 }

@@ -58,6 +58,7 @@
     <string name="tvBluetoothDesactivado">El bluetooth se encuentra apagado por favor enciendalo</string>
     <string name="tvBluetoothLocalizacionConcesion">Los permisos necesarios de localizacion no fueron concedidos</string>
     <string name="tvBluetoothLocalizacionApagado">La ubicación esta desactivada</string>
+    <string name="tvBluetoothLocalizacionTitule">Problemas con la ubicación</string>
     <string name="btnConectar">Seleccionar</string>
     <string name="tvDialogTitle">Exportar: </string>
     <string name="btnPhone">Movil</string>
@@ -95,14 +96,17 @@
     <string name="btnAñadido">Añadido</string>
     <string name="btnConected">Conectado</string>
     <string name="btnNotConected">No conectado</string>
-    <string name="etPressureSeaLevel">Presión a nivel del mar (hPa)</string>
-    <string name="titlePressure">Pressioón a nivel de mar vacio</string>
-    <string name="messagePressure">Ten en cuenta que al no introducir la presión a nivel del mar se utilizara la presión por defecto (1013.25 hpa) para calcular la altura más adelante</string>
+    <string name="etAltitudeSample"> Altitud de primera muestra (m)</string>
+    <string name="etAltitudeNow"> Tu altitud actual (m)</string>
+    <string name="titleAltitude">Altitude del primer avistamiento vacia</string>
+    <string name="messageAltitude">Ten en cuenta que al no introducir la altitud del primer avistamiento, no se utilizará en el primer avistamiento con lo que no se podrá estimar las altitudes más adelante</string>
     <string name="btnReturn">Volver</string>
     <string name="btnContinue">Continuar</string>
-    <string name="menuAltitude">Cambiar presión a nivel del mar</string>
-    <string name="btnChangePressure">Cambiar presión</string>
+    <string name="menuAltitude">Establecer muestra de altura</string>
+    <string name="btnChangePressure">Medir presion y guardar</string>
     <string name="btnDeactivatePressureEstimation">Desactivar estimación por presión</string>
     <string name="etNearestPlace">Lugar más cercano</string>
     <string name="seaLevelPressureAcronym">PNM</string>
+    <string name="alertDialogMissingMicrocontollerTitle">Problemas con el microcontrolador</string>
+    <string name="alertDialogMissingMicrocontollerMessage">El microcontrolador no esta conectado, para usar esta funcionalidad es necesario</string>
 </resources>

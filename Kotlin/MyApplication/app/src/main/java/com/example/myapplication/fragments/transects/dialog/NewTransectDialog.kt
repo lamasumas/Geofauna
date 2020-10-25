@@ -1,10 +1,7 @@
 package com.example.myapplication.fragments.transects.dialog
 
 import android.app.AlertDialog
-import android.app.Dialog
 import android.content.Context
-import android.content.res.ColorStateList
-import android.graphics.drawable.Drawable
 import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,21 +13,15 @@ import android.widget.EditText
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.MutableLiveData
 import com.example.myapplication.R
 import com.example.myapplication.rest.RestManager
-import com.example.myapplication.room.DatabaseRepository
 import com.example.myapplication.room.data_classes.Transect
 import com.example.myapplication.utils.InputValidator
 import com.example.myapplication.viewmodels.TransectViewModel
 import com.example.myapplication.viewmodels.controllers.LocationControllerViewModel
 import com.jakewharton.rxbinding2.view.clicks
-import io.reactivex.Observable
-import io.reactivex.Scheduler
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.new_transect_dialog.*
 
 class NewTransectDialog() : DialogFragment() {
@@ -52,22 +43,24 @@ class NewTransectDialog() : DialogFragment() {
         val etCountry = view.findViewById<EditText>(R.id.etCountry)
         val etAnimales = view.findViewById<EditText>(R.id.etAnimales)
         val etLocalidad = view.findViewById<EditText>(R.id.etLocalidad)
-        val etPressureSea = view.findViewById<EditText>(R.id.etPressureSeaLevel)
+        val etAltitudeFirst = view.findViewById<EditText>(R.id.etAltitudeFirst)
         val chPressure = view.findViewById<CheckBox>(R.id.chPressure)
         val validator = InputValidator()
 
 
-        val wrappedDrawable = DrawableCompat.wrap(etPressureSea.background)
+        val wrappedDrawable = DrawableCompat.wrap(etAltitudeFirst.background)
+        DrawableCompat.setTint(wrappedDrawable, resources.getColor(R.color.colorPrimaryPaleta))
+        etAltitudeFirst.background = wrappedDrawable
+
         chPressure.setOnCheckedChangeListener { buttonView, isChecked ->
-            etPressureSea.isEnabled = isChecked
+            val tempwrappedDrawable = DrawableCompat.wrap(etAltitudeFirst.background)
+            etAltitudeFirst.isEnabled = isChecked
             if (isChecked)
                 DrawableCompat.setTint(wrappedDrawable, resources.getColor(R.color.colorSecundarioPaleta))
             else
                 DrawableCompat.setTint(wrappedDrawable, resources.getColor(R.color.colorPrimaryPaleta))
-            etPressureSea.background = wrappedDrawable
-
+            etAltitudeFirst.background = tempwrappedDrawable
         }
-
 
         (view.context.getSystemService(Context.LOCATION_SERVICE) as LocationManager).also {
             if (it.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -91,30 +84,33 @@ class NewTransectDialog() : DialogFragment() {
                         .show()
             } else {
                 if (chPressure.isChecked) {
-                    if (validator.isEditTextEmpty(etPressureSea)) {
-                        AlertDialog.Builder(context).setTitle(R.string.titlePressure)
-                                .setMessage(R.string.messagePressure)
+                    if (validator.isEditTextEmpty(etAltitudeFirst)) {
+                        AlertDialog.Builder(context).setTitle(R.string.titleAltitude)
+                                .setMessage(R.string.messageAltitude)
                                 .setNeutralButton(R.string.btnReturn) { dialogInterface, _ -> dialogInterface.dismiss() }
                                 .setPositiveButton(R.string.btnContinue) { dialogInterface, _ ->
                                     transectViewModel.addTransect(Transect(
                                             name = etTransect.text.toString(),
                                             aniamlList = validator.nullOrEmpty(etAnimales.text.toString()),
-                                            locality = validator.nullOrEmpty(etLocalidad.text.toString()),
                                             country = validator.nullOrEmpty(etCountry.text.toString()),
-                                            pressureSeaLevel = 1013.25
-                                    ))
+                                            locality = validator.nullOrEmpty(etLocalidad.text.toString()),
+                                            pressureSampling = null,
+                                            altitudeSampling = null))
                                     dialogInterface.dismiss()
                                     this.dismiss()
                                 }.show()
 
                     } else {
-                        transectViewModel.addTransect(Transect(
+                        var tempTransect = Transect(
                                 name = etTransect.text.toString(),
                                 aniamlList = validator.nullOrEmpty(etAnimales.text.toString()),
-                                country = validator.nullOrEmpty(etCountry.text.toString()),
                                 locality = validator.nullOrEmpty(etLocalidad.text.toString()),
-                                pressureSeaLevel = etPressureSea.text.toString().toDouble()
-                        ))
+                                country = validator.nullOrEmpty(etCountry.text.toString()),
+                                pressureSampling = null,
+                                altitudeSampling = validator.nullOrEmpty(etAltitudeFirst.text.toString()).toDouble()
+                        )
+                        tempTransect.isAltitudeSamplingSet = true
+                        transectViewModel.addTransect(tempTransect)
                         this.dismiss()
                     }
                 } else {
@@ -123,10 +119,11 @@ class NewTransectDialog() : DialogFragment() {
                             aniamlList = validator.nullOrEmpty(etAnimales.text.toString()),
                             locality = validator.nullOrEmpty(etLocalidad.text.toString()),
                             country = validator.nullOrEmpty(etCountry.text.toString()),
-                            pressureSeaLevel = 1013.25
+                            pressureSampling = 1013.20,
+                            altitudeSampling = 0.0
                     )
 
-                    transect.isPressureSeaLevelSelected = false
+                    transect.isAltitudeSamplingSet = false
                     transectViewModel.addTransect(transect)
                     this.dismiss()
                 }
