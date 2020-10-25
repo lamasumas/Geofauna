@@ -72,6 +72,8 @@ class BleControllerViewModel(application: Application) : Controller(application)
      * aqui se configura todas las caracteristivas del dispositivo ble.
      */
     fun startTalking() {
+        disposable?.dispose()
+        disposables.clear()
         disposable = RxBleClient.create(getApplication()).getBleDevice(macAddress).establishConnection(false).observeOn(Schedulers.io()).subscribe { bleConnection ->
             setupCharacteristic(TEMPERATURE_UUID, BluetoothManager.TEMPERATURE_SENSOR, bleConnection)
             setupCharacteristic(HUMIDITY_UUID, BluetoothManager.HUMIDITY_SENSOR, bleConnection)
@@ -105,7 +107,7 @@ class BleControllerViewModel(application: Application) : Controller(application)
      * Funcion que termina la conexión
      */
     fun stopTalking() {
-        disposables.dispose()
+        disposables.clear()
         disposable?.dispose()
     }
 
