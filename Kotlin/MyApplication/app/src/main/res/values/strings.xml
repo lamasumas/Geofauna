@@ -109,4 +109,8 @@
     <string name="seaLevelPressureAcronym">PNM</string>
     <string name="alertDialogMissingMicrocontollerTitle">Problemas con el microcontrolador</string>
     <string name="alertDialogMissingMicrocontollerMessage">El microcontrolador no esta conectado, para usar esta funcionalidad es necesario</string>
+    <string name="btnDeactivateAltitudeEstimation">No establecer </string>
+    <string name="etNextSample">Altura de siguiente avistamiento (m)</string>
+    <string name="menuNextAltitude">Establecer siguiente altitud</string>
+    <string name="btnSave">Guardar</string>
 </resources>

@@ -11,15 +11,14 @@
         />
 
     <item
-        android:id="@+id/altitudeMenu"
+        android:id="@+id/altitudeAndPressureMenu"
         android:title="@string/menuAltitude"/>
+    <item
+        android:id="@+id/altitudeMenu"
+        android:title="@string/menuNextAltitude"/>
     <item
         android:id="@+id/exportarMenu"
         android:title="@string/exportarMenu"
         />
 
-
-    <item
-        android:id="@+id/exitMenu"
-        android:title="@string/menuExit"/>
 </menu>

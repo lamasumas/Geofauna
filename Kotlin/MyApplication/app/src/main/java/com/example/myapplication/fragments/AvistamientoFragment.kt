@@ -122,11 +122,12 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
             } else {
                 if (transectViewModel.selectedTransect.value?.isAltitudeSamplingSet == true) {
                     requireView().findViewById<EditText>(R.id.etAltitude).setText(transectViewModel.selectedTransect.value?.altitudeSampling.toString())
-                    disposables.add(requireView().findViewById<Button>(R.id.btnAñadirAvistamiento).clicks().subscribe {
+                   requireView().findViewById<Button>(R.id.btnAñadirAvistamiento).clicks().subscribe {
                         transectViewModel.selectedTransect.value?.pressureSampling = requireView().findViewById<EditText>(R.id.etPressure).text.toString().toDouble()
                         transectViewModel.selectedTransect.value?.isAltitudeSamplingSet = false
                         transectViewModel.selectedTransect.value?.areSampligDataSet = true
-                    })
+                        super.btnAñadirAvistamientoAction()
+                    }
                 }
             }
         }

@@ -24,6 +24,7 @@ import com.example.myapplication.viewmodels.TransectViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_avistamiento.*
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
@@ -40,19 +41,7 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
     protected fun setGeneralButtonActions(view: View, isEdit: Boolean = false, idSimple: Long = 0, idAdvance: Long = 0) {
 
         disposables.add(view.findViewById<FloatingActionButton>(R.id.btnAñadirAvistamiento).clicks().subscribe {
-            if (checkValidSimpleData(view)) {
-
-                val newDatabaseSimpleEntry = createSimpleAnimalObject(view)
-                val newDatabaseAdvanceEntry = createAdvanceAnimalObject(view)
-                transectViewModel.transectList.value
-                disposables.add(animalDatabaseViewModel.addNewAnimal(newDatabaseSimpleEntry, newDatabaseAdvanceEntry))
-                generateConfirmationDialog(R.string.btnAñadido)
-
-            } else
-                AlertDialog.Builder(view.context).setMessage(R.string.wrongInputMessage)
-                        .setTitle(R.string.wrongInputTitulo)
-                        .setNeutralButton(R.string.cerrarAlertBoton) { dialog, id -> dialog.dismiss() }
-                        .create().show()
+            btnAñadirAvistamientoAction()
         })
 
         disposables.add(view.findViewById<TextView>(R.id.btnExpand).clicks().subscribe {
@@ -102,6 +91,23 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
                 }
             }
         })
+    }
+
+    protected fun btnAñadirAvistamientoAction() {
+        val theView = requireView()
+        if (checkValidSimpleData(theView)) {
+
+            val newDatabaseSimpleEntry = createSimpleAnimalObject(theView)
+            val newDatabaseAdvanceEntry = createAdvanceAnimalObject(theView)
+            transectViewModel.transectList.value
+            disposables.add(animalDatabaseViewModel.addNewAnimal(newDatabaseSimpleEntry, newDatabaseAdvanceEntry))
+            generateConfirmationDialog(R.string.btnAñadido)
+
+        } else
+            AlertDialog.Builder(theView.context).setMessage(R.string.wrongInputMessage)
+                    .setTitle(R.string.wrongInputTitulo)
+                    .setNeutralButton(R.string.cerrarAlertBoton) { dialog, id -> dialog.dismiss() }
+                    .create().show()
     }
 
     private fun checkValidSimpleData(view: View): Boolean {

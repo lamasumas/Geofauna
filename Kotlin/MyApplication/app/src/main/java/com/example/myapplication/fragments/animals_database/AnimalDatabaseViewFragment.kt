@@ -8,10 +8,8 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.view.*
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginBottom
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.*
 import androidx.navigation.findNavController
@@ -23,15 +21,11 @@ import com.example.myapplication.export.dialog.ExportDialog
 import com.example.myapplication.fragments.abstracts.AbstractDatabaseFragment
 import com.example.myapplication.fragments.animals_database.database_recyclerview.AnimalViewHolder
 import com.example.myapplication.fragments.animals_database.database_recyclerview.DatabaseRvAdapter
-import com.example.myapplication.fragments.transects.dialog.NewTransectDialog
-import com.example.myapplication.fragments.transects.recyclerview.TransectViewHolder
-import com.example.myapplication.room.DatabaseRepository
-import com.example.myapplication.utils.BluetoothManager
+import com.example.myapplication.fragments.animals_database.dialogs.ChangeNextAltitudeDialog
+import com.example.myapplication.fragments.animals_database.dialogs.ChangeSamplePressureDialog
 import com.example.myapplication.viewmodels.controllers.BleControllerViewModel
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.android.schedulers.AndroidSchedulers
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
@@ -119,11 +113,8 @@ class AnimalDatabaseViewFragment : AbstractDatabaseFragment() {
 
                     true
                 }
-                R.id.exitMenu -> {
-                    view.findNavController().navigate(AnimalDatabaseViewFragmentDirections.actionMainFragment2ToMenuPrincipal())
-                    true
-                }
-                R.id.altitudeMenu -> {
+
+                R.id.altitudeAndPressureMenu -> {
                     if (!(view.context.getSystemService(Context.LOCATION_SERVICE) as LocationManager).isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                         AlertDialog.Builder(view.context).setTitle(R.string.tvBluetoothLocalizacionTitule)
                                 .setMessage(R.string.tvBluetoothLocalizacionApagado)
@@ -140,10 +131,14 @@ class AnimalDatabaseViewFragment : AbstractDatabaseFragment() {
                                 .setPositiveButton(R.string.cerrarAlertBoton) { button, _ -> button.dismiss() }
                                 .show()
                     } else {
-                        ChangeSeaPressureDialog().show(requireActivity().supportFragmentManager.beginTransaction(), "Change sea pressure dialog")
+                        ChangeSamplePressureDialog().show(requireActivity().supportFragmentManager.beginTransaction(), "Change sample altitude and  pressure dialog")
 
                     }
 
+                    true
+                }
+                R.id.altitudeMenu -> {
+                    ChangeNextAltitudeDialog().show(requireActivity().supportFragmentManager.beginTransaction(), "Change only next altitude  dialog")
                     true
                 }
                 else -> false
