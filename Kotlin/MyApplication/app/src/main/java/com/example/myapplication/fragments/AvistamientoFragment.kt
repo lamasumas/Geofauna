@@ -21,12 +21,18 @@ import com.example.myapplication.fragments.abstracts.AbstractDatabaseFragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.jakewharton.rxbinding2.view.clicks
+import io.reactivex.Observable
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.plugins.RxJavaPlugins
+import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.delay
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.math.ln
 
 class AvistamientoFragment : AbstractDatabaseFragment() {
@@ -56,9 +62,11 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val calendar = GregorianCalendar()
+        var calendar = GregorianCalendar()
         val checkBluetooth = BluetoothAdapter.getDefaultAdapter()
         val locationManager = view.context.getSystemService(Context.LOCATION_SERVICE) as LocationManager;
+        val etMinutes = view.findViewById<EditText>(R.id.etMinute);
+        val etHours = view.findViewById<EditText>(R.id.etHour)
         setGeneralButtonActions(view)
 
         setupSuggestions(view)
@@ -81,8 +89,34 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
             }
         }
 
-        view.findViewById<EditText>(R.id.etHour).setText(calendar.get(Calendar.HOUR_OF_DAY).toString())
-        view.findViewById<EditText>(R.id.etMinute).setText(calendar.get(Calendar.MINUTE).toString())
+
+
+        disposables.addAll(Observable.create<String> { emitter ->
+            var minute = calendar.get(Calendar.MINUTE).toString()
+            emitter.onNext(minute)
+            while (true) {
+                calendar = GregorianCalendar()
+                if (minute != calendar.get(Calendar.MINUTE).toString()) {
+                    minute = calendar.get(Calendar.MINUTE).toString()
+                    emitter.onNext(minute)
+                }
+                Thread.sleep(1000)
+            }
+        }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe { etMinutes.setText(it) },
+                Observable.create<String> { emitter ->
+                    var minute = calendar.get(Calendar.HOUR_OF_DAY).toString()
+                    emitter.onNext(minute)
+                    while (true) {
+                        calendar = GregorianCalendar()
+                        if (minute != calendar.get(Calendar.HOUR_OF_DAY).toString()) {
+                            minute = calendar.get(Calendar.HOUR_OF_DAY).toString()
+                            emitter.onNext(minute)
+                        }
+                        Thread.sleep(1000)
+                    }
+                }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe { etHours.setText(it) }
+        )
+
         view.findViewById<EditText>(R.id.etDay).setText(calendar.get(Calendar.DATE).toString())
         view.findViewById<EditText>(R.id.etMonth).setText(calendar.get(Calendar.MONTH).toString())
         view.findViewById<EditText>(R.id.etYear).setText(calendar.get(Calendar.YEAR).toString())
@@ -98,7 +132,7 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
             }
             df.format(altitude).replace(',', '.')
         }
-        if(bleController.macAddress != "") {
+        if (bleController.macAddress != "") {
             if (transectViewModel.selectedTransect.value?.areSampligDataSet == true) {
                 bleController.myData[BluetoothManager.PRESSURE_SENSOR]?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                     if (it != "e\r\n" && !bleController.myData[BluetoothManager.TEMPERATURE_SENSOR]?.value.isNullOrEmpty() && bleController.myData[BluetoothManager.TEMPERATURE_SENSOR]?.value != "e\r\n") {
@@ -122,12 +156,12 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
             } else {
                 if (transectViewModel.selectedTransect.value?.isAltitudeSamplingSet == true) {
                     requireView().findViewById<EditText>(R.id.etAltitude).setText(transectViewModel.selectedTransect.value?.altitudeSampling.toString())
-                   requireView().findViewById<Button>(R.id.btnAñadirAvistamiento).clicks().subscribe {
+                    disposables.add(requireView().findViewById<Button>(R.id.btnAñadirAvistamiento).clicks().subscribe {
                         transectViewModel.selectedTransect.value?.pressureSampling = requireView().findViewById<EditText>(R.id.etPressure).text.toString().toDouble()
                         transectViewModel.selectedTransect.value?.isAltitudeSamplingSet = false
                         transectViewModel.selectedTransect.value?.areSampligDataSet = true
                         super.btnAñadirAvistamientoAction()
-                    }
+                    })
                 }
             }
         }
