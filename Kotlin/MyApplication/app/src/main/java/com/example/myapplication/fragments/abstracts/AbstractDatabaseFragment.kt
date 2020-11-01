@@ -23,6 +23,8 @@ import com.example.myapplication.room.data_classes.AnimalSimpleData
 import com.example.myapplication.viewmodels.TransectViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.jakewharton.rxbinding2.view.clicks
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_avistamiento.*
 import java.io.ByteArrayOutputStream
@@ -104,6 +106,9 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
             generateConfirmationDialog(R.string.btnAñadido)
             theView.findViewById<EditText>(R.id.etNotes).setText("")
             theView.findViewById<TextView>(R.id.tvPhotoPath).text = ""
+            disposables.add(Observable.just(theView.findViewById<LinearLayout>(R.id.lPhoto)).subscribeOn(AndroidSchedulers.mainThread()).subscribe {
+                it.visibility = View.GONE
+            })
 
         } else
             AlertDialog.Builder(theView.context).setMessage(R.string.wrongInputMessage)
