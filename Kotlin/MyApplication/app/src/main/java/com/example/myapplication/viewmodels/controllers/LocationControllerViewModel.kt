@@ -112,7 +112,7 @@ class LocationControllerViewModel(application: Application) : Controller(applica
      * Función que termina la subscripción del observable "locaitonObservable"
      */
     fun stopGettingPositions(){
-        disposables.dispose()
+        disposables.clear()
     }
     override fun preStart(){
         Log.d("Initialization", "LocationViewModel startted")

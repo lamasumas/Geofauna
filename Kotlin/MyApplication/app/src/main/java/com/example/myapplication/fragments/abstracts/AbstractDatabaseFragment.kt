@@ -102,6 +102,8 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
             transectViewModel.transectList.value
             disposables.add(animalDatabaseViewModel.addNewAnimal(newDatabaseSimpleEntry, newDatabaseAdvanceEntry))
             generateConfirmationDialog(R.string.btnAñadido)
+            theView.findViewById<EditText>(R.id.etNotes).setText("")
+            theView.findViewById<TextView>(R.id.tvPhotoPath).text = ""
 
         } else
             AlertDialog.Builder(theView.context).setMessage(R.string.wrongInputMessage)

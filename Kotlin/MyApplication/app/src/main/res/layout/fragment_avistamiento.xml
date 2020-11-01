@@ -245,7 +245,8 @@
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/etPressure"
                                 style="@style/myEditText"
-                                android:hint="@string/etPressure" />
+                                android:hint="@string/etPressure"
+                                android:inputType="numberDecimal" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                     </LinearLayout>
