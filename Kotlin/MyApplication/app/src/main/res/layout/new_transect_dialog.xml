@@ -52,8 +52,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etLocalidad"
             style="@style/myEditText"
-            android:hint="@string/etLocalidad"
-            android:inputType="numberSigned|number|numberDecimal" />
+            android:hint="@string/etLocalidad" />
 
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
