@@ -1,5 +1,6 @@
 package com.example.myapplication.fragments.transects
 
+import android.app.AlertDialog
 import android.graphics.Canvas
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -63,7 +64,7 @@ class TransectFragment : GeneralFragmentRx() {
                     adapter.disposables.dispose()
                 }
 
-                ItemTouchHelper(getSwipLeftCallback()).attachToRecyclerView(this)
+                ItemTouchHelper(getSwipLeftCallback(adapter)).attachToRecyclerView(this)
                 ItemTouchHelper(getSwipeRightCallback(adapter)).attachToRecyclerView(this)
             }
 
@@ -76,16 +77,26 @@ class TransectFragment : GeneralFragmentRx() {
         }
     }
 
-    fun getSwipLeftCallback(): ItemTouchHelper.SimpleCallback {
+    private fun getSwipLeftCallback(adapter: TransectAdapter): ItemTouchHelper.SimpleCallback {
         return object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
                 return false
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                (viewHolder as TransectViewHolder).also {
-                    transectViewModel.deleteTransect(it.idDb)
-                }
+                AlertDialog.Builder(requireContext()).setMessage(R.string.dangerMessage)
+                        .setTitle(R.string.dangerTitle)
+                        .setNeutralButton(R.string.btnCancel) { dialog, id ->
+                            adapter.notifyItemChanged(viewHolder.adapterPosition)
+                            dialog.dismiss()
+                        }
+                        .setPositiveButton(R.string.btnDelete) { dialog, id ->
+                            (viewHolder as TransectViewHolder).also {
+                                transectViewModel.deleteTransect(it.idDb)
+                            }
+                            dialog.dismiss()
+                        }
+                        .create().show()
 
 
             }
@@ -105,6 +116,7 @@ class TransectFragment : GeneralFragmentRx() {
 
         }
     }
+
     private fun getSwipeRightCallback(adapter: TransectAdapter): ItemTouchHelper.SimpleCallback {
         return object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {

@@ -112,4 +112,5 @@
     <string name="etNextSample">Next sample altitude (m)</string>
     <string name="btnSave">Guardar</string>
     <string name="menuNextAltitude">Next sample altitude</string>
+    <string name="btnDelete">Delete</string>
 </resources>

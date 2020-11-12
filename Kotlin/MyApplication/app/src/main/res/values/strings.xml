@@ -112,5 +112,6 @@
     <string name="btnDeactivateAltitudeEstimation">No establecer </string>
     <string name="etNextSample">Altura de siguiente avistamiento (m)</string>
     <string name="menuNextAltitude">Establecer siguiente altitud</string>
+    <string name="btnDelete">Borrar</string>
     <string name="btnSave">Guardar</string>
 </resources>

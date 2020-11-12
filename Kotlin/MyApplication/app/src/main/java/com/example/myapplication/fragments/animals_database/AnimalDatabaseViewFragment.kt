@@ -77,7 +77,7 @@ class AnimalDatabaseViewFragment : AbstractDatabaseFragment() {
                 }
 
             })
-            ItemTouchHelper(getSwipeLeftCallback()).attachToRecyclerView(this)
+            ItemTouchHelper(getSwipeLeftCallback(adapter as DatabaseRvAdapter)).attachToRecyclerView(this)
             ItemTouchHelper(getSwipeRightCallback()).attachToRecyclerView(this)
         }
 
@@ -106,8 +106,6 @@ class AnimalDatabaseViewFragment : AbstractDatabaseFragment() {
         view.findViewById<BottomAppBar>(R.id.bar).setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.exportarMenu -> {
-
-
                     ExportDialog(animalDatabaseViewModel.dataList.value,
                             transectViewModel.selectedTransect.value?.name).show(requireActivity().supportFragmentManager.beginTransaction(), "New export dialog")
 
@@ -146,17 +144,28 @@ class AnimalDatabaseViewFragment : AbstractDatabaseFragment() {
         }
     }
 
-    private fun getSwipeLeftCallback(): ItemTouchHelper.SimpleCallback {
+    private fun getSwipeLeftCallback(adapter: DatabaseRvAdapter): ItemTouchHelper.SimpleCallback {
         return object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
                 return false
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                (viewHolder as AnimalViewHolder).also {
-                    disposables.add(animalDatabaseViewModel.deleteAnimal(it.idSimple))
+                AlertDialog.Builder(requireContext()).setMessage(R.string.dangerMessage)
+                        .setTitle(R.string.dangerTitle)
+                        .setNeutralButton(R.string.btnCancel) { dialog, id ->
+                            adapter.notifyItemChanged(viewHolder.adapterPosition)
+                            dialog.dismiss()
+                        }
+                        .setPositiveButton(R.string.btnDelete) { dialog, id ->
+                            (viewHolder as AnimalViewHolder).also {
+                                disposables.add(animalDatabaseViewModel.deleteAnimal(it.idSimple))
 
-                }
+                            }
+                            dialog.dismiss()
+                        }
+                        .create().show()
+
             }
 
             override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {

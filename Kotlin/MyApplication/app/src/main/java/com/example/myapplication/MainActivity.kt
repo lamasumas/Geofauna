@@ -73,11 +73,11 @@ class MainActivity : AppCompatActivity() {
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
             startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
 
-      /* val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+       val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
         if (!bluetoothAdapter.isEnabled) {
             startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), BLUETOOTH_CODE)
         }
-        */
+
 
     }
 

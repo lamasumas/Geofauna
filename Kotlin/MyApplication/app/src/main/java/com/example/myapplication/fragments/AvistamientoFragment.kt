@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.EditText
+import androidx.core.view.doOnDetach
 import androidx.fragment.app.activityViewModels
 import com.example.myapplication.viewmodels.controllers.Controller
 import com.example.myapplication.viewmodels.controllers.LocationControllerViewModel
@@ -39,6 +40,7 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
 
     private val bleController: BleControllerViewModel by activityViewModels()
     private val locationController: LocationControllerViewModel by activityViewModels()
+    lateinit var  autoCompleteTextView: AutoCompleteTextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +69,7 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
         val locationManager = view.context.getSystemService(Context.LOCATION_SERVICE) as LocationManager;
         val etMinutes = view.findViewById<EditText>(R.id.etMinute);
         val etHours = view.findViewById<EditText>(R.id.etHour)
+
         setGeneralButtonActions(view)
 
         setupSuggestions(view)
@@ -74,18 +77,18 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
 
         if (bleController.macAddress != "" && checkBluetooth.isEnabled && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             bleController.startTalking()
-            setCommonObserver(BluetoothManager.HUMIDITY_SENSOR, R.id.etHumidity, bleController)
-            setCommonObserver(BluetoothManager.TEMPERATURE_SENSOR, R.id.etTemperature, bleController)
-            setCommonObserver(BluetoothManager.UV_SENSOR, R.id.etIndexUV, bleController)
-            setCommonObserver(BluetoothManager.PRESSURE_SENSOR, R.id.etPressure, bleController)
+            setCommonObserver(BluetoothManager.HUMIDITY_SENSOR, R.id.etHumidity, bleController, 2)
+            setCommonObserver(BluetoothManager.TEMPERATURE_SENSOR, R.id.etTemperature, bleController,2)
+            setCommonObserver(BluetoothManager.UV_SENSOR, R.id.etIndexUV, bleController,0)
+            setCommonObserver(BluetoothManager.PRESSURE_SENSOR, R.id.etPressure, bleController,2)
             setAltitudeObserver()
             setArduinoLocationObserver(BluetoothManager.LATITUDE_SENSOR, view)
             setArduinoLocationObserver(BluetoothManager.LONGITUDE_SENSOR, view)
         } else {
             if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 locationController.startGettingInfinitePositions()
-                setCommonObserver(locationController.LONGITUDE_ID, R.id.etLongitud, locationController)
-                setCommonObserver(locationController.LATITUDE_ID, R.id.etLatitud, locationController)
+                setCommonObserver(locationController.LONGITUDE_ID, R.id.etLongitud, locationController, null)
+                setCommonObserver(locationController.LATITUDE_ID, R.id.etLatitud, locationController, null)
             }
         }
 
@@ -124,13 +127,12 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
     }
 
     private fun setAltitudeObserver() {
-        val hypsometricEq: (Double, Double) -> String = { pressure, temperature ->
-            val df = DecimalFormat("#.##")
-            df.roundingMode = RoundingMode.CEILING
+        val hypsometricEq: (Double, Double) -> Double? = { pressure, temperature ->
+
             val altitude = transectViewModel.selectedTransect.value?.altitudeSampling?.let {
                 ((287.06 * (temperature + 273.15) / 9.8) * transectViewModel.selectedTransect.value?.pressureSampling?.div(pressure)?.let { x -> ln(x) }!!) + it
             }
-            df.format(altitude).replace(',', '.')
+           altitude
         }
         if (bleController.macAddress != "") {
             if (transectViewModel.selectedTransect.value?.areSampligDataSet == true) {
@@ -140,7 +142,7 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
                         val altitude = hypsometricEq(
                                 it.toDouble()!!,
                                 bleController.myData[BluetoothManager.TEMPERATURE_SENSOR]!!.value!!.toDouble())
-                        requireView().findViewById<EditText>(R.id.etAltitude).setText(altitude)
+                        requireView().findViewById<EditText>(R.id.etAltitude).setText(altitude?.toInt().toString())
                     }
                 })
 
@@ -150,7 +152,7 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
                         val altitude = hypsometricEq(
                                 bleController.myData[BluetoothManager.PRESSURE_SENSOR]!!.value!!.toDouble(),
                                 it.toDouble()!!)
-                        requireView().findViewById<EditText>(R.id.etAltitude).setText(altitude)
+                        requireView().findViewById<EditText>(R.id.etAltitude).setText(altitude?.toInt().toString())
                     }
                 })
             } else {
@@ -170,23 +172,31 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
     private fun setupSuggestions(view: View) {
         transectViewModel.selectedTransect.value?.aniamlList?.split(",")?.toMutableList()?.let {
             view.findViewById<AutoCompleteTextView>(R.id.etEspecie).also { tv ->
+                autoCompleteTextView = tv
                 if (it.isNotEmpty() && it[0]?.isNotBlank()) {
                     tv.threshold = 0
-                    tv.setOnFocusChangeListener { _, _ -> tv.showDropDown() }
+                   tv.setOnFocusChangeListener { _, _ ->
+                       if(!isDetached && !isRemoving && isVisible && !requireActivity().isFinishing )
+                           tv.showDropDown()
+                        else{
+                           tv.dismissDropDown()
+                       }}
                     ArrayAdapter<String>(view.context, android.R.layout.simple_list_item_1, it).also {
                         tv.setAdapter(it)
                     }
                 } else {
                     tv.dismissDropDown()
                 }
+
+                tv.doOnDetach {  tv.dismissDropDown()}
             }
         }
     }
 
-    private fun setCommonObserver(index: Int, editTextId: Int, controller: Controller) {
+    private fun setCommonObserver(index: Int, editTextId: Int, controller: Controller, decimals: Int?) {
         controller.myData[index]?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             if (it != "e\r\n")
-                view?.findViewById<EditText>(editTextId)!!.setText(it)
+                view?.findViewById<EditText>(editTextId)!!.setText(setNumberOfDecimals(it, decimals))
             else
                 view?.findViewById<EditText>(editTextId)!!.setText("No Data")
         })
@@ -205,10 +215,30 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
                 view.findViewById<EditText>(R.id.etLongitud).setText(tempLocation.longitude.toString())
             } else {
                 locationController.startGettingInfinitePositions()
-                setCommonObserver(locationController.LONGITUDE_ID, R.id.etLongitud, locationController)
-                setCommonObserver(locationController.LATITUDE_ID, R.id.etLatitud, locationController)
+                setCommonObserver(locationController.LONGITUDE_ID, R.id.etLongitud, locationController, null)
+                setCommonObserver(locationController.LATITUDE_ID, R.id.etLatitud, locationController, null)
             }
         })
+    }
+
+    private fun setNumberOfDecimals(number:String, decimals:Int?):String{
+        if(decimals != null){
+            var splittedNumber = number.split(".")
+            if(decimals == 0)
+                return splittedNumber[0]
+            return if(splittedNumber.size == 1)
+                splittedNumber[0]
+            else{
+                if(splittedNumber[1].length <= decimals)
+                    splittedNumber[0]+"."+splittedNumber
+                else{
+                    splittedNumber[0]+"."+ splittedNumber[1].subSequence(0,decimals)
+                }
+
+            }
+
+        }
+        return number
     }
 
     override fun onDestroyView() {
@@ -216,5 +246,11 @@ class AvistamientoFragment : AbstractDatabaseFragment() {
         if (bleController.macAddress != "")
             bleController.stopTalking()
         locationController.stopGettingPositions()
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        autoCompleteTextView.dismissDropDown()
     }
 }

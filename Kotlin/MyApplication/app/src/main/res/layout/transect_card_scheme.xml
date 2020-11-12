@@ -23,7 +23,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tvTransectName" />
+                android:text="@string/tvTransectName"
+                android:layout_marginRight="5dp"/>
 
             <TextView
                 android:id="@+id/tvTransectName"
@@ -39,7 +40,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tvAnimalsSearched" />
+                android:text="@string/tvAnimalsSearched"
+                android:layout_marginRight="5dp"/>
             <TextView
                 android:id="@+id/tvAnimals"
                 android:layout_width="wrap_content"
@@ -54,6 +56,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
                 android:text="@string/tvCountry" />
 
             <TextView
@@ -70,11 +73,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
                     android:text="@string/tvProvincia" />
 
                 <TextView
                     android:id="@+id/tvCounty"
                     android:layout_width="wrap_content"
+                    android:layout_marginRight="5dp"
                     android:layout_height="match_parent" />
             </LinearLayout>
         </LinearLayout>
