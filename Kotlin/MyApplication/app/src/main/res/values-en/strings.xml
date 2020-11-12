@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Sampling app</string>
+    <string name="app_name">GeoFauna</string>
     <string name="btnResumen">Summary</string>
-    <string name="btnAñadir">Add animal</string>
+    <string name="btnAñadir">Add sighting</string>
     <string name="btnEstadisticas">Statistics</string>
-    <string name="avistamientoTitulo">Register Animal</string>
+    <string name="avistamientoTitulo">Add sighting</string>
     <string name="tvEspecie">Species</string>
     <string name="tvHora">Time:</string>
     <string name="tvFecha">Date:</string>
@@ -15,7 +15,7 @@
     <string name="tvTemperature">Temperature (ºC):</string>
     <string name="tvUv">UV Index:</string>
     <string name="tvPressure">Pressure (hPa):</string>
-    <string name="etEspecie">Write the species</string>
+    <string name="etEspecie">Specie name</string>
     <string name="etLongitud">Longitude</string>
     <string name="etLatitud">Latitude</string>
     <string name="etHora">Hour</string>
@@ -28,12 +28,12 @@
     <string name="etTemperature">Temperature (ºC)</string>
     <string name="etUv">UV Index</string>
     <string name="etPressure">Pressure (hPa)</string>
-    <string name="btnAñadirAvistamiento">Add animal</string>
-    <string name="tvPais">Country:</string>
-    <string name="tvLugar">Place:</string>
+    <string name="btnAñadirAvistamiento">Add sighting</string>
+    <string name="tvPais">"Country: "</string>
+    <string name="tvLugar">"Place: "</string>
     <string name="btnAutocompletar">Autocomplete</string>
-    <string name="etPais">The country</string>
-    <string name="etLugar">The place</string>
+    <string name="etPais">Country</string>
+    <string name="etLugar">Place</string>
     <string name="apagadoGPSMensaje">GPS information not found, try later again</string>
     <string name="apagadoGPSTitulo">Warning GPS</string>
     <string name="cerrarAlertBoton">Close</string>
@@ -51,11 +51,11 @@
     <string name="btnEditar">Edit</string>
     <string name="btnBorrar">Delete</string>
     <string name="bluetoothDenegadoTitulo">Bluetooth access denied</string>
-    <string name="bluetoothDenegadoDescripcion">If you don\'t turn on the bluetooth, you will not be able to use the microcontroller</string>
+    <string name="bluetoothDenegadoDescripcion">Turn on Bluetooth, if you would like to use the external environmental data sampler.</string>
     <string name="tvBluetoothScanTitulo">Searching bluetooth devices</string>
     <string name="tvBluetoothScanTituloAlternativo">Bluetooth problems</string>
-    <string name="tvBluetoothNoDisponible">The bluetooth is not available</string>
-    <string name="tvBluetoothDesactivado">The bluetooth is off, please turn it on</string>
+    <string name="tvBluetoothNoDisponible">Bluetooth is not available</string>
+    <string name="tvBluetoothDesactivado">Bluetooth is off, please turn it on</string>
     <string name="tvBluetoothLocalizacionConcesion">The necessary location permissions were not given</string>
     <string name="tvBluetoothLocalizacionApagado">The location is disabled</string>
     <string name="btnConectar">Choose</string>
@@ -94,8 +94,8 @@
     <string name="btnAñadido">Added</string>
     <string name="btnConected">Connected</string>
     <string name="btnNotConected">Not connected</string>
-    <string name="etAltitudeSample">Altitude of first sample</string>
-    <string name="etAltitudeNow"> Your altitude (m)</string>
+    <string name="etAltitudeSample">Altitude of first sighting</string>
+    <string name="etAltitudeNow">" You current altitude (m)"</string>
     <string name="titleAltitude">Altitude is empty</string>
     <string name="messageAltitude">Beware that if the pressure at sea level is empty, it will not be used for the estimation with the first animal</string>
     <string name="btnContinue">Continue</string>

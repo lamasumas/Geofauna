@@ -95,7 +95,8 @@ class NewTransectDialog() : DialogFragment() {
                                             country = validator.nullOrEmpty(etCountry.text.toString()),
                                             locality = validator.nullOrEmpty(etLocalidad.text.toString()),
                                             pressureSampling = null,
-                                            altitudeSampling = null))
+                                            altitudeSampling = null,
+                                            nearestPlace = validator.nullOrEmpty(etNearestPlace.text.toString())))
                                     dialogInterface.dismiss()
                                     this.dismiss()
                                 }.show()
@@ -107,7 +108,8 @@ class NewTransectDialog() : DialogFragment() {
                                 locality = validator.nullOrEmpty(etLocalidad.text.toString()),
                                 country = validator.nullOrEmpty(etCountry.text.toString()),
                                 pressureSampling = null,
-                                altitudeSampling = validator.nullOrEmpty(etAltitudeFirst.text.toString()).toDouble()
+                                altitudeSampling = validator.nullOrEmpty(etAltitudeFirst.text.toString()).toDouble(),
+                                nearestPlace = validator.nullOrEmpty(etNearestPlace.text.toString())
                         )
                         tempTransect.isAltitudeSamplingSet = true
                         transectViewModel.addTransect(tempTransect)
@@ -119,8 +121,9 @@ class NewTransectDialog() : DialogFragment() {
                             aniamlList = validator.nullOrEmpty(etAnimales.text.toString()),
                             locality = validator.nullOrEmpty(etLocalidad.text.toString()),
                             country = validator.nullOrEmpty(etCountry.text.toString()),
-                            pressureSampling = 1013.20,
-                            altitudeSampling = 0.0
+                            pressureSampling = null,
+                            altitudeSampling = null,
+                            nearestPlace = validator.nullOrEmpty(etNearestPlace.text.toString())
                     )
 
                     transect.isAltitudeSamplingSet = false

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Muestreo app</string>
+    <string name="app_name">GeoFauna</string>
     <string name="tituloAplicacion">Muestreo de Fauna Salvaje</string>
     <string name="btnResumen">Resumen</string>
     <string name="btnAñadir">Añadir avistamiento</string>
@@ -13,9 +13,9 @@
     <string name="tvHumidity">Humedad (%):</string>
     <string name="tvAltitude">Altitud (m):</string>
     <string name="tvTemperature">Temperatura (ºC):</string>
-    <string name="tvUv">Indice UV:</string>
-    <string name="tvPressure">Pressión (hPa):</string>
-    <string name="etEspecie">Escribe la especie</string>
+    <string name="tvUv">Índice UV:</string>
+    <string name="tvPressure">Presión (hPa):</string>
+    <string name="etEspecie">Nombre de la especie</string>
     <string name="etLongitud">Longitud</string>
     <string name="etLatitud">Latitud</string>
     <string name="etHora">Hora</string>
@@ -29,11 +29,11 @@
     <string name="etUv">Indice UV</string>
     <string name="etPressure">Pressión (hPa)</string>
     <string name="btnAñadirAvistamiento">Añadir avistamiento</string>
-    <string name="tvPais">País:</string>
-    <string name="tvLugar">Lugar:</string>
+    <string name="tvPais">"País: "</string>
+    <string name="tvLugar">"Lugar: "</string>
     <string name="btnAutocompletar">Autocompletar</string>
-    <string name="etPais">El país</string>
-    <string name="etLugar">El lugar</string>
+    <string name="etPais">País</string>
+    <string name="etLugar">Lugar</string>
     <string name="apagadoGPSMensaje"> No se ha encontrado información GPS. Intentelo más tarde.</string>
     <string name="apagadoGPSTitulo">Aviso GPS</string>
     <string name="cerrarAlertBoton">Cerrar</string>
@@ -51,11 +51,11 @@
     <string name="btnEditar">Editar</string>
     <string name="btnBorrar">Borrar</string>
     <string name="bluetoothDenegadoTitulo">Bluetooth denegado</string>
-    <string name="bluetoothDenegadoDescripcion">Si no enciende el bluetooth, no podra utilizar arduino.</string>
-    <string name="tvBluetoothScanTitulo">Buscando dispositivos bluetooth</string>
-    <string name="tvBluetoothScanTituloAlternativo">Problemas con el bluetooth</string>
-    <string name="tvBluetoothNoDisponible">El bluetooth no esta disponible en este dispositivo android</string>
-    <string name="tvBluetoothDesactivado">El bluetooth se encuentra apagado por favor enciendalo</string>
+    <string name="bluetoothDenegadoDescripcion">Enciende el Bluetooth, si quiere usar el medidor ambiental.</string>
+    <string name="tvBluetoothScanTitulo">Buscando dispositivos Bluetooth</string>
+    <string name="tvBluetoothScanTituloAlternativo">Problemas con el Bluetooth</string>
+    <string name="tvBluetoothNoDisponible">El Bluetooth no esta disponible en este dispositivo android</string>
+    <string name="tvBluetoothDesactivado">El Bluetooth se encuentra apagado por favor enciendalo</string>
     <string name="tvBluetoothLocalizacionConcesion">Los permisos necesarios de localizacion no fueron concedidos</string>
     <string name="tvBluetoothLocalizacionApagado">La ubicación esta desactivada</string>
     <string name="tvBluetoothLocalizacionTitule">Problemas con la ubicación</string>
@@ -81,7 +81,7 @@
     <string name="alertMessageTransect">El nombre del transecto y el país es obligatorio</string>
     <string name="etNotes">Notas</string>
     <string name="btnCamera">Camara</string>
-    <string name="tvTitlePhoto">Foto guardada en:</string>
+    <string name="tvTitlePhoto">Fotografía guardada en:</string>
     <string name="menuExit">Salir del transecto</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -96,9 +96,9 @@
     <string name="btnAñadido">Añadido</string>
     <string name="btnConected">Conectado</string>
     <string name="btnNotConected">No conectado</string>
-    <string name="etAltitudeSample"> Altitud de primera muestra (m)</string>
+    <string name="etAltitudeSample">" Altitud del primer avistamiento (m)"</string>
     <string name="etAltitudeNow"> Tu altitud actual (m)</string>
-    <string name="titleAltitude">Altitude del primer avistamiento vacia</string>
+    <string name="titleAltitude">Altitud del primer avistamiento vacia</string>
     <string name="messageAltitude">Ten en cuenta que al no introducir la altitud del primer avistamiento, no se utilizará en el primer avistamiento con lo que no se podrá estimar las altitudes más adelante</string>
     <string name="btnReturn">Volver</string>
     <string name="btnContinue">Continuar</string>

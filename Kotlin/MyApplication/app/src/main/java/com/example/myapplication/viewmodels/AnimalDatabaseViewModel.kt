@@ -34,13 +34,11 @@ class AnimalDatabaseViewModel(application: Application) : AndroidViewModel(appli
 
     fun loadData(idTransect: Long): Disposable? {
         transectId = idTransect
-        return dbRepository.retrieveFullAnimalDataFromTransectID(transectId)?.observeOn(Schedulers.io()).doOnNext {
+        return dbRepository.retrieveFullAnimalDataFromTransectID(transectId).observeOn(Schedulers.io()).doOnNext {
             dataList.value?.clear()
             dataList.value?.addAll(it)
         }.observeOn(AndroidSchedulers.mainThread())?.subscribe {
-
             dataList.value = dataList.value
-
         }
     }
 

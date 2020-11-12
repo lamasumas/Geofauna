@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.myapplication.room.DatabaseRepository
 import com.example.myapplication.room.data_classes.Transect
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 
@@ -49,6 +50,13 @@ class TransectViewModel(application: Application) : AndroidViewModel(application
         selectedTransect.value?.pressureSampling = pressure?.toDouble()
         selectedTransect.value?.altitudeSampling = altitude?.toDouble()
         dbRepository.updateTransect(selectedTransect.value)
+    }
+
+    fun retrieveTransect(id:Long): Observable<Transect> {
+        return dbRepository.retrieveTransectById(id)
+    }
+    fun updateTransect(transect:Transect){
+        dbRepository.updateTransect(transect)
     }
 
 

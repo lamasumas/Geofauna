@@ -17,14 +17,15 @@ data class AnimalSimpleData(@PrimaryKey(autoGenerate = true) var simpleId: Long 
 }
 
 @Entity(tableName = "muestreos")
-data class Transect(@PrimaryKey(autoGenerate = true) @ColumnInfo(name="transect_id") var uid: Long= 0,
-                     @ColumnInfo(name = "nome") val name:String,
-                     @ColumnInfo(name="country") val country:String,
-                     @ColumnInfo(name="locality") val locality:String,
-                     @ColumnInfo(name="animal_list") val aniamlList:String?,
-                     @ColumnInfo(name="Pressure_Sampling") var pressureSampling:Double?,
+data class Transect(@PrimaryKey(autoGenerate = true) @ColumnInfo(name = "transect_id") var uid: Long = 0,
+                    @ColumnInfo(name = "nome") val name: String,
+                    @ColumnInfo(name = "country") val country: String,
+                    @ColumnInfo(name = "locality") val locality: String,
+                    @ColumnInfo(name = "nearestPlace") val nearestPlace: String?,
+                    @ColumnInfo(name = "animal_list") val aniamlList: String?,
+                    @ColumnInfo(name = "Pressure_Sampling") var pressureSampling: Double?,
                     @ColumnInfo(name = "Altitude_Sampling") var altitudeSampling: Double?
-                     ){
+) {
     var isAltitudeSamplingSet = false
     var areSampligDataSet = false
 }
@@ -41,7 +42,7 @@ data class AnimalAdvanceData(@PrimaryKey(autoGenerate = true) @ColumnInfo(name =
                              @ColumnInfo(name = "pressure") val pressure: Double?,
                              @ColumnInfo(name = "notes") val notes: String?,
                              @ColumnInfo(name = "picture") val photoPlace: String?,
-                             @ColumnInfo(name = "isAltitudeEstimated")val estimatedWithPressure:Boolean? ) {
+                             @ColumnInfo(name = "isAltitudeEstimated") val estimatedWithPressure: Boolean?) {
     override fun toString(): String {
         val temp = listOf(humidity.toString(), temperature.toString(), estimatedWithPressure.toString(), altitude.toString(), pressure.toString(), index_uv.toString(), lugar, pais, notes, photoPlace)
         return temp.joinToString(separator = ",")

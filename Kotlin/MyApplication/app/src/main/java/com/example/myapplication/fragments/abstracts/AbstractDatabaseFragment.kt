@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Environment
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -30,6 +31,7 @@ import kotlinx.android.synthetic.main.fragment_avistamiento.*
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
+import java.util.*
 
 abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
 
@@ -106,6 +108,7 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
             generateConfirmationDialog(R.string.btnAñadido)
             theView.findViewById<EditText>(R.id.etNotes).setText("")
             theView.findViewById<TextView>(R.id.tvPhotoPath).text = ""
+            theView.findViewById<EditText>(R.id.etEspecie).setText("")
             disposables.add(Observable.just(theView.findViewById<LinearLayout>(R.id.lPhoto)).subscribeOn(AndroidSchedulers.mainThread()).subscribe {
                 it.visibility = View.GONE
             })
@@ -186,9 +189,14 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
     }
 
     private fun takePhoto(view: View): File? {
+        val clock = GregorianCalendar()
         val storageDir: File? = view.context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        var nameOfThePicture = ""
+        nameOfThePicture += transectViewModel.selectedTransect.value?.name +"_"
+        nameOfThePicture += clock.get(Calendar.DAY_OF_MONTH).toString() + "-"+clock.get(Calendar.MONTH) +"-" + clock.get(Calendar.YEAR) + "_"
+        nameOfThePicture += clock.get(Calendar.HOUR_OF_DAY).toString() +":"+clock.get(Calendar.MINUTE)+"___"
         return File.createTempFile(
-                "test", /* prefix */
+                nameOfThePicture, /* prefix */
                 ".jpg", /* suffix */
                 storageDir /* directory */
         ).apply {
@@ -211,7 +219,15 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
             disposables.add(alertView.findViewById<Button>(R.id.btnAdded).clicks().subscribe {
                 dialog.dismiss()
             })
-            dialog.show()
+            dialog.show().also {
+                object:CountDownTimer(3000, 2000) {
+                    override fun onTick(millisUntilFinished: Long) {}
+
+                    override fun onFinish() {
+                        dialog.dismiss()
+                    }
+                }.start()
+            }
         }
     }
 
