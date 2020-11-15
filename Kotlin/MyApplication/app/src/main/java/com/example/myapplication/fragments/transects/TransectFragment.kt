@@ -84,7 +84,7 @@ class TransectFragment : GeneralFragmentRx() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                AlertDialog.Builder(requireContext()).setMessage(R.string.dangerMessage)
+                AlertDialog.Builder(requireContext()).setMessage(R.string.dialogDeleteMessage)
                         .setTitle(R.string.dangerTitle)
                         .setNeutralButton(R.string.btnCancel) { dialog, id ->
                             adapter.notifyItemChanged(viewHolder.adapterPosition)

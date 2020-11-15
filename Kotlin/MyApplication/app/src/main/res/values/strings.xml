@@ -27,7 +27,7 @@
     <string name="etAltitude">Altitud </string>
     <string name="etTemperature">Temperatura (ºC)</string>
     <string name="etUv">Indice UV</string>
-    <string name="etPressure">Pressión (hPa)</string>
+    <string name="etPressure">Presión (hPa)</string>
     <string name="btnAñadirAvistamiento">Añadir avistamiento</string>
     <string name="tvPais">"País: "</string>
     <string name="tvLugar">"Lugar: "</string>
@@ -114,4 +114,5 @@
     <string name="menuNextAltitude">Establecer siguiente altitud</string>
     <string name="btnDelete">Borrar</string>
     <string name="btnSave">Guardar</string>
+    <string name="dialogDeleteMessage">¿Estás seguro de querer eliminarlo?</string>
 </resources>
