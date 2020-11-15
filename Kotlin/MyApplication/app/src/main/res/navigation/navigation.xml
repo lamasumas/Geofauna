@@ -6,7 +6,7 @@
     app:startDestination="@id/menuPrincipal">
     <fragment
         android:id="@+id/mainFragment2"
-        android:name="com.example.myapplication.fragments.animals_database.AnimalDatabaseViewFragment"
+        android:name="com.lamasumas.myapplication.fragments.animals_database.AnimalDatabaseViewFragment"
         android:label="MainFragment" >
         <action
             android:id="@+id/action_mainFragment2_to_avistamiento2"
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/avistamiento2"
-        android:name="com.example.myapplication.fragments.AvistamientoFragment"
+        android:name="com.lamasumas.myapplication.fragments.AvistamientoFragment"
         android:label="fragment_avistamiento"
         tools:layout="@layout/fragment_avistamiento" >
         <action
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/editSightseen"
-        android:name="com.example.myapplication.fragments.EditSightseenFragment"
+        android:name="com.lamasumas.myapplication.fragments.EditSightseenFragment"
         android:label="EditSightseen" >
         <action
             android:id="@+id/action_editSightseen_to_mainFragment2"
@@ -50,7 +50,7 @@
     </fragment>
     <fragment
         android:id="@+id/menuPrincipal"
-        android:name="com.example.myapplication.fragments.transects.TransectFragment"
+        android:name="com.lamasumas.myapplication.fragments.transects.TransectFragment"
         android:label="fragment_menu_principal"
         tools:layout="@layout/fragment_menu_principal" >
         <action
