@@ -82,7 +82,7 @@ abstract class AbstractDatabaseFragment() : GeneralFragmentRx() {
                     photoFile?.also {
                         val photoURI: Uri = FileProvider.getUriForFile(
                                 view.context,
-                                "com.example.myapplication.fileprovider",
+                                "com.lamasumas.myapplication.fileprovider",
                                 it
                         )
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)

@@ -34,7 +34,7 @@ class ExportManager {
             outputStream.close()
 
             val fileLocation = File(context.filesDir, createFileName(name))
-            val path = FileProvider.getUriForFile(context, "com.example.myapplication.fileprovider",fileLocation)
+            val path = FileProvider.getUriForFile(context, "com.lamasumas.myapplication.fileprovider",fileLocation)
             val intent = Intent(Intent.ACTION_SEND)
             intent.type = "text/csv"
             intent.putExtra(Intent.EXTRA_STREAM, path)
