@@ -29,7 +29,7 @@ class ChangeSamplePressureDialog : DialogFragment() {
         val etPressure = theView.findViewById<EditText>(R.id.etPRessureNow)
         val validator = InputValidator()
 
-        etAltitude.setText(transectViewModel.selectedTransect.value?.altitudeSampling.toString())
+        etAltitude.setText(validator.nullOrEmpty(transectViewModel.selectedTransect.value?.altitudeSampling.toString()))
 
         bleControllerViewModel.startTalking()
         bleControllerViewModel.myData[BluetoothManager.PRESSURE_SENSOR]?.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
