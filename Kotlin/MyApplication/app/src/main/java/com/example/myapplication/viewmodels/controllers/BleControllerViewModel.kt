@@ -58,13 +58,17 @@ class BleControllerViewModel(application: Application) : Controller(application)
      */
     fun scanDevicesAndConnect(): Observable<String>? {
 
-        return RxBleClient.create(getApplication()).scanBleDevices(ScanSettings.Builder().build(),
-                ScanFilter.Builder()
-                        .setServiceUuid(SERVICE_UUID)
-                        .build()).take(1).observeOn(Schedulers.io()
+        return RxBleClient.create(getApplication()).scanBleDevices(
+            ScanSettings.Builder().build(),
+            ScanFilter.Builder()
+                .setServiceUuid(SERVICE_UUID)
+                .build()
+        ).take(1).observeOn(
+            Schedulers.io()
         ).flatMap {
             macAddress = it.bleDevice.bluetoothDevice.toString()
-            return@flatMap Observable.just(macAddress)}
+            return@flatMap Observable.just(macAddress)
+        }
     }
 
     /**
@@ -74,15 +78,25 @@ class BleControllerViewModel(application: Application) : Controller(application)
     fun startTalking() {
         disposable?.dispose()
         disposables.clear()
-        disposable = RxBleClient.create(getApplication()).getBleDevice(macAddress).establishConnection(false).observeOn(Schedulers.io()).subscribe { bleConnection ->
-            setupCharacteristic(TEMPERATURE_UUID, BluetoothManager.TEMPERATURE_SENSOR, bleConnection)
-            setupCharacteristic(HUMIDITY_UUID, BluetoothManager.HUMIDITY_SENSOR, bleConnection)
-            setupCharacteristic(UV_UUID, BluetoothManager.UV_SENSOR, bleConnection)
-            setupCharacteristic(LATITUDE_UUID, BluetoothManager.LATITUDE_SENSOR, bleConnection)
-            setupCharacteristic(LONGITUDE_UUID, BluetoothManager.LONGITUDE_SENSOR, bleConnection)
-            setupCharacteristic(ALTITUDE_UUID, BluetoothManager.ALTITUDE_SENSOR, bleConnection)
-            setupCharacteristic(PRESSURE_UUID, BluetoothManager.PRESSURE_SENSOR, bleConnection)
-        }
+        disposable =
+            RxBleClient.create(getApplication()).getBleDevice(macAddress).establishConnection(false)
+                .observeOn(Schedulers.io()).subscribe { bleConnection ->
+                setupCharacteristic(
+                    TEMPERATURE_UUID,
+                    BluetoothManager.TEMPERATURE_SENSOR,
+                    bleConnection
+                )
+                setupCharacteristic(HUMIDITY_UUID, BluetoothManager.HUMIDITY_SENSOR, bleConnection)
+                setupCharacteristic(UV_UUID, BluetoothManager.UV_SENSOR, bleConnection)
+                setupCharacteristic(LATITUDE_UUID, BluetoothManager.LATITUDE_SENSOR, bleConnection)
+                setupCharacteristic(
+                    LONGITUDE_UUID,
+                    BluetoothManager.LONGITUDE_SENSOR,
+                    bleConnection
+                )
+                setupCharacteristic(ALTITUDE_UUID, BluetoothManager.ALTITUDE_SENSOR, bleConnection)
+                setupCharacteristic(PRESSURE_UUID, BluetoothManager.PRESSURE_SENSOR, bleConnection)
+            }
 
     }
 
@@ -92,13 +106,23 @@ class BleControllerViewModel(application: Application) : Controller(application)
      * @param characteristicUUID, UUID de la caracteristica
      * @param sensorPosition, key del hasmap donde estan todos los valores de los sensores
      */
-    private fun setupCharacteristic(characteristicUUID: UUID, sensorPosition: Int, bleConnection: RxBleConnection) {
-        disposables.add(bleConnection.readCharacteristic(characteristicUUID).observeOn(AndroidSchedulers.mainThread()).subscribe { byteArray ->
-            myData[sensorPosition]?.value = String(byteArray)
-            bleConnection.setupNotification(characteristicUUID, NotificationSetupMode.COMPAT).flatMap { it }.observeOn(AndroidSchedulers.mainThread()).subscribe {
-                myData[sensorPosition]?.value = String(it)
-            }
-        }
+    private fun setupCharacteristic(
+        characteristicUUID: UUID,
+        sensorPosition: Int,
+        bleConnection: RxBleConnection
+    ) {
+        disposables.add(
+            bleConnection.readCharacteristic(characteristicUUID)
+                .observeOn(AndroidSchedulers.mainThread()).subscribe { byteArray ->
+                    myData[sensorPosition]?.value = String(byteArray)
+                    bleConnection.setupNotification(
+                        characteristicUUID,
+                        NotificationSetupMode.COMPAT
+                    )
+                        .flatMap { it }.observeOn(AndroidSchedulers.mainThread()).subscribe {
+                            myData[sensorPosition]?.value = String(it)
+                        }
+                }
         )
     }
 

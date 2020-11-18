@@ -17,7 +17,8 @@ import java.lang.Exception
 
 
 @SuppressLint("MissingPermission")
-class LocationControllerViewModel(application: Application) : Controller(application), GeneralViewModel {
+class LocationControllerViewModel(application: Application) : Controller(application),
+    GeneralViewModel {
 
     var locationObservable: Observable<Location>
     val LATITUDE_ID = 0
@@ -25,15 +26,21 @@ class LocationControllerViewModel(application: Application) : Controller(applica
     val COUNTRY_ID = 2
     val PLACE_ID = 3
 
-    private  var geocoder:Geocoder = Geocoder(application)
+    private var geocoder: Geocoder = Geocoder(application)
     private val disposables = CompositeDisposable()
-    data class  MylocationObject(var longitude:Double, var latitude:Double, var country: String, var place:String)
+
+    data class MylocationObject(
+        var longitude: Double,
+        var latitude: Double,
+        var country: String,
+        var place: String
+    )
 
     /**
      * Se inicializa el hasmap con los valores mutables de la posición.
      * Aqui tambien se crea el observable infinito con el que se actualiza se pide actualizar la posicion
      */
-   init{
+    init {
 
         myData[LATITUDE_ID] = MutableLiveData("")
         myData[LONGITUDE_ID] = MutableLiveData("")
@@ -41,27 +48,27 @@ class LocationControllerViewModel(application: Application) : Controller(applica
         myData[PLACE_ID] = MutableLiveData("")
 
 
-       locationObservable = Observable.create { emitter ->
-           val locationRequest = LocationRequest.create();
-           locationRequest.interval = 10000;
-           locationRequest.fastestInterval = 5000;
-           locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY;
+        locationObservable = Observable.create { emitter ->
+            val locationRequest = LocationRequest.create();
+            locationRequest.interval = 10000;
+            locationRequest.fastestInterval = 5000;
+            locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY;
 
-           val locationCallback = object : LocationCallback() {
-               override fun onLocationResult(locationResult: LocationResult?) {
-                   super.onLocationResult(locationResult)
-                   if (locationResult != null) {
-                       for (location: Location in locationResult.locations) {
-                           if (location != null) {
-                               emitter.onNext(location)
-                           }
-                       }
-                   }
-               }
-           }
-           val locationClient = LocationServices.getFusedLocationProviderClient(application)
-           locationClient.requestLocationUpdates(locationRequest,locationCallback, null)
-       }
+            val locationCallback = object : LocationCallback() {
+                override fun onLocationResult(locationResult: LocationResult?) {
+                    super.onLocationResult(locationResult)
+                    if (locationResult != null) {
+                        for (location: Location in locationResult.locations) {
+                            if (location != null) {
+                                emitter.onNext(location)
+                            }
+                        }
+                    }
+                }
+            }
+            val locationClient = LocationServices.getFusedLocationProviderClient(application)
+            locationClient.requestLocationUpdates(locationRequest, locationCallback, null)
+        }
     }
 
 
@@ -69,15 +76,16 @@ class LocationControllerViewModel(application: Application) : Controller(applica
      * Función en la que se subscribe al observable creado en el constructor, y en el que se
      * actualiza los valores del hasmap
      */
-    fun startGettingInfinitePositions(){
+    fun startGettingInfinitePositions() {
         disposables.add(
-                locationObservable.observeOn(Schedulers.io())
-                        .flatMap {Observable.just(translateGPS2Place(it.longitude, it.latitude))}
-                        .observeOn(AndroidSchedulers.mainThread()).subscribe {
-                            myData[LATITUDE_ID]?.value =  it.latitude.toString()
-                            myData[LONGITUDE_ID]?.value = it.longitude.toString()
-                            myData[PLACE_ID]?.value = it.place
-                            myData[COUNTRY_ID]?.value = it.country }
+            locationObservable.observeOn(Schedulers.io())
+                .flatMap { Observable.just(translateGPS2Place(it.longitude, it.latitude)) }
+                .observeOn(AndroidSchedulers.mainThread()).subscribe {
+                    myData[LATITUDE_ID]?.value = it.latitude.toString()
+                    myData[LONGITUDE_ID]?.value = it.longitude.toString()
+                    myData[PLACE_ID]?.value = it.place
+                    myData[COUNTRY_ID]?.value = it.country
+                }
         )
 
     }
@@ -89,13 +97,14 @@ class LocationControllerViewModel(application: Application) : Controller(applica
      * @return MylocationObject, objeto de una data class, este objeto contiene la lat, lon, el país
      * y el lugar obtenidos de Geocoder
      */
-    fun translateGPS2Place(lon:Double, lat: Double): MylocationObject {
+    fun translateGPS2Place(lon: Double, lat: Double): MylocationObject {
         val mylocationObject = MylocationObject(lon, lat, "", "")
         try {
-        geocoder.getFromLocation (lat, lon,3).forEach { address ->
-            mylocationObject.country = address.countryName;
-            mylocationObject.place = address.adminArea;
-        }}catch (e:Exception){
+            geocoder.getFromLocation(lat, lon, 3).forEach { address ->
+                mylocationObject.country = address.countryName;
+                mylocationObject.place = address.adminArea;
+            }
+        } catch (e: Exception) {
             Log.d("Geocoder", "Geocoder didn't found anything");
         }
         return mylocationObject
@@ -104,17 +113,18 @@ class LocationControllerViewModel(application: Application) : Controller(applica
     fun getOneGPSPosition(): Observable<MylocationObject> {
 
         return locationObservable.take(1).observeOn(Schedulers.io())
-                .flatMap { Observable.just(translateGPS2Place(it.longitude, it.latitude))}
-                .observeOn(AndroidSchedulers.mainThread())
+            .flatMap { Observable.just(translateGPS2Place(it.longitude, it.latitude)) }
+            .observeOn(AndroidSchedulers.mainThread())
     }
 
     /**
      * Función que termina la subscripción del observable "locaitonObservable"
      */
-    fun stopGettingPositions(){
+    fun stopGettingPositions() {
         disposables.clear()
     }
-    override fun preStart(){
+
+    override fun preStart() {
         Log.d("Initialization", "LocationViewModel startted")
     }
 

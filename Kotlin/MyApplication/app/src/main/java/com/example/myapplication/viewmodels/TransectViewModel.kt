@@ -10,14 +10,17 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 
-class TransectViewModel(application: Application) : AndroidViewModel(application), GeneralViewModel {
+class TransectViewModel(application: Application) : AndroidViewModel(application),
+    GeneralViewModel {
     private val dbRepository = DatabaseRepository(application)
     val transectList: MutableLiveData<ArrayList<Transect>> = MutableLiveData()
     val selectedTransect = MutableLiveData<Transect>()
     val selectedId = MutableLiveData<Long>()
     var prestarted = false
 
-
+    /**
+     * Precarga los transectos y observa futuros cambios con programacion reactiva
+     */
     init {
         transectList.value = ArrayList()
         dbRepository.retrieveTransects().observeOn(AndroidSchedulers.mainThread()).subscribe {
@@ -27,35 +30,69 @@ class TransectViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
+    /**
+     * Cambia el transecto selecionado almacenado en este viewmodel, para luego poder saber sobre
+     * que transecto se estra trabajando
+     * @param transectId, id del transecto a guardar
+     * @return disposable de la operacion reactiva
+     */
     fun choosenTransect(transectId: Long): Disposable? {
         selectedId.value = transectId
-        return dbRepository.retrieveTransectById(transectId).observeOn(AndroidSchedulers.mainThread()).subscribe {
-            selectedTransect.value = it
-        }
+        return dbRepository.retrieveTransectById(transectId)
+            .observeOn(AndroidSchedulers.mainThread()).subscribe {
+                selectedTransect.value = it
+            }
     }
 
+    /**
+     * Añade un nuevo transecto a la vase de datos
+     * @param transect, transecto a añadir
+     */
     fun addTransect(transect: Transect) {
         dbRepository.insertNewTransect(transect)
     }
 
-    fun deleteTransect(idTransect: Long):Disposable {
+    /**
+     * Borra un transecto de la base de datos
+     * @param idTransect, id del transecto a borrar
+     * @return disposable devuelto por la operacion reactiva
+     */
+    fun deleteTransect(idTransect: Long): Disposable {
         return dbRepository.deleteTransect(idTransect)
     }
 
-    override fun preStart(){
+    /**
+     * Funcion utilizada para lanzar los viewmodel en la pantalla splash
+     */
+    override fun preStart() {
         Log.d("Initialization", "TransectViewModel startted")
     }
 
+    /**
+     *  Asigna la relacioón altura-presión con la que se calculara más la altura
+     *  @param pressure, presión como string
+     *  @param altitude, altitud como string
+     */
     fun samplingValues(pressure: String?, altitude: String?) {
         selectedTransect.value?.pressureSampling = pressure?.toDouble()
         selectedTransect.value?.altitudeSampling = altitude?.toDouble()
         dbRepository.updateTransect(selectedTransect.value)
     }
 
-    fun retrieveTransect(id:Long): Observable<Transect> {
+    /**
+     * Recupera un transecto de la base de datos por el id
+     * @param id, id del transecto a buscar
+     * @return retorna un observable del transecto
+     */
+    fun retrieveTransect(id: Long): Observable<Transect> {
         return dbRepository.retrieveTransectById(id)
     }
-    fun updateTransect(transect:Transect){
+
+    /**
+     * Actualiza un transecto almacenado en la base de datos
+     * @param transect, transecto a acutualizar
+     */
+    fun updateTransect(transect: Transect) {
         dbRepository.updateTransect(transect)
     }
 

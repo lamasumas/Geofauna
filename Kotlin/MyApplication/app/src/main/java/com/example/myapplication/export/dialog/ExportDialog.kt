@@ -24,9 +24,6 @@ class ExportDialog(private val listOfAnimals: List<SimpleAdvanceRelation>?,
     private val disposables = CompositeDisposable()
 
 
-
-
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val theView = inflater.inflate(R.layout.share_dialog, container)
